@@ -1,7 +1,7 @@
 // Example by Tom Igoe
 import processing.serial.*;
 
-String[] wordBank = { "hat", "potato", "tree", "goat" };
+String[] wordBank = { "had", "potato", "tree", "goat" };
 color backgroundColor = color( 235, 235, 235 );
 
 String userInput = "";
@@ -16,24 +16,25 @@ String instructions = "Press ENTER to clear your input. Press DELETE to delete l
 int instructionSize = 18;
 color instructionColor = targetWordColor;
 
-
+Serial mySerial;
 void setup()
 {
   // The serial port:
-  Serial myPort;
+//  Serial myPort;
 
   // List all the available serial ports:
   println( Serial.list() );
 
   // Open the port you are using at the rate you want:
   // port is called: /dev/tty/usbmodem33181 on Ariel's MacBook
-  //  myPort = new Serial(this, Serial.list()[1], 9600);
+  mySerial = new Serial(this, Serial.list()[5], 9600);
 
   size( 900, 600 );
 }
 
 void draw()
 {
+  pollForKeyTouches();
   // Init backgroun
   fill( backgroundColor );
   background( 50, 50, 50 );
@@ -80,11 +81,11 @@ void keyPressed()
   {
     if ( userInput.equals( targetWord ) )
     {
-      userInputColor = color( 15, 230, 15 );
+      userInputColor = color( 15, 230, 15 ); // green for success
     }
     else
     {
-      userInputColor = color( 230, 15, 15 );
+      userInputColor = color( 230, 15, 15 ); // red for failure
     }
   }
   else
@@ -93,5 +94,34 @@ void keyPressed()
   }
 
 
+}
+
+void pollForKeyTouches()
+{
+  byte[] buffer = new byte[2];
+  while ( mySerial.available() > 0 )
+  {
+    mySerial.readBytes( buffer );
+   if ( buffer != null )
+   {
+     String message = new String( buffer );
+     println( message );  
+     
+     userInput += (char)buffer[1];
+
+    if ( userInput.length() == targetWord.length() )
+    {
+      if ( userInput.equals( targetWord ) )
+      {
+        userInputColor = color( 15, 230, 15 ); // green for success
+      }
+      else
+      {
+        userInputColor = color( 230, 15, 15 ); // red for failure
+      }
+    }
+     
+   }  
+  }
 }
 
