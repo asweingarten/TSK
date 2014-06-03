@@ -3,10 +3,10 @@ import model.*;
 
 public class TypingGamePresenter
 {
-	TypingGameModel model_;
+    TypingGameModel model_;
 
-	public TypingGamePresenter()
-	{
-		this.model_ = new TypingGameModel();
-	}
+    public TypingGamePresenter()
+    {
+        this.model_ = new TypingGameModel();
+    }
 }
