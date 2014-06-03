@@ -41,13 +41,11 @@ public class TypingLevelView extends JComponent implements IView
     });
   }
 
-  public void paintCompnent( Graphics g )
+  public void paintComponent( Graphics g )
   {
     Graphics2D g2 = ( Graphics2D ) g;
-    g2.setPaint( Color.WHITE );
-    g2.fillRect( 0, 0, width_, height_ );
     g2.setPaint( Color.BLACK );
-    System.out.println( "Yo, I'm painting here!" );
+    g2.fillRect( 0, 0, width_, height_ );
   }
 
   public void updateFromPresenter()
