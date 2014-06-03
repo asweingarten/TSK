@@ -13,6 +13,5 @@ public class Main
 		jFrame.setSize( 800, 600 );
 		jFrame.setContentPane( gameView );
 		jFrame.setVisible( true );
-
 	}
 }
