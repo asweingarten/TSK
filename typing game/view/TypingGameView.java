@@ -1,39 +1,52 @@
 package view;
-import .*;
+import presenter.*;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class TypingGameView extends JComponent implements IView
 {
-	// Window information
-	private final int FPS_ = 30;
-	private final int width_  = 800;
-	private final int height_ = 600;
+    // Window information
+    private final int FPS_ = 30;
+    private final int width_  = 800;
+    private final int height_ = 600;
 
-	// Presenter
-	private TypingGamePresenter presenter_;
+    // Presenter
+    private TypingGamePresenter presenter_;
 
-	public TypingGameView()
-	{
-		super();
-		this.setLayout( new BorderLayout() );
+    private TypingLevelView levelView_;
 
-		presenter_ = new TypingGamePresenter();
-	}
+    public TypingGameView()
+    {
+        super();
+        this.setLayout( new BorderLayout() );
 
-	public void paintComponent( Graphics g )
-	{
-		Graphics2D g2 = ( Graphics2D ) g;
-	}
+        presenter_ = new TypingGamePresenter();
 
-	public synchronized void updateFromPresenter()
-	{
+      // Typing Level Init
+      levelView_ = new TypingLevelView( width_, height_ );
+      // Dimension levelViewDim = (Dimension)levelView_.getDimension();
+      // levelViewDim.setSize( width_/2, height_/2 );
+      Dimension levelViewDim = new Dimension( width_/2, height_/2 );
+      levelView_.setPreferredSize( levelViewDim );
+      this.add( levelView_, BorderLayout.CENTER );
+      levelView_.repaint();
+    }
 
-	}
+    public void paintComponent( Graphics g )
+    {
+        Graphics2D g2 = ( Graphics2D ) g;
 
-	public void saveToPresenter()
-	{
+    }
 
-	}
+    public synchronized void updateFromPresenter()
+    {
+
+    }
+
+    public void saveToPresenter()
+    {
+
+    }
 
 }
