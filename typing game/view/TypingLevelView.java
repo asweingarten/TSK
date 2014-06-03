@@ -42,18 +42,35 @@ public class TypingLevelView extends JComponent implements IView
     {
         public void mousePressed( MouseEvent e )
         {
-            fireActionPerformed( new ActionEvent( this, 0, "MOUSE_PRESSED" ) );
-            repaint();
-            previouslyTyped.repaint();
-            beingTyped.repaint();
-            toBeTyped.repaint();
-            System.out.println( "Mouse Pressed" );
+          fireActionPerformed( new ActionEvent( this, 0, "MOUSE_PRESSED" ) );
+          System.out.println( "Mouse Pressed" );
         }
 
         public void mouseReleased( MouseEvent e )
         {
         }
     });
+
+    addKeyListener( new KeyAdapter()
+    {
+      public void keyTyped( KeyEvent e )
+      {
+        fireActionPerformed( new ActionEvent( this, 0, "KEY_TYPED" ) );
+        System.out.println( "A key was typed: " + e.getKeyChar() );
+      }
+
+      public void keyPressed( KeyEvent e )
+      {
+        System.out.println( "A key was pressed: " + e.getKeyChar() );
+      }
+
+      public void keyReleased( KeyEvent e )
+      {
+        System.out.println( "A key was released: " + e.getKeyChar() );
+      }
+
+    });
+
   }
 
   public void paintComponent( Graphics g )
