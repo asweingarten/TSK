@@ -25,18 +25,14 @@ public class TypingGameView extends JComponent implements IView
 
       // Typing Level Init
       levelView_ = new TypingLevelView( width_, height_ );
-      // Dimension levelViewDim = (Dimension)levelView_.getDimension();
-      // levelViewDim.setSize( width_/2, height_/2 );
       Dimension levelViewDim = new Dimension( width_/2, height_/2 );
       levelView_.setPreferredSize( levelViewDim );
       this.add( levelView_, BorderLayout.CENTER );
-      levelView_.repaint();
     }
 
     public void paintComponent( Graphics g )
     {
         Graphics2D g2 = ( Graphics2D ) g;
-
     }
 
     public synchronized void updateFromPresenter()
