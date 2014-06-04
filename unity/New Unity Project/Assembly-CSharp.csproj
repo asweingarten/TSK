@@ -46,6 +46,9 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\CamMouse.cs" />
+     <Compile Include="Assets\Scripts\InputEventArgs.cs" />
+     <Compile Include="Assets\Scripts\Keyboard.cs" />
      <Compile Include="Assets\Scripts\textInput.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
