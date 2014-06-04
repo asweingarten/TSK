@@ -31,6 +31,6 @@ public class CamMouse : MonoBehaviour {
 		mouseX = Input.mousePosition.x;
 		mouseY = Input.mousePosition.y;
 
-		Debug.Log("Cam Pos: " + Input.mousePosition.y);
+		// Debug.Log("Cam Pos: " + Input.mousePosition.y);
 	}
 }
