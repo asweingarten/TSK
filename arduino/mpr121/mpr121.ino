@@ -18,7 +18,20 @@ struct Touch_Message
   char *serialize()
   {
     char *serializedMessage = new char[2];
-    char header = ( is_key_released << 6 ) & ( is_key_touched << 7 );
+    byte header;
+    
+    if ( is_key_touched )
+    {
+      header = 1;
+    } 
+    else if ( is_key_released )
+    {
+      header = 0;
+    } 
+    else
+    {
+      header = -1; // Something has gone horribly wrong 
+    }
 
     serializedMessage[0] = header;
     serializedMessage[1] = key_code;
@@ -228,7 +241,7 @@ void mpr121_setup(void){
   set_register(0x5A, FDL_R, 0x00);
 
   // Section B - Controls filtering when data is < baseline.
-  set_register(0x5A, MHD_F, 0x01);
+  set_register(0x5A, MHD_F, 0x01);//Maximum Half Delta - Determines the largest magnitude of variation to pass through the baseline filter. Valid values 1-63
   set_register(0x5A, NHD_F, 0x01);
   set_register(0x5A, NCL_F, 0xFF);
   set_register(0x5A, FDL_F, 0x02);
@@ -287,7 +300,7 @@ void mpr121_setup(void){
   set_register(0x5A, ATO_CFGU, 0xC9);  // USL = (Vdd-0.7)/vdd*256 = 0xC9 @3.3V   set_register(0x5A, ATO_CFGL, 0x82);  // LSL = 0.65*USL = 0x82 @3.3V
   set_register(0x5A, ATO_CFGT, 0xB5);*/  // Target = 0.9*USL = 0xB5 @3.3V
 
-  set_register(0x5A, ELE_CFG, 0x0C);
+  //set_register(0x5A, ELE_CFG, 0x0C);
 
 }
 
