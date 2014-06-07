@@ -2,9 +2,10 @@ package model;
 
 import java.util.ArrayList;
 
-public class TypingGameModel
+public class LevelModel
 {
-    public TypingGameModel()
+
+    public LevelModel()
     {
     }
 }

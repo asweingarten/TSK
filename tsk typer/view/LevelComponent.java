@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
 
-public class TypingLevelView extends JComponent implements IView
+public class LevelComponent extends JComponent implements IView
 {
   private EventListenerList listenerList_ = new EventListenerList();
 
@@ -15,14 +15,16 @@ public class TypingLevelView extends JComponent implements IView
   private final int width_,
                     height_;
 
-  private TypingLevelPresenter presenter_;
+  private char lastTypedChar;
+
+  private LevelPresenter presenter_;
 
   // Components
   private JLabel previouslyTyped,
                  beingTyped,
                  toBeTyped;
 
-  public TypingLevelView( int width, int height )
+  public LevelComponent( int width, int height )
   {
     super();
     width_  = width;
@@ -57,16 +59,13 @@ public class TypingLevelView extends JComponent implements IView
       {
         fireActionPerformed( new ActionEvent( this, 0, "KEY_TYPED" ) );
         System.out.println( "A key was typed: " + e.getKeyChar() );
-      }
-
-      public void keyPressed( KeyEvent e )
-      {
-        System.out.println( "A key was pressed: " + e.getKeyChar() );
+        lastTypedChar = e.getKeyChar();
+        saveToPresenter();
       }
 
       public void keyReleased( KeyEvent e )
       {
-        System.out.println( "A key was released: " + e.getKeyChar() );
+        updateFromPresenter();
       }
 
     });
@@ -90,7 +89,7 @@ public class TypingLevelView extends JComponent implements IView
 
   public void saveToPresenter()
   {
-
+    // presenter_.setLastEnteredKey();
   }
 
   //***************************

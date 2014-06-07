@@ -1,11 +1,11 @@
 package presenter;
 import model.*;
 
-public class TypingGamePresenter
+public class SetupScreenPresenter
 {
     TypingGameModel model_;
 
-    public TypingGamePresenter()
+    public SetupScreenPresenter()
     {
         this.model_ = new TypingGameModel();
     }
