@@ -17,7 +17,7 @@ public class TskTyperView extends JComponent implements IView
     // Presenter
     private TskTyperPresenter presenter_;
 
-    private TypingLevelView levelView_;
+    private LevelComponent levelView_;
 
     public TskTyperView()
     {
@@ -27,7 +27,7 @@ public class TskTyperView extends JComponent implements IView
         presenter_ = new TskTyperPresenter();
 
       // Typing Level Init
-      levelView_ = new TypingLevelView( width_, height_ );
+      levelView_ = new LevelComponent( width_, height_ );
       Dimension levelViewDim = new Dimension( width_/2, height_/2 );
       levelView_.setPreferredSize( levelViewDim );
       this.add( levelView_, BorderLayout.CENTER );
