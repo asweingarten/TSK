@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
 
-public class TypingGameView extends JComponent implements IView
+public class TskTyperView extends JComponent implements IView
 {
     // Window information
     private final int FPS_ = 30;
@@ -15,19 +15,19 @@ public class TypingGameView extends JComponent implements IView
     private final int height_ = 600;
 
     // Presenter
-    private TypingGamePresenter presenter_;
+    private TskTyperPresenter presenter_;
 
-    private TypingLevelView levelView_;
+    private LevelComponent levelView_;
 
-    public TypingGameView()
+    public TskTyperView()
     {
         super();
         this.setLayout( new BorderLayout() );
 
-        presenter_ = new TypingGamePresenter();
+        presenter_ = new TskTyperPresenter();
 
       // Typing Level Init
-      levelView_ = new TypingLevelView( width_, height_ );
+      levelView_ = new LevelComponent( width_, height_ );
       Dimension levelViewDim = new Dimension( width_/2, height_/2 );
       levelView_.setPreferredSize( levelViewDim );
       this.add( levelView_, BorderLayout.CENTER );
