@@ -10,23 +10,23 @@ public class TskTyperPresenter
         this.model_ = new TskTyperModel();
     }
 
-    public String GetFilename()
+    public String getFilename()
     {
-        return model_.GetFilename();
+        return model_.getFilename();
     }
 
-    public void SetFilename(String filename)
+    public void setFilename(String filename)
     {
-        model_.SetFilename(filename);
+        model_.setFilename(filename);
     }
 
-    public String GetFileContents()
+    public String getFileContents()
     {
-        return model_.GetFileContents();
+        return model_.getFileContents();
     }
 
-    public boolean IsGameReady()
+    public boolean isGameReady()
     {
-        return model_.IsFileValid();
+        return model_.isFileValid();
     }
 }

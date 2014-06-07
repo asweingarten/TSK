@@ -1,5 +1,6 @@
 package model;
 
+import model.utilities.*;
 import java.util.ArrayList;
 import java.io.File;
 import java.io.IOException;
@@ -14,17 +15,17 @@ public class TskTyperModel
         reader_ = new TextFileReader(new FullFileReadStrategy());
     }
 
-    public String GetFilename()
+    public String getFilename()
     {
         return filename_;
     }
 
-    public void SetFilename(String filename)
+    public void setFilename(String filename)
     {
         filename_ = filename;
     }
 
-    public String GetFileContents()
+    public String getFileContents()
     {
         try
         {
@@ -36,7 +37,7 @@ public class TskTyperModel
         }
     }
 
-    public boolean IsFileValid()
+    public boolean isFileValid()
     {
         try
         {
