@@ -15,6 +15,8 @@ public class TypingLevelView extends JComponent implements IView
   private final int width_,
                     height_;
 
+  private char lastTypedChar;
+
   private TypingLevelPresenter presenter_;
 
   // Components
@@ -57,16 +59,13 @@ public class TypingLevelView extends JComponent implements IView
       {
         fireActionPerformed( new ActionEvent( this, 0, "KEY_TYPED" ) );
         System.out.println( "A key was typed: " + e.getKeyChar() );
-      }
-
-      public void keyPressed( KeyEvent e )
-      {
-        System.out.println( "A key was pressed: " + e.getKeyChar() );
+        lastTypedChar = e.getKeyChar();
+        saveToPresenter();
       }
 
       public void keyReleased( KeyEvent e )
       {
-        System.out.println( "A key was released: " + e.getKeyChar() );
+        updateFromPresenter();
       }
 
     });
@@ -90,7 +89,7 @@ public class TypingLevelView extends JComponent implements IView
 
   public void saveToPresenter()
   {
-
+    // presenter_.setLastEnteredKey();
   }
 
   //***************************
