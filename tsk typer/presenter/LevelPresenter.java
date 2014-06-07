@@ -3,10 +3,10 @@ import model.*;
 
 public class LevelPresenter
 {
-    TypingLevelModel model_;
+    LevelModel model_;
 
     public LevelPresenter()
     {
-        this.model_ = new TypingLevelModel();
+        this.model_ = new LevelModel();
     }
 }

@@ -17,7 +17,7 @@ public class LevelComponent extends JComponent implements IView
 
   private char lastTypedChar;
 
-  private TypingLevelPresenter presenter_;
+  private LevelPresenter presenter_;
 
   // Components
   private JLabel previouslyTyped,
