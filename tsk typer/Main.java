@@ -7,7 +7,7 @@ public class Main
 {
 	public static void main( String[] args )
 	{
-		TypingGameView gameView = new TypingGameView();
+		TskTyperView gameView = new TskTyperView();
 		JFrame jFrame = new JFrame( "Typing Game v0.0.1" );
 		jFrame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 		jFrame.setSize( 800, 600 );
