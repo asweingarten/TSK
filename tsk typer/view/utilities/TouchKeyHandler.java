@@ -3,7 +3,7 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 import javax.comm.SerialPort;
 import javax.comm.SerialPortEvent;
-import javax.comm.SerialPortEventListener;
+import javax.comm.SerialPortEventListener; 
 
 public abstract class TouchKeyHandler implements TouchKeyListener
 {
@@ -13,8 +13,8 @@ public abstract class TouchKeyHandler implements TouchKeyListener
         inStream = new TouchKeyStream(port);
     }
     
-    public abstract void keyTouched(KeyEvent e);
-    public abstract void keyTouchReleased(KeyEvent e);
+    public abstract void keyTouched(TouchKeyMessage e);
+    public abstract void keyTouchReleased(TouchKeyMessage e);
 
     public void serialEvent(SerialPortEvent e)
     {
@@ -31,11 +31,11 @@ public abstract class TouchKeyHandler implements TouchKeyListener
 
             if(message.type == TouchKeyMessage.Type.TOUCH)
             {
-                //Create KeyEvent and call keyTouched
+                keyTouched(message);
             }
             else if(message.type == TouchKeyMessage.Type.RELEASE)
             {
-                //Create KeyEvent and call keyTouchReleased
+                keyTouchReleased(message);
             }
         }
         else
