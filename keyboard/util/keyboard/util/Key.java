@@ -8,6 +8,12 @@ public class Key
 	private boolean touched;
     private boolean pressed;
 
+    public Key( char value, char shiftValue ) 
+    {
+        this.value = value;
+        this.shiftValue = shiftValue;
+    }
+
 
 	public char getValue() 
 	{
@@ -24,9 +30,9 @@ public class Key
         return this.shiftValue;
     }
 
-    public void setShiftedValue( final char shiftedValue ) 
+    public void setShiftedValue( final char shiftValue ) 
     {
-        this.shiftedValue = shiftedValue;
+        this.shiftValue = shiftValue;
     }
 
     public boolean isTouched() {
@@ -51,13 +57,19 @@ public class Key
         if ( !(other instanceof Key) )return false;
         if ( other == this ) return true;        
         Key otherKey = (Key) other;
-        return ( this.value == otherKey.getValue() && this.shiftedValue == otherKey.getShiftedValue() );
+        return ( this.value == otherKey.getValue() && this.shiftValue == otherKey.getShiftedValue() );
     }
 
     @Override
     public String toString() 
     {
-        return String.valueOf( value );
+        return String.valueOf( shiftValue );
+    }
+    
+    @Override
+    public int hashCode() 
+    {
+        return 17 + 31*value + 57*shiftValue;
     }
 
 }
