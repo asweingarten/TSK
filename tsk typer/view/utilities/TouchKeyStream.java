@@ -4,26 +4,11 @@ import javax.comm.SerialPort;
 
 public class TouchKeyStream extends BufferedInputStream
 {
-    public enum Type
-    {
-        TOUCH, RELEASE
-    }
     private static final int VALID_HEADER_LOW = 0;
     private static final int VALID_HEADER_HIGH = 1;
     private static final int VALID_CHARACTER_LOW = 2;
     private static final int VALID_CHARACTER_HIGH = 127;
 
-    public class TouchKeyMessage
-    {
-        protected char character;
-        protected Type type;
-
-        public TouchKeyMessage( char character, Type type )
-        {
-            this.character = character;
-            this.type = type;
-        }
-    }
 
     public TouchKeyStream( SerialPort serialPort ) throws IOException
     {
@@ -38,7 +23,7 @@ public class TouchKeyStream extends BufferedInputStream
         int byteOne = read();
         int byteTwo = read(); 
 
-        Type type = null;
+        TouchKeyMessage.Type type = null;
         char message;
 
         //Check if first byte is a header
@@ -46,11 +31,11 @@ public class TouchKeyStream extends BufferedInputStream
         {
             if(byteOne == 1)
             {
-                type = Type.TOUCH;
+                type = TouchKeyMessage.Type.TOUCH;
             }
             else if(byteOne == 0)
             {
-                type = Type.RELEASE;
+                type = TouchKeyMessage.Type.RELEASE;
             }
         }
         else
