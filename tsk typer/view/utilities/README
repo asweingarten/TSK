@@ -1,3 +1,0 @@
-Compile Instructions for TouchKeyStream
-
-javac -cp jar/comm-2.0.jar TouchKeyStream.java
