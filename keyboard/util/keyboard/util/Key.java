@@ -5,6 +5,8 @@ public class Key
 {
     private char value;
     private char shiftValue;
+    private double xScale;
+    private double yScale;
 	private boolean touched;
     private boolean pressed;
 
@@ -12,6 +14,16 @@ public class Key
     {
         this.value = value;
         this.shiftValue = shiftValue;
+        this.xScale = 1;
+        this.yScale = 1;
+    }
+    
+    public Key( char value, char shiftValue, double xScale, double yScale ) 
+    {
+        this.value = value;
+        this.shiftValue = shiftValue;
+        this.xScale = xScale;
+        this.yScale = yScale;
     }
 
 
@@ -35,6 +47,22 @@ public class Key
         this.shiftValue = shiftValue;
     }
 
+    public double getXScale() {
+    	return xScale;
+    }
+    
+    public void setXScale( double xScale ) {
+    	this.xScale = xScale;
+    }
+    
+    public double getYScale() {
+    	return yScale;
+    }
+    
+    public void setYScale( double yScale ) {
+    	this.yScale = yScale;
+    }
+    
     public boolean isTouched() {
         return this.touched;
     }
