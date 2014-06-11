@@ -25,8 +25,14 @@ public abstract class TouchKeyHandler implements TouchKeyListener
             {
                 message = inStream.getNextMessage();
             }
-            catch(IOException ex)
+            catch(IOException | TouchKeyStream.TouchKeyException ex)
             {
+                if(ex instanceof IOException)
+                {
+                }
+                else if(ex instanceof TouchKeyStream.TouchKeyException)
+                {
+                }
             }
 
             if(message.type == TouchKeyMessage.Type.TOUCH)

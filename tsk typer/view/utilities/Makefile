@@ -24,17 +24,18 @@ ECHO_DEMO = \
 .java.class:
 	javac $(DEST) $(CP) $(JFLAGS) $*.java
 
-default: all
+default: handler
 
-all: portLister stream
+all: portLister stream handler echoDemo
 
 portLister: $(PORT_PRINTER_CLASSES:.java=.class)
+
+handler: stream $(HANDLER_CLASSES:.java=.class)
 
 stream: message $(STREAM_CLASSES:.java=.class) 
 
 message: $(MESSAGE_CLASSES:.java=.class)
 
-handler: $(HANDLER_CLASSES:.java=.class)
 
 echoDemo: $(ECHO_DEMO:.java=.class)
 	
