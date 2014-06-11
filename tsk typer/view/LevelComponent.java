@@ -19,10 +19,13 @@ public class LevelComponent extends JComponent implements IView
 
   private LevelPresenter presenter_;
 
+  private Font font_;
+
   // Components
   private JLabel previouslyTyped,
-                 beingTyped,
+                 // beingTyped,
                  toBeTyped;
+  private CurrentTextComponent beingTyped;
 
   public LevelComponent( int width, int height )
   {
@@ -33,7 +36,9 @@ public class LevelComponent extends JComponent implements IView
 
     // Text to be typed
     previouslyTyped = new JLabel( "Previously Typed", JLabel.LEFT );
-    beingTyped = new JLabel( "Being Typed", JLabel.CENTER );
+    // beingTyped = new JLabel( "Being Typed", JLabel.CENTER );
+    beingTyped = new CurrentTextComponent();
+    beingTyped.setNewWord( "hello" );
     toBeTyped = new JLabel( "To Be Typed", JLabel.RIGHT );
 
     this.add( previouslyTyped );
@@ -75,6 +80,7 @@ public class LevelComponent extends JComponent implements IView
   public void paintComponent( Graphics g )
   {
     Graphics2D g2 = ( Graphics2D ) g;
+    g2.setFont( font_ );
     g2.setPaint( Color.WHITE );
     g2.fillRect( 0, 0, width_, height_ );
 

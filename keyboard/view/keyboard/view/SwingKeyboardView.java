@@ -2,7 +2,7 @@ package keyboard.view;
 
 import keyboard.presenter.KeyboardPresenter;
 import keyboard.util.Key;
-import keyboard.util.KeyLocation;
+import keyboard.util.KeyboardRow;
 
 import javax.swing.*;
 import java.awt.*;
@@ -43,19 +43,18 @@ public class SwingKeyboardView extends JComponent implements KeyboardView
 		{
 			int keyboardLeft = presenter.getLeft();
 			int keyboardTop = presenter.getTop(); 
-			int keyWidth = presenter.getKeyWidth();
-			int keyHeight = presenter.getKeyHeight();
-				    
-		    List<Key> keys = presenter.getKeys();
-		    Map<Key, KeyLocation> keyMapping = presenter.getKeyMapping();
-		    for ( Key key : keys ) 
+
+
+		    List<KeyboardRow> keyboardRows = presenter.getKeyboardRows();
+	    	int keyTop = 30;
+	    	
+		    for ( KeyboardRow row : keyboardRows ) 
 		    {
-		    	KeyLocation location = keyMapping.get(key);
-		    	if (location != null) 
-		    	{
-		    		int keyLeft = keyboardLeft + location.getColumn()*(keyWidth + 5);
-		    		int keyTop = keyboardTop + location.getRow()*(keyHeight + 5);
-			    
+				int keyWidth = presenter.getKeyWidth();
+				int keyHeight = presenter.getKeyHeight();
+		    	int keyLeft = 30;
+		    	for ( Key key : row.getKeys() )
+		    	{    
 		    		if ( key.isTouched() ) { 
 		    			context.setPaint( Color.GREEN );
 		    		} else if ( key.isPressed() ) {
@@ -63,13 +62,17 @@ public class SwingKeyboardView extends JComponent implements KeyboardView
 		    		} else {
 		    			context.setPaint ( Color.GRAY );
 		    		}
+		    		keyWidth = (int) Math.floor( keyWidth * key.getXScale() );
+		    		keyHeight = (int) Math.floor( keyHeight * key.getYScale() );
 			    	context.fillRect( keyLeft,
 			    					  keyTop,
 			    					  keyWidth,
 			    					  keyHeight );
 			    	context.setPaint( Color.BLACK );
 			    	context.drawString( key.toString(), keyLeft + 5, keyTop + 15 );
+			    	keyLeft += (keyWidth + 5);	    	
 		    	}
+		    	keyTop += (keyHeight + 5);
 		    }
 		    
 		}
