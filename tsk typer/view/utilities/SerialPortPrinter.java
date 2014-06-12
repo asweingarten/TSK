@@ -1,20 +1,14 @@
 import java.io.IOException;
 import java.util.Enumeration;
-import javax.comm.SerialPort;
-import javax.comm.CommPortIdentifier;
-import javax.comm.PortInUseException;
+import jssc.SerialPortList;
 public class SerialPortPrinter 
 {
     public static void main(String[] args)
     {
-        Enumeration portList = CommPortIdentifier.getPortIdentifiers();
-        while(portList.hasMoreElements())
+        String[] portNames = SerialPortList.getPortNames(); 
+        for(String portName : portNames)
         {
-            CommPortIdentifier port = (CommPortIdentifier)portList.nextElement();
-            if(port.getPortType() == CommPortIdentifier.PORT_SERIAL) 
-            {
-                System.out.println(port.getName());
-            }
+            System.out.println(portName);
         }
     }
 

@@ -1,14 +1,17 @@
 import java.io.BufferedInputStream;
-import java.io.IOException;
-import javax.comm.SerialPort;
+import jssc.SerialPort;
+import jssc.SerialPortException;
 
-public class TouchKeyStream extends BufferedInputStream
+public class TouchKeyStream
 {
     private static final int MESSAGE_LENGTH = 2;
     private static final int VALID_HEADER_LOW = 0;
     private static final int VALID_HEADER_HIGH = 1;
     private static final int VALID_CHARACTER_LOW = 2;
     private static final int VALID_CHARACTER_HIGH = 127;
+ 
+    private SerialPort serialPort;
+
     public class TouchKeyException extends Exception
     {
         public TouchKeyException()
@@ -22,12 +25,12 @@ public class TouchKeyStream extends BufferedInputStream
         }
     }
 
-    public TouchKeyStream( SerialPort serialPort ) throws IOException
+    public TouchKeyStream( SerialPort serialPort ) 
     {
-        super(serialPort.getInputStream());
+        this.serialPort = serialPort;
     }
 
-    public TouchKeyMessage getNextMessage() throws IOException, TouchKeyException
+    public TouchKeyMessage getNextMessage() throws SerialPortException, TouchKeyException
     {
         TouchKeyMessage message = null;
         TouchKeyMessage.Type type = null;
@@ -36,22 +39,14 @@ public class TouchKeyStream extends BufferedInputStream
 
         //Mark pre-read buffer position incase we need to back up this read
         //Becomes invalid after we read more than one full message
-        mark(MESSAGE_LENGTH);
-        int bytesRead = read(buffer, 0, MESSAGE_LENGTH);
-        if(bytesRead != MESSAGE_LENGTH)
+        if(serialPort.getInputBufferBytesCount() >= MESSAGE_LENGTH)
         {
-            if(bytesRead == -1)
-            {
-                throw new TouchKeyException("Input stream reached EOF");
-                //Have reached EOF
-                //We should throw an error here or return a special message type
-                
-            }
-            if(bytesRead % 2 == 1)
-            {
-                throw new TouchKeyException("Odd number of bytes read");
-                //If we read an odd number of bytes we are probably offset in the buffer
-            }
+            buffer = serialPort.readBytes(MESSAGE_LENGTH);
+        }
+        else
+        {
+            serialPort.purgePort( SerialPort.PURGE_RXCLEAR | SerialPort.PURGE_TXCLEAR );
+            throw new TouchKeyException("Less than a message is in the buffer");
         }
 
         int byteOne = (int)buffer[0];
@@ -71,8 +66,6 @@ public class TouchKeyStream extends BufferedInputStream
         }
         else
         {
-            reset();
-            read();
             throw new TouchKeyException("First byte was not a vaild header as expected");
         }
         
@@ -84,8 +77,6 @@ public class TouchKeyStream extends BufferedInputStream
             //If Byte two is not a valid character but is a vaild header then perhaps we are just offset
             if(type == null && byteTwo >= VALID_HEADER_LOW && byteTwo <= VALID_HEADER_HIGH)    
             {
-                reset();
-                read();
                 throw new TouchKeyException("Second byte was not a valid character as expected");
             }
         }

@@ -1,6 +1,6 @@
 JFLAGS = 
 JC = javac
-CP = -cp lib/comm-2.0.jar:.
+CP = -cp lib/jssc.jar:.
 DEST = -d .
 
 .SUFFIXES: .java .class

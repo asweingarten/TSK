@@ -1,8 +1,8 @@
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
-import javax.comm.SerialPort;
-import javax.comm.SerialPortEvent;
-import javax.comm.SerialPortEventListener;
+import jssc.SerialPort;
+import jssc.SerialPortEvent;
+import jssc.SerialPortEventListener;
 
 public interface TouchKeyListener extends SerialPortEventListener
 {

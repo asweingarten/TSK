@@ -1,8 +1,9 @@
 import java.io.IOException;
 import java.util.Enumeration;
-import javax.comm.SerialPort;
-import javax.comm.CommPortIdentifier;
-import javax.comm.PortInUseException;
+import jssc.SerialPortException;
+import jssc.SerialPortEventListener;
+import jssc.SerialPortList;
+import jssc.SerialPort;
 
 public class TouchKeyEcho
 {
@@ -17,22 +18,19 @@ public class TouchKeyEcho
     public TouchKeyEcho()
     {
         //Find serial port
-        Enumeration portList = CommPortIdentifier.getPortIdentifiers();
-        while(portList.hasMoreElements())
+        String[] portNames = SerialPortList.getPortNames();
+        for(String portName : portNames)
         {
-            CommPortIdentifier port = (CommPortIdentifier)portList.nextElement();
-            if(port.getPortType() == CommPortIdentifier.PORT_SERIAL) 
+            if(portName.equals(targetPortName))
             {
-                if(port.getName().equals(targetPortName))
+                try
                 {
-                    try
-                    {
-                        serialPort = (SerialPort)port.open(this.toString(),500);
-                    }
-                    catch(PortInUseException e)
-                    {
-                        System.err.println(e);
-                    }
+                    serialPort = new SerialPort(portName);
+                    serialPort.openPort();
+                }
+                catch(SerialPortException e)
+                {
+                    System.err.println(e);
                 }
             }
         }

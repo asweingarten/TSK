@@ -1,14 +1,14 @@
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
-import java.io.IOException;
-import javax.comm.SerialPort;
-import javax.comm.SerialPortEvent;
-import javax.comm.SerialPortEventListener; 
+import jssc.SerialPort;
+import jssc.SerialPortEvent;
+import jssc.SerialPortEventListener; 
+import jssc.SerialPortException;
 
 public abstract class TouchKeyHandler implements TouchKeyListener
 {
     public TouchKeyStream inStream;
-    public TouchKeyHandler(SerialPort port) throws IOException
+    public TouchKeyHandler(SerialPort port) 
     {
         inStream = new TouchKeyStream(port);
     }
@@ -18,16 +18,16 @@ public abstract class TouchKeyHandler implements TouchKeyListener
 
     public void serialEvent(SerialPortEvent e)
     {
-        if(e.getEventType() == e.DATA_AVAILABLE)
+        if(e.isRXCHAR())
         {
             TouchKeyMessage message = null;
             try
             {
                 message = inStream.getNextMessage();
             }
-            catch(IOException | TouchKeyStream.TouchKeyException ex)
+            catch(SerialPortException | TouchKeyStream.TouchKeyException ex)
             {
-                if(ex instanceof IOException)
+                if(ex instanceof SerialPortException)
                 {
                 }
                 else if(ex instanceof TouchKeyStream.TouchKeyException)
