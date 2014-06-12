@@ -1,9 +1,15 @@
 JFLAGS = 
 JC = javac
 CP = -cp lib/jssc.jar:.
-DEST = -d .
+DEST = -d classes
 
 .SUFFIXES: .java .class
+
+TSK_PACKAGE_CLASSES = \
+			src/TouchKeyStream.java \
+			src/TouchKeyHandler.java \
+			src/TouchKeyListener.java \
+			src/TouchKeyMessage.java
 
 PORT_PRINTER_CLASSES = \
 			SerialPortPrinter.java 
@@ -24,9 +30,12 @@ ECHO_DEMO = \
 .java.class:
 	javac $(DEST) $(CP) $(JFLAGS) $*.java
 
-default: handler
+tsk: $(TSK_PACKAGE_CLASSES:.java.class)
+	jar -cf tsk.jar classes
 
-all: portLister stream handler echoDemo
+default: tsk
+
+all: tsk
 
 portLister: $(PORT_PRINTER_CLASSES:.java=.class)
 
@@ -41,4 +50,4 @@ echoDemo: $(ECHO_DEMO:.java=.class)
 	
 
 clean:
-	$(RM) *.class;
+	$(RM) classes/*.class;

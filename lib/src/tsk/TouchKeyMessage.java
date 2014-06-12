@@ -1,3 +1,5 @@
+package tsk;
+
 public class TouchKeyMessage
 {
     public enum Type
