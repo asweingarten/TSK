@@ -21,12 +21,14 @@ public class TouchKeyEcho
         String[] portNames = SerialPortList.getPortNames();
         for(String portName : portNames)
         {
-            if(portName.equals(targetPortName))
+            //Don't worry about target port right now, will assume first port found is correct
+            if(true/*portName.equals(targetPortName)*/)
             {
                 try
                 {
                     serialPort = new SerialPort(portName);
                     serialPort.openPort();
+                    serialPort.setParams(9600, 8, 1, 0);
                 }
                 catch(SerialPortException e)
                 {
