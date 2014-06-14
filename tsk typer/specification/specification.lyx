@@ -1,0 +1,499 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement H
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+TSK-Typer Functional Specification - v.1.1
+\end_layout
+
+\begin_layout Author
+Saba Saba
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage pagebreak
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\begin_inset Newpage pagebreak
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FloatList figure
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage pagebreak
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Overview
+\end_layout
+
+\begin_layout Standard
+The touch-sensitive keyboard (TSK) is a keyboard that can detect a user's
+ fingers resting lightly on the keys.
+ TSK-Typer is a typing game that leverages the TSK's functionality to determine
+ the typist's posture while using the application.
+\end_layout
+
+\begin_layout Paragraph*
+Disclaimer: This specification is not complete, and is subject to revision.
+\end_layout
+
+\begin_layout Section
+Non-Goals
+\end_layout
+
+\begin_layout Standard
+TSK-Typer is not intended to deal with TSK's keyboard gesture functionality.
+ 
+\end_layout
+
+\begin_layout Section
+Scenarios
+\end_layout
+
+\begin_layout Standard
+Scenarios are provided below to better understand the cases where a user
+ would use TSK-Typer.
+\end_layout
+
+\begin_layout Enumerate
+Robert is a zookeeper with aspirations of becoming a celebrated novelist.
+ To achieve this goal, he purchases hundreds of computers.
+ He then forces the zoo's chimpanzees to type for long hours every day.
+ Since progress is slow, he installs TSK-Typer on each computer.
+ Thus, he hopes to improve the chimpanzees' typing skills and subsequently
+ gain a novel in the process.
+\end_layout
+
+\begin_layout Enumerate
+Jim is a competitive video-gamer who wants to enter the big leagues.
+ However, he finds himself looking down at his keyboard when entering keyboard
+ commands.
+ Furthermore, it is difficult to make out each letter with only the dim
+ glow of the monitor illuminating the keyboard.
+ Naturally, this prevents him from climbing up in the ranks.
+ To gain an edge over his opponents, he installs TSK-Typer to improve his
+ hand-eye coordination and typing speed.
+\end_layout
+
+\begin_layout Section
+Screen Specification
+\end_layout
+
+\begin_layout Standard
+TSK-Typer features a few different screens that the user interacts with.
+ Each screen is described below from the user's perspective.
+\end_layout
+
+\begin_layout Subsection
+Setup Screen
+\end_layout
+
+\begin_layout Standard
+The setup screen is the initial screen displayed to the user.
+ The text area contains the text that the user will type in the typing screen.
+ This text area can be edited by the user manually.
+ Alternatively, the user may choose to load the contents of a text file
+ into the text area.
+ This is accomplished by checking the 
+\series bold
+Show File Selection
+\series default
+ check box, which displays a text box and a 
+\series bold
+Browse
+\series default
+ button.
+ The text box displays the name of the text file that will be loaded.
+ A 
+\series bold
+Browse
+\series default
+ button beside the text box allows the user to bring up an open file dialog.
+ If the text box is empty or contains an invalid file path, an error indicator
+ is displayed next to the text box and the 
+\series bold
+Begin
+\series default
+ button is disabled.
+ Otherwise, the contents of the file are displayed in the text area.
+ Once the text area is non-empty, the 
+\series bold
+Begin
+\series default
+ button is enabled.
+ Clicking the 
+\series bold
+Begin
+\series default
+ button switches TSK-Typer to the typing screen.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename setup1.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Setup screen with file selection displayed
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename setup2.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Setup screen with file selection hidden
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Typing Screen
+\end_layout
+
+\begin_layout Standard
+The typing screen deals with testing the user's typing skills using text
+ extracted from a given text file.
+ A subset of the text, restricted to 50 characters, is displayed in a marquee-li
+ke display.
+ Each character, inluding whitespace, is displayed in monospace font.
+ A caret placed underneath a character denotes the character that the user
+ should type.
+ When the user presses a key, the character changes colour: green signifies
+ success, red signifies an incorrect character, and yellow signifies a correct
+ character typed with incorrect finger placement on the TSK.
+ Additionally, the text shifts one space to the left whilst the caret remains
+ in the same position.
+ To make whitespace characters easier to see, the following representation
+ is used: a single space is represented as a blank character, a tab is represent
+ed by the word 
+\series bold
+Tab
+\series default
+ in a box, and a newline is represented by the word 
+\series bold
+Return
+\series default
+ in a box.
+ Once every character in the text has been typed, TSK-Typer switches to
+ the results screen.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename typing.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Typing Screen
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Results Screen
+\end_layout
+
+\begin_layout Standard
+The results screen displays the user's performance statistics.
+ These statistics are displayed in a table.
+ Additionally, a line chart visible below the table lists the number of
+ mistakes made by the user over time.
+ The line chart features two sets of plots: the number of incorrect characters
+ over time, and the number of characters typed with incorrect form over
+ time.
+ An overall score is also displayed above the table.
+ The formula for determining the score is given in figure 5.
+ Note that a word is considered to be correct if and only if each character
+ is typed correctly with proper form.
+ A word is considered incorrect if at least one of the characters typed
+ is incorrect.
+ Finally, a word is considered to be typed with incorrect form if at least
+ one of the characters has been typed with incorrect form.
+ This screen features two buttons: the 
+\series bold
+retry
+\series default
+ button and the 
+\series bold
+settings
+\series default
+ button.
+ Clicking on the 
+\series bold
+retry
+\series default
+ button results in the TSK-Typer switching to the typing screen with the
+ same text file loaded.
+ Clicking on the 
+\series bold
+settings
+\series default
+ button results in the TSK-Typer switching to the setup screen.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+Score: 1420
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset VSpace smallskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename results.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Results Screen
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+Let 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ represent the overall score of the user, 
+\begin_inset Formula $s$
+\end_inset
+
+ is the words per minute, 
+\begin_inset Formula $w_{g}$
+\end_inset
+
+ is the number of words typed correctly, 
+\begin_inset Formula $c_{b}$
+\end_inset
+
+ is the number of characters typed incorrectly, and 
+\begin_inset Formula $c_{f}$
+\end_inset
+
+ is the number of characters typed with incorrect form.
+ Hence, the algorithm for calculating the overall score is:
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\sigma=sw_{g}-\left(2c_{b}+c_{f}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Score algorithm
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
