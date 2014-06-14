@@ -54,6 +54,13 @@ public class LevelPresenter
         return rightIndex_;
     }
 
+    private void incrementIndices()
+    {
+        ++currentIndex_;
+        ++leftIndex_;
+        rightIndex_ = Math.min( rightIndex_ + 1, model_.getTextLength() );
+    }
+
     public CharacterColor getCharacterColor(int index) throws IllegalArgumentException
     {
         try
@@ -77,6 +84,6 @@ public class LevelPresenter
         {
             model_.setCharacterMode(currentIndex_, LevelModel.CharacterMode.INCORRECT);
         }
-        ++currentIndex_;
+        incrementIndices();
     }
 }
