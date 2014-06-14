@@ -6,7 +6,7 @@ import java.lang.IllegalArgumentException;
 
 public class LevelModel
 {
-    private String text_;   // full text
+    private String text_;       // full text
     private Map characterMap_;  // maps each character in text_ to a character mode
 
     public enum CharacterMode
