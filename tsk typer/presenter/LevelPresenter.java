@@ -59,7 +59,7 @@ public class LevelPresenter
         try
         {
             LevelModel.CharacterMode mode = model_.getCharacterMode(index);
-            return (CharacterColor)mode.getValue();
+            return CharacterColor.values()[ mode.getValue() ];
         }
         catch (IllegalArgumentException e)
         {
@@ -71,11 +71,11 @@ public class LevelPresenter
     {
         if (model_.getCharacter(currentIndex_) == character)
         {
-            model_.setCharacterMode(currentIndex_, LevelMode.CharacterMode.CORRECT);
+            model_.setCharacterMode(currentIndex_, LevelModel.CharacterMode.CORRECT);
         }
         else
         {
-            model_.setCharacterMode(currentIndex_, LevelMode.CharacterMode.INCORRECT);
+            model_.setCharacterMode(currentIndex_, LevelModel.CharacterMode.INCORRECT);
         }
         ++currentIndex_;
     }
