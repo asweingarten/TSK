@@ -46,9 +46,11 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Grid.cs" />
      <Compile Include="Assets\Scripts\CamMouse.cs" />
      <Compile Include="Assets\Scripts\InputEventArgs.cs" />
      <Compile Include="Assets\Scripts\Keyboard.cs" />
+     <Compile Include="Assets\Scripts\NewBehaviourScript.cs" />
      <Compile Include="Assets\Scripts\movementScript.cs" />
      <Compile Include="Assets\Scripts\textInput.cs" />
   </ItemGroup>
