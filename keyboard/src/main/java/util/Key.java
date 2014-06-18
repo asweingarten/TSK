@@ -1,4 +1,4 @@
-package keyboard.util;
+package util;
 
 
 public class Key 
