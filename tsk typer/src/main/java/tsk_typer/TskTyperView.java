@@ -1,7 +1,7 @@
 package tsk_typer;
 
 import interfaces.*;
-import level.LevelComponent;
+import level.LevelScreen;
 
 import javax.swing.*;
 import javax.swing.event.*;
@@ -19,7 +19,7 @@ public class TskTyperView extends JComponent implements IView
     // Presenter
     private TskTyperPresenter presenter_;
 
-    private LevelComponent levelView_;
+    private LevelScreen levelView_;
 
     public TskTyperView()
     {
@@ -29,7 +29,7 @@ public class TskTyperView extends JComponent implements IView
         presenter_ = new TskTyperPresenter();
 
       // Typing Level Init
-      levelView_ = new LevelComponent( width_, height_ );
+      levelView_ = new LevelScreen( width_, height_ );
       Dimension levelViewDim = new Dimension( width_/2, height_/2 );
       levelView_.setPreferredSize( levelViewDim );
       this.add( levelView_, BorderLayout.CENTER );

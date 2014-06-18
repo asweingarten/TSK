@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
 
-public class LevelComponent extends JComponent implements IView
+public class LevelScreen extends JComponent implements IView
 {
   private EventListenerList listenerList_ = new EventListenerList();
 
@@ -26,7 +26,7 @@ public class LevelComponent extends JComponent implements IView
                  beingTyped,
                  toBeTyped;
 
-  public LevelComponent( int width, int height )
+  public LevelScreen( int width, int height )
   {
     super();
     width_  = width;
