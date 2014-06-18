@@ -26,7 +26,7 @@ public abstract class TouchKeyHandler implements TouchKeyListener
             {
                 message = inStream.getNextMessage();
             }
-            catch(SerialPortException | TouchKeyStream.TouchKeyException ex)
+            catch(SerialPortException|TouchKeyStream.TouchKeyException ex)
             {
                 if(ex instanceof SerialPortException)
                 {
