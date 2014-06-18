@@ -1,13 +1,11 @@
 package level;
 
-import java.util.Map;
-import java.util.HashMap;
 import java.lang.IllegalArgumentException;
 
 public class LevelModel
 {
     private String text_;       // full text
-    private Map characterMap_;  // maps each character in text_ to a character mode
+    private CharacterMode[] characterModeList_;  // maps each character in text_ to a character mode
 
     public enum CharacterMode
     {
@@ -32,7 +30,7 @@ public class LevelModel
     public LevelModel(String text)
     {
         this.text_ = text;
-        this.characterMap_ = new HashMap(text_.length());
+        this.characterModeList_ = new CharacterMode[text_.length()];
     }
 
     public int getTextLength()
@@ -46,12 +44,12 @@ public class LevelModel
         {
             throw new IllegalArgumentException();
         }
-        return (CharacterMode)this.characterMap_.get(index);
+        return (CharacterMode)this.characterModeList_[index];
     }
 
     public void setCharacterMode(int index, CharacterMode mode)
     {
-        this.characterMap_.put(index, mode);
+        this.characterModeList_[index] = mode;
     }
 
     public char getCharacter(int index) throws IllegalArgumentException
