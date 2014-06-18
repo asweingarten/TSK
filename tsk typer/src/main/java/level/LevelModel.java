@@ -1,13 +1,11 @@
 package level;
 
-import java.util.Map;
-import java.util.HashMap;
 import java.lang.IllegalArgumentException;
 
 public class LevelModel
 {
-    private String text_;       // full text
-    private Map characterMap_;  // maps each character in text_ to a character mode
+    private String text_;                        // full text
+    private CharacterMode[] characterModeList_;  // stores each character mode for each character in text_ in corresponding index
 
     public enum CharacterMode
     {
@@ -18,7 +16,7 @@ public class LevelModel
 
         private int value_;
 
-        private CharacterMode(int value)
+        private CharacterMode( int value )
         {
             this.value_ = value;
         }
@@ -29,10 +27,10 @@ public class LevelModel
         }
     }
 
-    public LevelModel(String text)
+    public LevelModel( String text )
     {
         this.text_ = text;
-        this.characterMap_ = new HashMap(text_.length());
+        this.characterModeList_ = new CharacterMode[text_.length()];
     }
 
     public int getTextLength()
@@ -40,26 +38,26 @@ public class LevelModel
         return text_.length();
     }
 
-    public CharacterMode getCharacterMode(int index) throws IllegalArgumentException
+    public CharacterMode getCharacterMode( int index ) throws IllegalArgumentException
     {
-        if (index >= text_.length())
+        if ( index >= text_.length() )
         {
             throw new IllegalArgumentException();
         }
-        return (CharacterMode)this.characterMap_.get(index);
+        return (CharacterMode)this.characterModeList_[index];
     }
 
-    public void setCharacterMode(int index, CharacterMode mode)
+    public void setCharacterMode( int index, CharacterMode mode )
     {
-        this.characterMap_.put(index, mode);
+        this.characterModeList_[index] = mode;
     }
 
-    public char getCharacter(int index) throws IllegalArgumentException
+    public char getCharacter( int index ) throws IllegalArgumentException
     {
-        if (index >= text_.length())
+        if ( index >= text_.length() )
         {
             throw new IllegalArgumentException();
         }
-        return text_.charAt(index);
+        return text_.charAt( index );
     }
 }

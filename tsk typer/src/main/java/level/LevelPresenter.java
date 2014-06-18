@@ -20,7 +20,7 @@ public class LevelPresenter
 
         private int value_;
 
-        private CharacterColor(int value)
+        private CharacterColor( int value )
         {
             this.value_ = value;
         }
@@ -35,12 +35,12 @@ public class LevelPresenter
     {
     }
 
-    public void setTextContents(String text)
+    public void setTextContents( String text )
     {
-        model_ = new LevelModel(text);
+        model_ = new LevelModel( text );
         currentIndex_ = 0;
         leftIndex_ = 0;
-        rightIndex_ = Math.min(model_.getTextLength(), leftIndex_ + windowSize_);
+        rightIndex_ = Math.min( model_.getTextLength() - 1, leftIndex_ + windowSize_ );
     }
 
     public int getLeftIndex()
@@ -57,31 +57,31 @@ public class LevelPresenter
     {
         ++currentIndex_;
         ++leftIndex_;
-        rightIndex_ = Math.min( rightIndex_ + 1, model_.getTextLength() );
+        rightIndex_ = Math.min( rightIndex_ + 1, model_.getTextLength() - 1 );
     }
 
-    public CharacterColor getCharacterColor(int index) throws IllegalArgumentException
+    public CharacterColor getCharacterColor( int index ) throws IllegalArgumentException
     {
         try
         {
-            LevelModel.CharacterMode mode = model_.getCharacterMode(index);
+            LevelModel.CharacterMode mode = model_.getCharacterMode( index );
             return CharacterColor.values()[ mode.getValue() ];
         }
-        catch (IllegalArgumentException e)
+        catch ( IllegalArgumentException e )
         {
             throw new IllegalArgumentException();
         }
     }
 
-    public void handleTypedCharacter(char character)
+    public void handleTypedCharacter( char character )
     {
-        if (model_.getCharacter(currentIndex_) == character)
+        if ( model_.getCharacter( currentIndex_ ) == character )
         {
-            model_.setCharacterMode(currentIndex_, LevelModel.CharacterMode.CORRECT);
+            model_.setCharacterMode( currentIndex_, LevelModel.CharacterMode.CORRECT );
         }
         else
         {
-            model_.setCharacterMode(currentIndex_, LevelModel.CharacterMode.INCORRECT);
+            model_.setCharacterMode( currentIndex_, LevelModel.CharacterMode.INCORRECT );
         }
         incrementIndices();
     }
