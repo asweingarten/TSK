@@ -7,18 +7,13 @@ repositories
     mavenCentral()
 }
 
-allprojects
-{
-    sourceCompatibility = 1.7
-}
-
 dependencies
 {
-    compile: 'org.scream3r:jssc:2.8.0'
+    compile group: 'org.scream3r', name: 'jssc', version:'2.8.0'
 }
 
 jar {
     manifest {
-        attributes 'Implementation-Title': 'tsk', 'Implementation-Version': version
+        attributes("Implementation-Title": "tsk", "Implementation-Version": version)
     }
 }
