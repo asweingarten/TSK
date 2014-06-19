@@ -4,6 +4,7 @@ import jssc.SerialPortException;
 import jssc.SerialPortEventListener;
 import jssc.SerialPortList;
 import jssc.SerialPort;
+import tsk.*;
 
 public class TouchKeyEcho
 {
@@ -58,12 +59,12 @@ public class TouchKeyEcho
 
         public void keyTouched(TouchKeyMessage message)
         {
-            System.out.print(message.character);
+            System.out.print(message.getCharacter());
         }
         
         public void keyTouchReleased(TouchKeyMessage message)
         {
-            System.out.print(message.character);
+            System.out.print(message.getCharacter());
         }
     }
 }

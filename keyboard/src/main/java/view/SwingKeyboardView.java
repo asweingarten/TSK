@@ -1,8 +1,8 @@
-package keyboard.view;
+package view;
 
-import keyboard.presenter.KeyboardPresenter;
-import keyboard.util.Key;
-import keyboard.util.KeyboardRow;
+import presenter.KeyboardPresenter;
+import util.Key;
+import util.KeyboardRow;
 
 import javax.swing.*;
 import java.awt.*;
@@ -36,6 +36,33 @@ public class SwingKeyboardView extends JComponent implements KeyboardView
 		});
 		
 	}
+	
+	/**
+	 * Method to draw an individual key, passing in the key itself, and dimension/location info
+	 * @param key
+	 * @param keyLeft
+	 * @param keyTop
+	 * @param keyWidth
+	 * @param keyHeight
+	 */
+	private void drawKey(Key key, int keyLeft, int keyTop, int keyWidth, int keyHeight) 
+	{
+		if ( key.isTouched() ) { 
+			context.setPaint( Color.GREEN );
+		} else if ( key.isPressed() ) {
+			context.setPaint( Color.RED );
+		} else {
+			context.setPaint ( Color.GRAY );
+		}
+		keyWidth = (int) Math.floor( keyWidth * key.getXScale() );
+		keyHeight = (int) Math.floor( keyHeight * key.getYScale() );
+    	context.fillRect( keyLeft,
+    					  keyTop,
+    					  keyWidth,
+    					  keyHeight );
+    	context.setPaint( Color.BLACK );
+    	context.drawString( key.toString(), keyLeft + 5, keyTop + 15 );
+	}
 
 	public void draw() 
 	{
@@ -43,36 +70,22 @@ public class SwingKeyboardView extends JComponent implements KeyboardView
 		{
 			int keyboardLeft = presenter.getLeft();
 			int keyboardTop = presenter.getTop(); 
-
+			int keySpacing = presenter.getKeySpacing();
 
 		    List<KeyboardRow> keyboardRows = presenter.getKeyboardRows();
-	    	int keyTop = 30;
+	    	int keyTop = keyboardLeft;
 	    	
 		    for ( KeyboardRow row : keyboardRows ) 
 		    {
 				int keyWidth = presenter.getKeyWidth();
 				int keyHeight = presenter.getKeyHeight();
-		    	int keyLeft = 30;
+		    	int keyLeft = keyboardLeft + row.getOffset();
 		    	for ( Key key : row.getKeys() )
 		    	{    
-		    		if ( key.isTouched() ) { 
-		    			context.setPaint( Color.GREEN );
-		    		} else if ( key.isPressed() ) {
-		    			context.setPaint( Color.RED );
-		    		} else {
-		    			context.setPaint ( Color.GRAY );
-		    		}
-		    		keyWidth = (int) Math.floor( keyWidth * key.getXScale() );
-		    		keyHeight = (int) Math.floor( keyHeight * key.getYScale() );
-			    	context.fillRect( keyLeft,
-			    					  keyTop,
-			    					  keyWidth,
-			    					  keyHeight );
-			    	context.setPaint( Color.BLACK );
-			    	context.drawString( key.toString(), keyLeft + 5, keyTop + 15 );
-			    	keyLeft += (keyWidth + 5);	    	
+		    		drawKey(key, keyLeft, keyTop, keyWidth, keyHeight);
+			    	keyLeft += (keyWidth + keySpacing);	    	
 		    	}
-		    	keyTop += (keyHeight + 5);
+		    	keyTop += (keyHeight + keySpacing);
 		    }
 		    
 		}

@@ -1,4 +1,4 @@
-package keyboard.view;
+package view;
 
 public interface KeyboardView 
 {

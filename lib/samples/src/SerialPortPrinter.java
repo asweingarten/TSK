@@ -4,6 +4,7 @@ import jssc.SerialPort;
 import jssc.SerialPortException;
 import jssc.SerialPortList;
 import jssc.SerialNativeInterface;
+
 public class SerialPortPrinter 
 {
     public static void main(String[] args)

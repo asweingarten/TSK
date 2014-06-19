@@ -15,4 +15,14 @@ public class TouchKeyMessage
         this.character = character;
         this.type = type; 
     }
+    
+    public char getCharacter()
+    {
+        return character;
+    }
+
+    public Type getType()
+    {
+        return type;
+    }
 }

@@ -1,8 +1,7 @@
-package keyboard.model;
+package model;
 
-
-import keyboard.util.Key;
-import keyboard.util.KeyboardRow;
+import util.Key;
+import util.KeyboardRow;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -14,12 +13,15 @@ public class KeyboardModel
 {
 	private List<KeyboardRow> keyboardRows;
 	private LinkedHashMap<Character, Key> test;
-    private boolean shift;
+	
+	private int keyWidth = 40;
+	private int keyHeight = 40;
+	private int keySpacing = 5;
+    private boolean shift = false;
 	
 	public KeyboardModel() 
 	{
     	keyboardRows = new ArrayList<KeyboardRow>();
-    	
     	KeyboardRow keyboardRow = new KeyboardRow();
         keyboardRow.addKey( new Key('`','~') );
         keyboardRow.addKey( new Key('1','!') );
@@ -36,7 +38,7 @@ public class KeyboardModel
         keyboardRow.addKey( new Key('=','+') );
         keyboardRows.add( keyboardRow );
         
-        keyboardRow = new KeyboardRow();
+        keyboardRow = new KeyboardRow(60);
         keyboardRow.addKey( new Key('q','Q') );
         keyboardRow.addKey( new Key('w','W') );
         keyboardRow.addKey( new Key('e','E') );
@@ -52,7 +54,7 @@ public class KeyboardModel
         keyboardRow.addKey( new Key('\\','|') );
         keyboardRows.add( keyboardRow );
         
-        keyboardRow = new KeyboardRow();
+        keyboardRow = new KeyboardRow(70);
         keyboardRow.addKey( new Key('a','A') );
         keyboardRow.addKey( new Key('s','S') );
         keyboardRow.addKey( new Key('d','D') );
@@ -67,7 +69,7 @@ public class KeyboardModel
         keyboardRow.addKey( new Key('E','E') );
         keyboardRows.add( keyboardRow );
         
-        keyboardRow = new KeyboardRow();
+        keyboardRow = new KeyboardRow(85);
         keyboardRow.addKey( new Key('z','Z') );
         keyboardRow.addKey( new Key('x','X') );
         keyboardRow.addKey( new Key('c','C') );
@@ -81,7 +83,7 @@ public class KeyboardModel
         keyboardRow.addKey( new Key('S','S') );
         keyboardRows.add( keyboardRow );
         
-        keyboardRow = new KeyboardRow();
+        keyboardRow = new KeyboardRow(195);
         Key k =  new Key( ' ',' ', 4.0, 1.0 );
         keyboardRow.addKey(k);
         test = new LinkedHashMap<Character, Key>();
@@ -120,6 +122,35 @@ public class KeyboardModel
         this.shift = shift;
     }
     
+    public int getKeyWidth() 
+    {
+    	return keyWidth;
+    }
+
+    public void setKeyWidth( int keyWidth ) 
+    {
+    	this.keyWidth = keyWidth;
+    }
+    
+    public int getKeyHeight() 
+    {
+    	return keyHeight;
+    }
+    
+    public void setKeyHeight( int keyHeight ) 
+    {
+    	this.keyHeight = keyHeight;
+    }
+    
+    public int getKeySpacing() 
+    {
+    	return keySpacing;
+    }
+    
+    public void setKeySpacing( int keySpacing ) 
+    {
+    	this.keySpacing = keySpacing;
+    }
 	//TODO: Change this to use a hashmap lookup of keys
     public void setPressed( char keyValue, boolean pressed ) 
     {

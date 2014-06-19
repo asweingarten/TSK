@@ -1,10 +1,8 @@
-package keyboard.presenter;
+package presenter;
 
-import keyboard.model.KeyboardModel;
-import keyboard.util.Key;
-import keyboard.util.KeyboardRow;
-import keyboard.layout.KeyboardLayout;
-import keyboard.layout.RegularKeyboardLayout;
+import model.KeyboardModel;
+import util.Key;
+import util.KeyboardRow;
 
 import java.util.Map;
 import java.util.List;
@@ -13,16 +11,10 @@ public class KeyboardPresenter
 {
 
     private KeyboardModel model;
-    private KeyboardLayout keyLayout;
-    private int keyWidth = 30;
-    private int keyHeight = 30;
-    private int left = 50;
-    private int top = 50;
 
     public KeyboardPresenter( final KeyboardModel model ) 
     {
         this.model = model;
-        this.keyLayout = new RegularKeyboardLayout();
         // Initialize state from the model, getting the set of keys.
         // May need to initialize the positioning of each keys here.
     }
@@ -34,22 +26,27 @@ public class KeyboardPresenter
     
     public int getKeyWidth() 
     {
-    	return keyWidth;
+    	return model.getKeyWidth();
     }
     
     public int getKeyHeight() 
     {
-    	return keyHeight;
+    	return model.getKeyHeight();
+    }
+    
+    public int getKeySpacing()
+    {
+    	return model.getKeySpacing();
     }
     
     public int getLeft() 
     {
-    	return left;
+    	return 30;
     }
     
     public int getTop() 
     {
-    	return top;
+    	return 30;
     }
     
     public void keyPressed( char keyValue ) {

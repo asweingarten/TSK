@@ -1,7 +1,9 @@
-import keyboard.model.KeyboardModel;
-import keyboard.view.SwingKeyboardView;
-import keyboard.presenter.KeyboardPresenter;
-import keyboard.util.Key;
+package main;
+
+import model.KeyboardModel;
+import view.SwingKeyboardView;
+import presenter.KeyboardPresenter;
+import util.Key;
 
 import javax.swing.*;
 import java.awt.*;
