@@ -1,5 +1,6 @@
 package level;
 
+// import java.util.Array;
 import interfaces.*;
 import javax.swing.*;
 import javax.swing.event.*;
@@ -21,10 +22,8 @@ public class LevelScreen extends JComponent implements IView
 
   private Font font_;
 
-  // Components
-  private JLabel previouslyTyped,
-                 beingTyped,
-                 toBeTyped;
+  private String textToDraw_;
+  private Color[] characterColors_;
 
   public LevelScreen( int width, int height )
   {
@@ -33,29 +32,59 @@ public class LevelScreen extends JComponent implements IView
     height_ = height;
     this.setLayout( new FlowLayout( FlowLayout.LEFT, width_/5, height_/3 ) );
 
-    // Text to be typed
-    previouslyTyped = new JLabel( "Previously Typed", JLabel.LEFT );
-    beingTyped = new JLabel( "Being Typed", JLabel.CENTER );
-    toBeTyped = new JLabel( "To Be Typed", JLabel.RIGHT );
+    presenter_ = new LevelPresenter();
+    presenter_.setTextContents( "My country, 'tis of thee," +
+                                  "Sweet land of liberty," +
+                                  "Of thee I sing;" +
+                                  "Land where my fathers died," +
+                                  "Land of the pilgrims' pride," +
+                                  "From ev'ry mountainside" +
+                                  "Let freedom ring!" +
+                                  "2" +
+                                  "My native country, thee," +
+                                  "Land of the noble free," +
+                                  "Thy name I love;" +
+                                  "I love thy rocks and rills," +
+                                  "Thy woods and templed hills;" +
+                                  "My heart with rapture thrills," +
+                                  "Like that above." +
+                                  "3" +
+                                  "Let music swell the breeze," +
+                                  "And ring from all the trees" +
+                                  "Sweet freedom's song;" +
+                                  "Let mortal tongues awake;" +
+                                  "Let all that breathe partake;" +
+                                  "Let rocks their silence break," +
+                                  "The sound prolong." +
+                                  "4" +
+                                  "Our fathers' God to Thee," +
+                                  "Author of liberty," +
+                                  "To Thee we sing." +
+                                  "Long may our land be bright," +
+                                  "With freedom's holy light," +
+                                  "Protect us by Thy might," +
+                                  "Great God our King." );
+    updateFromPresenter();
+  }
 
-    this.add( previouslyTyped );
-    this.add( beingTyped );
-    this.add( toBeTyped );
+  public void paintComponent( Graphics g )
+  {
+    Graphics2D g2 = ( Graphics2D ) g;
+    g2.setFont( font_ );
+    g2.setPaint( Color.WHITE );
+    g2.fillRect( 0, 0, width_, height_ );
 
-    addMouseListener( new MouseAdapter()
+    g2.setPaint( Color.BLACK );
+    for ( int i = 0; i < textToDraw_.length(); ++i )
     {
-        public void mousePressed( MouseEvent e )
-        {
-          fireActionPerformed( new ActionEvent( this, 0, "MOUSE_PRESSED" ) );
-          System.out.println( "Mouse Pressed" );
-        }
+      // g2.setPaint( characterColors_[i] );
+      g2.drawString( textToDraw_.substring( i, i+1 ), 200 + i*7, 295 );
+    }
+  }
 
-        public void mouseReleased( MouseEvent e )
-        {
-        }
-    });
-
-    addKeyListener( new KeyAdapter()
+  private void initializeListeners()
+  {
+    this.addKeyListener( new KeyAdapter()
     {
       public void keyTyped( KeyEvent e )
       {
@@ -71,28 +100,17 @@ public class LevelScreen extends JComponent implements IView
       }
 
     });
-
-  }
-
-  public void paintComponent( Graphics g )
-  {
-    Graphics2D g2 = ( Graphics2D ) g;
-    g2.setFont( font_ );
-    g2.setPaint( Color.WHITE );
-    g2.fillRect( 0, 0, width_, height_ );
-
-    g2.setPaint( Color.BLACK );
-    // previouslyTyped.paint( g2 );
   }
 
   public void updateFromPresenter()
   {
-
+    textToDraw_ = presenter_.getTextToDraw();
+    characterColors_ = presenter_.getCharacterColors();
   }
 
   public void saveToPresenter()
   {
-    // presenter_.setLastEnteredKey();
+    presenter_.handleTypedCharacter( lastTypedChar );
   }
 
   //***************************

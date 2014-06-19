@@ -25,12 +25,15 @@ public class LevelModel
         {
             return value_;
         }
+
     }
 
     public LevelModel( String text )
     {
         this.text_ = text;
         this.characterModeList_ = new CharacterMode[text_.length()];
+        for ( int i = 0; i < text_.length(); ++i )
+            this.characterModeList_[i] = CharacterMode.UNTYPED;
     }
 
     public int getTextLength()

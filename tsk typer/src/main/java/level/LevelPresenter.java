@@ -1,6 +1,9 @@
 package level;
 
+// import java.util.Array;
+import java.util.ArrayList;
 import java.lang.*;
+import java.awt.Color;
 
 public class LevelPresenter
 {
@@ -16,7 +19,8 @@ public class LevelPresenter
         BLACK(0),
         GREEN(1),
         RED(2),
-        YELLOW(3);
+        YELLOW(3),
+        INVALID(4);
 
         private int value_;
 
@@ -28,6 +32,23 @@ public class LevelPresenter
         public int getValue()
         {
             return value_;
+        }
+
+        public Color getColor()
+        {
+            switch ( this )
+            {
+                case BLACK:
+                return Color.BLACK;
+                case GREEN:
+                return Color.GREEN;
+                case RED:
+                return Color.RED;
+                case YELLOW:
+                return Color.YELLOW;
+                default:
+                return Color.BLUE;
+            }
         }
     }
 
@@ -43,6 +64,11 @@ public class LevelPresenter
         rightIndex_ = Math.min( model_.getTextLength() - 1, leftIndex_ + windowSize_ );
     }
 
+    public int getWindowSize()
+    {
+        return windowSize_;
+    }
+
     public int getLeftIndex()
     {
         return leftIndex_;
@@ -53,14 +79,32 @@ public class LevelPresenter
         return rightIndex_;
     }
 
+    public int getCurrentIndex()
+    {
+        return currentIndex_;
+    }
+
+    public String getTextToDraw()
+    {
+        StringBuilder textBuilder = new StringBuilder();
+        for ( int index = leftIndex_; index <= rightIndex_; ++index )
+        {
+            textBuilder.append( model_.getCharacter( index ) );
+        }
+        return textBuilder.toString();
+    }
+
     private void incrementIndices()
     {
         ++currentIndex_;
-        ++leftIndex_;
+        if ( currentIndex_ > ( windowSize_ / 2 ) )
+        {
+            ++leftIndex_;
+        }
         rightIndex_ = Math.min( rightIndex_ + 1, model_.getTextLength() - 1 );
     }
 
-    public CharacterColor getCharacterColor( int index ) throws IllegalArgumentException
+    private CharacterColor getCharacterColor( int index )
     {
         try
         {
@@ -69,8 +113,19 @@ public class LevelPresenter
         }
         catch ( IllegalArgumentException e )
         {
-            throw new IllegalArgumentException();
+            System.err.println( "Error in getCharacterColor" );
         }
+        return CharacterColor.INVALID;
+    }
+
+    public Color[] getCharacterColors()
+    {
+        Color[] colorList = new Color[windowSize_];
+        for ( int index = leftIndex_; index < rightIndex_; ++index )
+        {
+            colorList[index] = getCharacterColor( index ).getColor();
+        }
+        return colorList;
     }
 
     public void handleTypedCharacter( char character )
