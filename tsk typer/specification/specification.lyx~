@@ -201,7 +201,6 @@ Browse
  button beside the text box allows the user to bring up an open folder dialog.
  If the text box is empty or contains an invalid folder path, an error indicator
  is displayed next to the text box and the combo box is disabled.
- Otherwise, the contents of the file are displayed in the text area.
  Once the text area is non-empty, the 
 \series bold
 Begin
@@ -235,7 +234,7 @@ status open
 \begin_inset Caption
 
 \begin_layout Plain Layout
-Setup screen with file selection displayed
+Setup screen with folder selection displayed
 \end_layout
 
 \end_inset
@@ -265,7 +264,7 @@ Setup screen with file selection displayed
 \begin_inset Caption
 
 \begin_layout Plain Layout
-Setup screen with file selection hidden
+Setup screen with folder selection hidden
 \end_layout
 
 \end_inset
