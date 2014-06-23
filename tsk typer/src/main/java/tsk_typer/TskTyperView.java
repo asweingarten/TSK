@@ -34,25 +34,6 @@ public class TskTyperView extends JComponent implements IView
       levelView_.setPreferredSize( levelViewDim );
       this.add( levelView_, BorderLayout.CENTER );
 
-
-      addKeyListener( new KeyListener()
-      {
-        public void keyTyped( KeyEvent e )
-        {
-          System.out.println( "A key was typed: " + e.getKeyChar() );
-        }
-
-        public void keyPressed( KeyEvent e )
-        {
-          System.out.println( "A key was pressed: " + e.getKeyChar() );
-        }
-
-        public void keyReleased( KeyEvent e )
-        {
-          System.out.println( "A key was released: " + e.getKeyChar() );
-        }
-
-      });
     }
 
     public void paintComponent( Graphics g )

@@ -87,7 +87,7 @@ public class LevelPresenter
     public String getTextToDraw()
     {
         StringBuilder textBuilder = new StringBuilder();
-        for ( int index = leftIndex_; index <= rightIndex_; ++index )
+        for ( int index = leftIndex_; index < rightIndex_; ++index )
         {
             textBuilder.append( model_.getCharacter( index ) );
         }

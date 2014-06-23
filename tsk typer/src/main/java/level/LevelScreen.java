@@ -64,6 +64,7 @@ public class LevelScreen extends JComponent implements IView
                                   "With freedom's holy light," +
                                   "Protect us by Thy might," +
                                   "Great God our King." );
+    initializeListeners();
     updateFromPresenter();
   }
 
@@ -74,17 +75,16 @@ public class LevelScreen extends JComponent implements IView
     g2.setPaint( Color.WHITE );
     g2.fillRect( 0, 0, width_, height_ );
 
-    g2.setPaint( Color.BLACK );
     for ( int i = 0; i < textToDraw_.length(); ++i )
     {
-      // g2.setPaint( characterColors_[i] );
+      g2.setPaint( characterColors_[i] );
       g2.drawString( textToDraw_.substring( i, i+1 ), 200 + i*7, 295 );
     }
   }
 
   private void initializeListeners()
   {
-    this.addKeyListener( new KeyAdapter()
+    addKeyListener( new KeyAdapter()
     {
       public void keyTyped( KeyEvent e )
       {

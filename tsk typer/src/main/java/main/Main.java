@@ -13,8 +13,8 @@ public class Main
 		JFrame jFrame = new JFrame( "Typing Game v0.0.2" );
 		jFrame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 		jFrame.setSize( 800, 600 );
-		jFrame.setContentPane( gameView );
 		gameView.setKeyboardFocus();
+		jFrame.setContentPane( gameView );
 		jFrame.setVisible( true );
 	}
 }
