@@ -43,7 +43,7 @@ public class TskTyperView extends JComponent implements IView
 
     public void setKeyboardFocus()
     {
-      levelView_.requestFocusInWindow();
+        levelView_.requestFocusInWindow();
     }
 
     public synchronized void updateFromPresenter()

@@ -30,6 +30,7 @@ public class LevelScreen extends JComponent implements IView
     super();
     width_  = width;
     height_ = height;
+    this.setFocusable(true);
     this.setLayout( new FlowLayout( FlowLayout.LEFT, width_/5, height_/3 ) );
 
     presenter_ = new LevelPresenter();
