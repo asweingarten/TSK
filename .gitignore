@@ -1,2 +1,4 @@
 *.meta
 *.meta
+tsk typer/build/**
+tsk typer/.gradle/**
