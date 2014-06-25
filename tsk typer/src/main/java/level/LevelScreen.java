@@ -32,7 +32,7 @@ public class LevelScreen extends JComponent implements IView
     height_ = height;
     this.setFocusable(true);
     this.setLayout( new FlowLayout( FlowLayout.LEFT, width_/5, height_/3 ) );
-
+    font_ = new Font( "Courier New", Font.PLAIN, 16 );
     presenter_ = new LevelPresenter();
     presenter_.setTextContents( "My country, 'tis of thee," +
                                   "Sweet land of liberty," +
@@ -79,7 +79,7 @@ public class LevelScreen extends JComponent implements IView
     for ( int i = 0; i < textToDraw_.length(); ++i )
     {
       g2.setPaint( characterColors_[i] );
-      g2.drawString( textToDraw_.substring( i, i+1 ), 200 + i*7, 295 );
+      g2.drawString( textToDraw_.substring( i, i+1 ), 200 + i*9, 295 );
     }
   }
 
