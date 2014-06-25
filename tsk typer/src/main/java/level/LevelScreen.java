@@ -17,13 +17,18 @@ public class LevelScreen extends JComponent implements IView
                       height_,
                       characterWidth_;
 
-    private int textOffset_;
+    // Drawing text
+    private int textOffset_,
+                caretHorizontalPosition_,
+                caretVerticalPosition_,
+                textVerticalPosition_ = 295,
+                caretSize_ = 24;
 
+    private Font levelTextFont_,
+                 caretFont_;
     private char lastTypedChar;
 
     private LevelPresenter presenter_;
-
-    private Font font_;
 
     private String textToDraw_;
     private Color[] characterColors_;
@@ -38,41 +43,45 @@ public class LevelScreen extends JComponent implements IView
         this.setFocusable(true);
         this.setLayout( new FlowLayout( FlowLayout.LEFT, width_/5, height_/3 ) );
 
-        font_ = new Font( "Courier New", Font.PLAIN, 16 );
+        levelTextFont_ = new Font( "Courier New", Font.PLAIN, 16 );
+        caretFont_     = new Font( "Courier New", Font.BOLD, caretSize_ );
+
         characterWidth_ = 9;
         textOffset_ = 209;
+        caretHorizontalPosition_ = width_/2;
+        caretVerticalPosition_   = height_/2 + caretSize_;
 
-        presenter_ = new LevelPresenter();
-        presenter_.setTextContents( "My country, 'tis of thee," +
-                                    "Sweet land of liberty," +
-                                    "Of thee I sing;" +
-                                    "Land where my fathers died," +
-                                    "Land of the pilgrims' pride," +
+        presenter_ = new LevelPresenter( width_/characterWidth_ );
+        presenter_.setTextContents( "My country, 'tis of thee, " +
+                                    "Sweet land of liberty, " +
+                                    "Of thee I sing; " +
+                                    "Land where my fathers died, " +
+                                    "Land of the pilgrims' pride, " +
                                     "From ev'ry mountainside" +
                                     "Let freedom ring!" +
-                                    "2" +
-                                    "My native country, thee," +
-                                    "Land of the noble free," +
-                                    "Thy name I love;" +
-                                    "I love thy rocks and rills," +
-                                    "Thy woods and templed hills;" +
-                                    "My heart with rapture thrills," +
+                                    " " +
+                                    "My native country, thee, " +
+                                    "Land of the noble free, " +
+                                    "Thy name I love; " +
+                                    "I love thy rocks and rills, " +
+                                    "Thy woods and templed hills; " +
+                                    "My heart with rapture thrills, " +
                                     "Like that above." +
-                                    "3" +
-                                    "Let music swell the breeze," +
+                                    " " +
+                                    "Let music swell the breeze, " +
                                     "And ring from all the trees" +
-                                    "Sweet freedom's song;" +
-                                    "Let mortal tongues awake;" +
-                                    "Let all that breathe partake;" +
-                                    "Let rocks their silence break," +
+                                    "Sweet freedom's song; " +
+                                    "Let mortal tongues awake; " +
+                                    "Let all that breathe partake; " +
+                                    "Let rocks their silence break, " +
                                     "The sound prolong." +
-                                    "4" +
-                                    "Our fathers' God to Thee," +
-                                    "Author of liberty," +
+                                    " " +
+                                    "Our fathers' God to Thee, " +
+                                    "Author of liberty, " +
                                     "To Thee we sing." +
-                                    "Long may our land be bright," +
-                                    "With freedom's holy light," +
-                                    "Protect us by Thy might," +
+                                    "Long may our land be bright, " +
+                                    "With freedom's holy light, " +
+                                    "Protect us by Thy might, " +
                                     "Great God our King." );
         initializeListeners();
 
@@ -84,15 +93,19 @@ public class LevelScreen extends JComponent implements IView
     public void paintComponent( Graphics g )
     {
         Graphics2D g2 = ( Graphics2D ) g;
-        g2.setFont( font_ );
+        g2.setFont( levelTextFont_ );
         g2.setPaint( Color.WHITE );
         g2.fillRect( 0, 0, width_, height_ );
 
         for ( int i = 0; i < textToDraw_.length(); ++i )
         {
             g2.setPaint( characterColors_[i] );
-            g2.drawString( textToDraw_.substring( i, i+1 ), textOffset_ + i*9, 295 );
+            g2.drawString( textToDraw_.substring( i, i+1 ), textOffset_ + ( i*9 ), textVerticalPosition_ );
         }
+
+        g2.setPaint( Color.BLACK );
+        g2.setFont( caretFont_ );
+        g2.drawString( "^", caretHorizontalPosition_, caretVerticalPosition_ );
     }
 
     private void initializeListeners()
