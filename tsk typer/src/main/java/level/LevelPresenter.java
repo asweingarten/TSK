@@ -99,7 +99,26 @@ public class LevelPresenter
     {
         char[] characterArray = new char[fixedWindowSize_];
         String drawText = getTextToDraw();
-        for ( int index = 0; index < fixedWindowSize_; ++index )
+
+        int expectedCurrentIndex = ( leftIndex_ + rightIndex_ ) / 2;
+        int nullPadNumber = currentIndex_ - expectedCurrentIndex;
+        if ( nullPadNumber < 0 )
+        {
+            nullPadNumber = -nullPadNumber;
+            for ( int index = 0; index < nullPadNumber; ++index )
+            {
+                characterArray[index] = 0;
+            }
+        }
+        else if ( nullPadNumber > 0 )
+        {
+            for ( int index = 0; index < nullPadNumber; ++index )
+            {
+                characterArray[fixedWindowSize_ - index - 1] = 0;
+            }
+        }
+
+        for ( int index = nullPadNumber; index < fixedWindowSize_; ++index )
         {
             characterArray[index] = drawText.charAt( index );
         }

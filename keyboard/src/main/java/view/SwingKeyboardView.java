@@ -24,65 +24,68 @@ public class SwingKeyboardView extends JComponent implements KeyboardView
 	private KeyboardPresenter presenter;
 	private Graphics2D context = null;
 	private SerialPort serialPort = null;
-	
-	public SwingKeyboardView( KeyboardPresenter presenter ) 
+
+	public SwingKeyboardView( KeyboardPresenter presenter )
 	{
 		this.presenter = presenter;
-		
+
 		addKeyListener(new KeyListener() {
-		    public void keyPressed(KeyEvent e) 
+		    public void keyPressed(KeyEvent e)
 		    {
 		    	pressed( e.getKeyChar() );
 		    }
 
-		    public void keyReleased(KeyEvent e) 
+		    public void keyReleased(KeyEvent e)
 		    {
 		    	released( e.getKeyChar() );
 		    }
 
 		    public void keyTyped(KeyEvent e) {}
 		});
-	
+
 		// This assumes that only one active serial port exists
 		String[] portNames = SerialPortList.getPortNames();
-		for (String portName : portNames) 
+		for (String portName : portNames)
 		{
 			System.out.println("Port Found");
-			try 
+			try
 			{
 				this.serialPort = new SerialPort(portName);
 				this.serialPort.openPort();
 				this.serialPort.setParams(9600, 8, 1, 0);
 				break;
 
-			} 
-			catch (SerialPortException e) 
+			}
+			catch (SerialPortException e)
 			{
 
 			}
 		}
 
 		try {
-			serialPort.addEventListener( new TouchKeyHandler(serialPort) { 
-				public void keyTouched( TouchKeyMessage msg ) 
+			serialPort.addEventListener( new TouchKeyHandler(serialPort) {
+				public void keyTouched( TouchKeyMessage msg )
 				{
+					System.err.println("keyTouched");
 					pressed ( msg.getCharacter() );
 				}
 
-				public void keyTouchReleased( TouchKeyMessage msg ) 
+				public void keyTouchReleased( TouchKeyMessage msg )
 				{
+					System.err.println("keyTouchReleased");
+
 					released( msg.getCharacter() );
 				}
-					
+
 
 			});
 
 		} catch (SerialPortException e) {
 			System.err.println(" Failed to add listener ");
-		} 
+		}
 
 	}
-	
+
 	/**
 	 * Method to draw an individual key, passing in the key itself, and dimension/location info
 	 * @param key
@@ -91,9 +94,9 @@ public class SwingKeyboardView extends JComponent implements KeyboardView
 	 * @param keyWidth
 	 * @param keyHeight
 	 */
-	private void drawKey(Key key, int keyLeft, int keyTop, int keyWidth, int keyHeight) 
+	private void drawKey(Key key, int keyLeft, int keyTop, int keyWidth, int keyHeight)
 	{
-		if ( key.isTouched() ) { 
+		if ( key.isTouched() ) {
 			context.setPaint( Color.GREEN );
 		} else if ( key.isPressed() ) {
 			context.setPaint( Color.RED );
@@ -110,43 +113,43 @@ public class SwingKeyboardView extends JComponent implements KeyboardView
     	context.drawString( key.toString(), keyLeft + 5, keyTop + 15 );
 	}
 
-	public void draw() 
+	public void draw()
 	{
-		if ( context != null ) 
+		if ( context != null )
 		{
 			int keyboardLeft = presenter.getLeft();
-			int keyboardTop = presenter.getTop(); 
+			int keyboardTop = presenter.getTop();
 			int keySpacing = presenter.getKeySpacing();
 
 		    List<KeyboardRow> keyboardRows = presenter.getKeyboardRows();
 	    	int keyTop = keyboardLeft;
-	    	
-		    for ( KeyboardRow row : keyboardRows ) 
+
+		    for ( KeyboardRow row : keyboardRows )
 		    {
 				int keyWidth = presenter.getKeyWidth();
 				int keyHeight = presenter.getKeyHeight();
 		    	int keyLeft = keyboardLeft + row.getOffset();
 		    	for ( Key key : row.getKeys() )
-		    	{    
+		    	{
 		    		drawKey(key, keyLeft, keyTop, keyWidth, keyHeight);
-			    	keyLeft += (keyWidth + keySpacing);	    	
+			    	keyLeft += (keyWidth + keySpacing);
 		    	}
 		    	keyTop += (keyHeight + keySpacing);
 		    }
-		    
+
 		}
 	}
-	
+
 	public void paintComponent( Graphics g )
 	{
 	    this.context = ( Graphics2D ) g;
 	    draw();
 	}
-	
+
 	private void pressed( char c ) {
 		presenter.keyPressed(c);
 	}
-	
+
 	private void released( char c ) {
 		presenter.keyReleased(c);
 	}
