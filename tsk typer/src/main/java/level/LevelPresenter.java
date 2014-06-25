@@ -12,7 +12,7 @@ public class LevelPresenter
     private int leftIndex_; // index of left-most character
     private int rightIndex_;    // index of right-most character
 
-    private static final int windowSize_ = 50;
+    // private static final int getWindowSize() = 50;
 
     public enum CharacterColor
     {
@@ -61,12 +61,12 @@ public class LevelPresenter
         model_ = new LevelModel( text );
         currentIndex_ = 0;
         leftIndex_ = 0;
-        rightIndex_ = Math.min( model_.getTextLength() - 1, leftIndex_ + windowSize_ );
+        rightIndex_ = Math.min( model_.getTextLength() - 1, leftIndex_ + getWindowSize() );
     }
 
     public int getWindowSize()
     {
-        return windowSize_;
+        return Math.max( 50, rightIndex_ - leftIndex_ );
     }
 
     public int getLeftIndex()
@@ -96,12 +96,19 @@ public class LevelPresenter
 
     private void incrementIndices()
     {
+        System.out.println( "BEFORE Left index: " + leftIndex_ );
+        System.out.println( "BEFORE Current index: " + currentIndex_ );
+        System.out.println( "BEFORE Right index: " + rightIndex_ );
         ++currentIndex_;
-        if ( currentIndex_ > ( windowSize_ / 2 ) )
+        if ( currentIndex_ > ( getWindowSize() / 2 ) )
         {
             ++leftIndex_;
         }
         rightIndex_ = Math.min( rightIndex_ + 1, model_.getTextLength() - 1 );
+        System.out.println( "AFTER Left index: " + leftIndex_ );
+        System.out.println( "AFTER Current index: " + currentIndex_ );
+        System.out.println( "AFTER Right index: " + rightIndex_ );
+
     }
 
     private CharacterColor getCharacterColor( int index )
@@ -120,8 +127,8 @@ public class LevelPresenter
 
     public Color[] getCharacterColors()
     {
-        Color[] colorList = new Color[windowSize_];
-        for ( int index = leftIndex_; index < leftIndex_+windowSize_; ++index )
+        Color[] colorList = new Color[getWindowSize()];
+        for ( int index = leftIndex_; index < leftIndex_+getWindowSize(); ++index )
         {
             colorList[index - leftIndex_] = getCharacterColor( index ).getColor();
         }
