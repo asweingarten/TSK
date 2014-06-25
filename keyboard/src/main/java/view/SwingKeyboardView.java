@@ -12,10 +12,18 @@ import java.awt.geom.*;
 import java.util.List;
 import java.util.Map;
 
+import jssc.SerialPortException;
+import jssc.SerialPortEventListener;
+import jssc.SerialPortList;
+import jssc.SerialPort;
+
+import tsk.*;
+
 public class SwingKeyboardView extends JComponent implements KeyboardView
 {
 	private KeyboardPresenter presenter;
 	private Graphics2D context = null;
+	private SerialPort serialPort = null;
 	
 	public SwingKeyboardView( KeyboardPresenter presenter ) 
 	{
@@ -34,7 +42,45 @@ public class SwingKeyboardView extends JComponent implements KeyboardView
 
 		    public void keyTyped(KeyEvent e) {}
 		});
-		
+	
+		// This assumes that only one active serial port exists
+		String[] portNames = SerialPortList.getPortNames();
+		for (String portName : portNames) 
+		{
+			System.out.println("Port Found");
+			try 
+			{
+				this.serialPort = new SerialPort(portName);
+				this.serialPort.openPort();
+				this.serialPort.setParams(9600, 8, 1, 0);
+				break;
+
+			} 
+			catch (SerialPortException e) 
+			{
+
+			}
+		}
+
+		try {
+			serialPort.addEventListener( new TouchKeyHandler(serialPort) { 
+				public void keyTouched( TouchKeyMessage msg ) 
+				{
+					pressed ( msg.getCharacter() );
+				}
+
+				public void keyTouchReleased( TouchKeyMessage msg ) 
+				{
+					released( msg.getCharacter() );
+				}
+					
+
+			});
+
+		} catch (SerialPortException e) {
+			System.err.println(" Failed to add listener ");
+		} 
+
 	}
 	
 	/**
