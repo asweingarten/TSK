@@ -12,7 +12,7 @@ public class LevelPresenter
     private int leftIndex_; // index of left-most character
     private int rightIndex_;    // index of right-most character
 
-    // private static final int getWindowSize() = 50;
+    private int fixedWindowSize_;
 
     public enum CharacterColor
     {
@@ -52,8 +52,9 @@ public class LevelPresenter
         }
     }
 
-    public LevelPresenter()
+    public LevelPresenter( int charactersOnScreen )
     {
+        fixedWindowSize_ = charactersOnScreen;
     }
 
     public void setTextContents( String text )
@@ -66,7 +67,7 @@ public class LevelPresenter
 
     public int getWindowSize()
     {
-        return Math.max( 50, rightIndex_ - leftIndex_ );
+        return Math.max( fixedWindowSize_, rightIndex_ - leftIndex_ );
     }
 
     public int getLeftIndex()
@@ -92,6 +93,36 @@ public class LevelPresenter
             textBuilder.append( model_.getCharacter( index ) );
         }
         return textBuilder.toString();
+    }
+
+    public char[] getCharactersToDraw()
+    {
+        char[] characterArray = new char[fixedWindowSize_];
+        String drawText = getTextToDraw();
+
+        int expectedCurrentIndex = ( leftIndex_ + rightIndex_ ) / 2;
+        int nullPadNumber = currentIndex_ - expectedCurrentIndex;
+        if ( nullPadNumber < 0 )
+        {
+            nullPadNumber = -nullPadNumber;
+            for ( int index = 0; index < nullPadNumber; ++index )
+            {
+                characterArray[index] = 0;
+            }
+        }
+        else if ( nullPadNumber > 0 )
+        {
+            for ( int index = 0; index < nullPadNumber; ++index )
+            {
+                characterArray[fixedWindowSize_ - index - 1] = 0;
+            }
+        }
+
+        for ( int index = nullPadNumber; index < fixedWindowSize_; ++index )
+        {
+            characterArray[index] = drawText.charAt( index );
+        }
+        return characterArray;
     }
 
     private void incrementIndices()

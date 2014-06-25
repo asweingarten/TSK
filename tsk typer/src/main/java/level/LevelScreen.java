@@ -51,7 +51,7 @@ public class LevelScreen extends JComponent implements IView
         caretHorizontalPosition_ = width_/2;
         caretVerticalPosition_   = height_/2 + caretSize_;
 
-        presenter_ = new LevelPresenter();
+        presenter_ = new LevelPresenter( width_/characterWidth_ );
         presenter_.setTextContents( "My country, 'tis of thee, " +
                                     "Sweet land of liberty, " +
                                     "Of thee I sing; " +

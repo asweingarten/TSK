@@ -123,7 +123,7 @@ void readTouchSensor( int index, int irq_pin )
           // Serial.println(" is no longer being touched");
           struct Touch_Message msg;
           msg.is_key_released = true;
-          msg.is_key_touched  = true;
+          msg.is_key_touched  = false;
           msg.key_code        = i + 'a';
           Serial.write( msg.serialize(), 2 );
           /*
