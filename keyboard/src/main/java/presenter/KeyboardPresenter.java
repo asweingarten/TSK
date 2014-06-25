@@ -64,4 +64,12 @@ public class KeyboardPresenter
     	}
     	model.setPressed( keyValue, false );
     }
+
+    public void keyTouched( char keyValue ) {
+        model.setTouched( keyValue, true );
+    }
+    
+    public void keyTouchReleased( char keyValue ) {
+        model.setTouched( keyValue, false );
+    }
 }
