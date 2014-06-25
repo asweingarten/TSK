@@ -2,3 +2,7 @@
 *.meta
 tsk typer/build/**
 tsk typer/.gradle/**
+keyboard/.gradle/**
+keyboard/build/**
+lib/tsklib/.gradle/**
+lib/tsklib/build/**
