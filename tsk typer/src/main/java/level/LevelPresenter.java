@@ -121,7 +121,7 @@ public class LevelPresenter
     public Color[] getCharacterColors()
     {
         Color[] colorList = new Color[windowSize_];
-        for ( int index = leftIndex_; index < rightIndex_ && index < 50; ++index )
+        for ( int index = leftIndex_; index < leftIndex_+windowSize_; ++index )
         {
             colorList[index - leftIndex_] = getCharacterColor( index ).getColor();
         }
