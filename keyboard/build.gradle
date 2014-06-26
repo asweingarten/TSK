@@ -3,11 +3,9 @@ apply plugin: 'application'
 
 repositories
 {
+    flatDir name: 'tsklib', dirs: '../lib/tsklib/build/libs'
+    
 	mavenCentral()
-    flatDir 
-    {
-        dirs '../lib/tsklib/build/libs'
-    }
 }
 
 dependencies
