@@ -19,13 +19,13 @@ public class LevelScreen extends JComponent implements IView
 
     // Drawing text
     private int textOffset_,
-                caretHorizontalPosition_,
-                caretVerticalPosition_,
+                cursorHorizontalPosition_,
+                cursorVerticalPosition_,
                 textVerticalPosition_ = 295,
-                caretSize_ = 24;
+                cursorSize_ = 24;
 
     private Font levelTextFont_,
-                 caretFont_;
+                 cursorFont_;
     private char lastTypedChar;
 
     private LevelPresenter presenter_;
@@ -44,12 +44,12 @@ public class LevelScreen extends JComponent implements IView
         this.setLayout( new FlowLayout( FlowLayout.LEFT, width_/5, height_/3 ) );
 
         levelTextFont_ = new Font( "Courier New", Font.PLAIN, 16 );
-        caretFont_     = new Font( "Courier New", Font.BOLD, caretSize_ );
+        cursorFont_     = new Font( "Courier New", Font.BOLD, cursorSize_ );
 
         characterWidth_ = 9;
-        textOffset_ = 209;
-        caretHorizontalPosition_ = width_/2;
-        caretVerticalPosition_   = height_/2 + caretSize_;
+        int maxCharacters = width_/characterWidth_;
+        cursorHorizontalPosition_ = ( ( maxCharacters/2 ) * characterWidth_ ) - Math.round( characterWidth_/2 );
+        cursorVerticalPosition_   = height_/2 + cursorSize_;
 
         presenter_ = new LevelPresenter( width_/characterWidth_ );
         presenter_.setTextContents( "My country, 'tis of thee, " +
@@ -104,8 +104,8 @@ public class LevelScreen extends JComponent implements IView
         }
 
         g2.setPaint( Color.BLACK );
-        g2.setFont( caretFont_ );
-        g2.drawString( "^", caretHorizontalPosition_, caretVerticalPosition_ );
+        g2.setFont( cursorFont_ );
+        g2.drawString( "^", cursorHorizontalPosition_, cursorVerticalPosition_ );
     }
 
     private void initializeListeners()
@@ -140,10 +140,6 @@ public class LevelScreen extends JComponent implements IView
         System.out.println( "Text to draw: " + textToDraw_ );
         characterColors_ = presenter_.getCharacterColors();
 
-        if ( textOffset_ > characterWidth_ )
-        {
-            textOffset_ -= characterWidth_;
-        }
         repaint();
     }
 
