@@ -8,9 +8,10 @@ import java.awt.Color;
 public class LevelPresenter
 {
     private LevelModel model_;
-    private int currentIndex_;  // index of current character
-    private int leftIndex_; // index of left-most character
-    private int rightIndex_;    // index of right-most character
+    private int currentIndex_,  // index of current character
+                leftIndex_,     // index of left-most character
+                rightIndex_,    // index of right-most character
+                numberPaddingCharacters_;
 
     private int fixedWindowSize_;
 
@@ -59,15 +60,21 @@ public class LevelPresenter
 
     public void setTextContents( String text )
     {
-        model_ = new LevelModel( text );
-        currentIndex_ = 0;
         leftIndex_ = 0;
-        rightIndex_ = Math.min( model_.getTextLength() - 1, leftIndex_ + getWindowSize() );
+        rightIndex_ = fixedWindowSize_;
+        numberPaddingCharacters_ = Math.round( rightIndex_ / 2 );
+        currentIndex_ = numberPaddingCharacters_;
+
+        String padding = "";
+        for ( int i = 0; i < numberPaddingCharacters_; ++i )
+            padding += " ";
+        model_ = new LevelModel( padding + text );
     }
 
     public int getWindowSize()
     {
-        return Math.max( fixedWindowSize_, rightIndex_ - leftIndex_ );
+        // return Math.max( fixedWindowSize_, rightIndex_ - leftIndex_ );
+        return fixedWindowSize_;
     }
 
     public int getLeftIndex()
@@ -95,50 +102,20 @@ public class LevelPresenter
         return textBuilder.toString();
     }
 
-    public char[] getCharactersToDraw()
-    {
-        char[] characterArray = new char[fixedWindowSize_];
-        String drawText = getTextToDraw();
-
-        int expectedCurrentIndex = ( leftIndex_ + rightIndex_ ) / 2;
-        int nullPadNumber = currentIndex_ - expectedCurrentIndex;
-        if ( nullPadNumber < 0 )
-        {
-            nullPadNumber = -nullPadNumber;
-            for ( int index = 0; index < nullPadNumber; ++index )
-            {
-                characterArray[index] = 0;
-            }
-        }
-        else if ( nullPadNumber > 0 )
-        {
-            for ( int index = 0; index < nullPadNumber; ++index )
-            {
-                characterArray[fixedWindowSize_ - index - 1] = 0;
-            }
-        }
-
-        for ( int index = nullPadNumber; index < fixedWindowSize_; ++index )
-        {
-            characterArray[index] = drawText.charAt( index );
-        }
-        return characterArray;
-    }
-
     private void incrementIndices()
     {
-        System.out.println( "BEFORE Left index: " + leftIndex_ );
-        System.out.println( "BEFORE Current index: " + currentIndex_ );
-        System.out.println( "BEFORE Right index: " + rightIndex_ );
+        // System.out.println( "BEFORE Left index: " + leftIndex_ );
+        // System.out.println( "BEFORE Current index: " + currentIndex_ );
+        // System.out.println( "BEFORE Right index: " + rightIndex_ );
         ++currentIndex_;
-        if ( currentIndex_ > ( getWindowSize() / 2 ) )
-        {
-            ++leftIndex_;
-        }
+        ++leftIndex_;
         rightIndex_ = Math.min( rightIndex_ + 1, model_.getTextLength() - 1 );
-        System.out.println( "AFTER Left index: " + leftIndex_ );
-        System.out.println( "AFTER Current index: " + currentIndex_ );
-        System.out.println( "AFTER Right index: " + rightIndex_ );
+
+        if ( numberPaddingCharacters_ > 0 )
+            --numberPaddingCharacters_;
+        // System.out.println( "AFTER Left index: " + leftIndex_ );
+        // System.out.println( "AFTER Current index: " + currentIndex_ );
+        // System.out.println( "AFTER Right index: " + rightIndex_ );
 
     }
 
