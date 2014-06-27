@@ -1,6 +1,5 @@
 package level;
 
-// import java.util.Array;
 import interfaces.*;
 import javax.swing.*;
 import javax.swing.event.*;
@@ -10,9 +9,6 @@ import java.awt.geom.*;
 
 public class LevelScreen extends JComponent implements IView
 {
-    private EventListenerList listenerList_ = new EventListenerList();
-
-
     private final int width_,
                       height_,
                       characterWidth_;
@@ -146,29 +142,5 @@ public class LevelScreen extends JComponent implements IView
     public void saveToPresenter()
     {
         presenter_.handleTypedCharacter( lastTypedChar );
-    }
-
-    //***************************
-    //*   Event Listener code
-    //***************************
-    public void addActionListener( ActionListener l )
-    {
-        listenerList_.add( ActionListener.class, l );
-    }
-
-    public void removeActionListener( ActionListener l )
-    {
-        listenerList_.remove( ActionListener.class, l );
-    }
-
-    protected void fireActionPerformed( ActionEvent e )
-    {
-        Object[] listeners = listenerList_.getListenerList();
-        for (int i = listeners.length-2; i>=0; i-=2)
-        {
-            if (listeners[i]==ActionListener.class)
-                ((ActionListener)listeners[i+1]).actionPerformed(e);
-        }
-
     }
 }
