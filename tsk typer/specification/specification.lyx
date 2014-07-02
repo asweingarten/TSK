@@ -173,9 +173,7 @@ Setup Screen
 \begin_layout Standard
 The setup screen is the initial screen displayed to the user.
  The text area contains the text that the user will type in the typing screen.
- This text area can be edited by the user manually.
- Alternatively, the user may choose to load the contents of a text file
- into the text area.
+ The user can choose to load the contents of a text file into the text area.
  This is accomplished by selecting a file name from the combo box situated
  above the text area.
  The file names listed in this combo box are retrieved from the 
@@ -201,6 +199,7 @@ Browse
  button beside the text box allows the user to bring up an open folder dialog.
  If the text box is empty or contains an invalid folder path, an error indicator
  is displayed next to the text box and the combo box is disabled.
+ Alternatively, this text area can be edited by the user manually.
  Once the text area is non-empty, the 
 \series bold
 Begin
