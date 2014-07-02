@@ -23,10 +23,9 @@ public class TskTyperView extends JComponent implements IView
 
     public TskTyperView()
     {
-        super();
-        this.setLayout( new BorderLayout() );
-
-        presenter_ = new TskTyperPresenter();
+      super();
+      this.setLayout( new BorderLayout() );
+      presenter_ = new TskTyperPresenter();
 
       // Typing Level Init
       levelView_ = new LevelScreen( width_, height_ );
