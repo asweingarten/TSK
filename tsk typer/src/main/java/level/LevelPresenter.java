@@ -11,8 +11,7 @@ public class LevelPresenter extends BasePresenter
 {
     private int currentIndex_,  // index of current character
                 leftIndex_,     // index of left-most character
-                rightIndex_,    // index of right-most character
-                numberPaddingCharacters_;
+                rightIndex_;    // index of right-most character
 
     private int fixedWindowSize_;
 
@@ -64,11 +63,11 @@ public class LevelPresenter extends BasePresenter
     {
         leftIndex_ = 0;
         rightIndex_ = fixedWindowSize_;
-        numberPaddingCharacters_ = Math.round( rightIndex_ / 2 );
-        currentIndex_ = numberPaddingCharacters_;
+        int numberPaddingCharacters = Math.round( rightIndex_ / 2 );
+        currentIndex_ = numberPaddingCharacters;
 
         String padding = "";
-        for ( int i = 0; i < numberPaddingCharacters_; ++i )
+        for ( int i = 0; i < numberPaddingCharacters; ++i )
             padding += " ";
         tskTyperModel_.setLevelModel(new LevelModel( padding + text ));
     }
@@ -113,8 +112,8 @@ public class LevelPresenter extends BasePresenter
         ++leftIndex_;
         rightIndex_ = Math.min( rightIndex_ + 1, tskTyperModel_.getLevelModel().getTextLength() - 1 );
 
-        if ( numberPaddingCharacters_ > 0 )
-            --numberPaddingCharacters_;
+        // if ( numberPaddingCharacters_ > 0 )
+        //     --numberPaddingCharacters_;
         // System.out.println( "AFTER Left index: " + leftIndex_ );
         // System.out.println( "AFTER Current index: " + currentIndex_ );
         // System.out.println( "AFTER Right index: " + rightIndex_ );
