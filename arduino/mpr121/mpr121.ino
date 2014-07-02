@@ -1,12 +1,11 @@
 #include "mpr121.h"
 #include <Wire.h>
 
-const int NUM_IRQ_PINS = 2,
-          NUM_SENSORS_PER_BOARD = 12;
-int *irq_pins = new int[NUM_IRQ_PINS];
+const int NUM_SENSORS_PER_BOARD = 12,
+          IRQ_PIN = 5;
 
 
-boolean touch_states[NUM_IRQ_PINS][NUM_SENSORS_PER_BOARD];
+boolean touch_states[NUM_SENSORS_PER_BOARD];
 
 struct Touch_Message
 {
@@ -19,18 +18,18 @@ struct Touch_Message
   {
     char *serializedMessage = new char[2];
     byte header;
-    
+
     if ( is_key_touched )
     {
       header = 1;
-    } 
+    }
     else if ( is_key_released )
     {
       header = 0;
-    } 
+    }
     else
     {
-      header = -1; // Something has gone horribly wrong 
+      header = -1; // Something has gone horribly wrong
     }
 
     serializedMessage[0] = header;
@@ -41,17 +40,8 @@ struct Touch_Message
 };
 
 void setup(){
-
-  irq_pins[0] = 2; // Digital 2
-  irq_pins[1] = 5; // Digital 5
-
-  int irq_pin;
-  for ( int i = 0; i < NUM_IRQ_PINS; i++ )
-  {
-    irq_pin = irq_pins[i];
-    pinMode( irq_pin, INPUT );
-    digitalWrite( irq_pin, HIGH );
-  }
+  pinMode( IRQ_PIN, INPUT );
+  digitalWrite( IRQ_PIN, HIGH );
 
   Serial.begin(9600);  // 9600 Baud
   Wire.begin();
@@ -64,22 +54,10 @@ void loop()
   readTouchInputs();
 }
 
-void readTouchSensor( int index, int irq_pin )
+void readTouchSensor( int irq_pin )
 {
   if( !checkInterrupt( irq_pin ) )
   {
-
-    //read the touch state from the proper MPR121
-//    if ( irq_pin == 2 )
-//    {
-//      // Pin 2 -- Breakboard A
-//      Wire.requestFrom( 0x5C, 2 );
-//    }
-//    else if ( irq_pin == 5 )
-//    {
-//      // Pin 5 -- Breakout Board B
-//      Wire.requestFrom( 0x5A, 2 );
-//    }
 
     Wire.requestFrom( 0x5A, 2 );
 
@@ -94,7 +72,7 @@ void readTouchSensor( int index, int irq_pin )
       if( touched & (1<<i) )
       {
 
-        if( touch_states[index][i] == 0 ) {
+        if( touch_states[i] == 0 ) {
           //pin i was just touched
           struct Touch_Message msg;
           msg.is_key_released = false;
@@ -106,17 +84,17 @@ void readTouchSensor( int index, int irq_pin )
           // Serial.println(" was just touched");
 
         }
-        else if( touch_states[index][i] == 1 )
+        else if( touch_states[i] == 1 )
         {
           //pin i is still being touched
         }
 
-        touch_states[index][i] = 1;
+        touch_states[i] = 1;
       }
       else
       {
 
-        if( touch_states[index][i] == 1 )
+        if( touch_states[i] == 1 )
         {
           // Serial.print("pin ");
           // Serial.print(i);
@@ -137,7 +115,7 @@ void readTouchSensor( int index, int irq_pin )
           //pin i is no longer being touched
        }
 
-        touch_states[index][i] = 0;
+        touch_states[i] = 0;
       }
 
     }
@@ -147,10 +125,7 @@ void readTouchSensor( int index, int irq_pin )
 
 void readTouchInputs()
 {
-  for ( int i = 0; i < NUM_IRQ_PINS; i++ )
-  {
-    readTouchSensor( i, irq_pins[i] );
-  }
+  readTouchSensor( IRQ_PIN );
 }
 
 
@@ -296,9 +271,9 @@ void mpr121_setup(void){
 
   // Section F
   // Enable Auto Config and auto Reconfig
-  /*set_register(0x5A, ATO_CFG0, 0x0B);
+  set_register(0x5A, ATO_CFG0, 0x0B);
   set_register(0x5A, ATO_CFGU, 0xC9);  // USL = (Vdd-0.7)/vdd*256 = 0xC9 @3.3V   set_register(0x5A, ATO_CFGL, 0x82);  // LSL = 0.65*USL = 0x82 @3.3V
-  set_register(0x5A, ATO_CFGT, 0xB5);*/  // Target = 0.9*USL = 0xB5 @3.3V
+  set_register(0x5A, ATO_CFGT, 0xB5);  // Target = 0.9*USL = 0xB5 @3.3V
 
   //set_register(0x5A, ELE_CFG, 0x0C);
 
