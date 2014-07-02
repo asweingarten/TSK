@@ -2,7 +2,7 @@ package tsk_typer;
 
 public class TskTyperPresenter
 {
-    TskTyperModel model_;
+    private static TskTyperModel model_;
 
     public TskTyperPresenter()
     {
@@ -27,5 +27,10 @@ public class TskTyperPresenter
     public boolean isGameReady()
     {
         return model_.isFileValid();
+    }
+
+    public static TskTyperModel getModel()
+    {
+        return model_;
     }
 }
