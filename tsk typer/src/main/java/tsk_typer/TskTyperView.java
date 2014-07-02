@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
 
-public class TskTyperView extends JComponent implements IView
+public class TskTyperView extends JComponent implements IView, IObserver
 {
     // Window information
     private final int FPS_ = 30;
@@ -51,6 +51,11 @@ public class TskTyperView extends JComponent implements IView
     }
 
     public void saveToPresenter()
+    {
+
+    }
+
+    public void update()
     {
 
     }

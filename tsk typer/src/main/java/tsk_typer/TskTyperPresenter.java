@@ -1,6 +1,8 @@
 package tsk_typer;
 
-public class TskTyperPresenter
+import interfaces.*;
+
+public class TskTyperPresenter extends BaseSubject implements IObserver
 {
     private static TskTyperModel model_;
 
@@ -32,5 +34,10 @@ public class TskTyperPresenter
     public static TskTyperModel getModel()
     {
         return model_;
+    }
+
+    public void update()
+    {
+
     }
 }

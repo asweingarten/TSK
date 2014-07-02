@@ -1,12 +1,13 @@
 package tsk_typer;
 
+import interfaces.BaseSubject;
 import utilities.*;
 import java.util.ArrayList;
 import java.io.File;
 import java.io.IOException;
 import level.LevelModel;
 
-public class TskTyperModel
+public class TskTyperModel extends BaseSubject
 {
     LevelModel levelModel_;
     private TextFileReader reader_;
