@@ -51,6 +51,7 @@ public abstract class TouchKeyHandler implements TouchKeyListener
         else
         {
             //Handle error conditions here
+            System.err.println("Unexpected Serial Port Event Received of Type: " +  e.getEventType());
         }
     }
 }

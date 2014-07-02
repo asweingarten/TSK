@@ -8,11 +8,12 @@ import java.awt.Color;
 public class LevelPresenter
 {
     private LevelModel model_;
-    private int currentIndex_;  // index of current character
-    private int leftIndex_; // index of left-most character
-    private int rightIndex_;    // index of right-most character
+    private int currentIndex_,  // index of current character
+                leftIndex_,     // index of left-most character
+                rightIndex_,    // index of right-most character
+                numberPaddingCharacters_;
 
-    private static final int windowSize_ = 50;
+    private int fixedWindowSize_;
 
     public enum CharacterColor
     {
@@ -52,21 +53,28 @@ public class LevelPresenter
         }
     }
 
-    public LevelPresenter()
+    public LevelPresenter( int charactersOnScreen )
     {
+        fixedWindowSize_ = charactersOnScreen;
     }
 
     public void setTextContents( String text )
     {
-        model_ = new LevelModel( text );
-        currentIndex_ = 0;
         leftIndex_ = 0;
-        rightIndex_ = Math.min( model_.getTextLength() - 1, leftIndex_ + windowSize_ );
+        rightIndex_ = fixedWindowSize_;
+        numberPaddingCharacters_ = Math.round( rightIndex_ / 2 );
+        currentIndex_ = numberPaddingCharacters_;
+
+        String padding = "";
+        for ( int i = 0; i < numberPaddingCharacters_; ++i )
+            padding += " ";
+        model_ = new LevelModel( padding + text );
     }
 
     public int getWindowSize()
     {
-        return windowSize_;
+        // return Math.max( fixedWindowSize_, rightIndex_ - leftIndex_ );
+        return fixedWindowSize_;
     }
 
     public int getLeftIndex()
@@ -96,12 +104,19 @@ public class LevelPresenter
 
     private void incrementIndices()
     {
+        // System.out.println( "BEFORE Left index: " + leftIndex_ );
+        // System.out.println( "BEFORE Current index: " + currentIndex_ );
+        // System.out.println( "BEFORE Right index: " + rightIndex_ );
         ++currentIndex_;
-        if ( currentIndex_ > ( windowSize_ / 2 ) )
-        {
-            ++leftIndex_;
-        }
+        ++leftIndex_;
         rightIndex_ = Math.min( rightIndex_ + 1, model_.getTextLength() - 1 );
+
+        if ( numberPaddingCharacters_ > 0 )
+            --numberPaddingCharacters_;
+        // System.out.println( "AFTER Left index: " + leftIndex_ );
+        // System.out.println( "AFTER Current index: " + currentIndex_ );
+        // System.out.println( "AFTER Right index: " + rightIndex_ );
+
     }
 
     private CharacterColor getCharacterColor( int index )
@@ -120,8 +135,8 @@ public class LevelPresenter
 
     public Color[] getCharacterColors()
     {
-        Color[] colorList = new Color[windowSize_];
-        for ( int index = leftIndex_; index < rightIndex_; ++index )
+        Color[] colorList = new Color[getWindowSize()];
+        for ( int index = leftIndex_; index < leftIndex_+getWindowSize(); ++index )
         {
             colorList[index - leftIndex_] = getCharacterColor( index ).getColor();
         }

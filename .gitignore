@@ -1,2 +1,10 @@
 *.meta
 *.meta
+tsk typer/build/**
+tsk typer/.gradle/**
+keyboard/.gradle/**
+keyboard/build/**
+lib/tsklib/.gradle/**
+lib/tsklib/build/**
+
+tsk typer/src/main/java/level/Notes.txt
