@@ -4,15 +4,27 @@ import utilities.*;
 import java.util.ArrayList;
 import java.io.File;
 import java.io.IOException;
+import level.LevelModel;
 
 public class TskTyperModel
 {
+    LevelModel levelModel_;
     private TextFileReader reader_;
     private String filename_;
 
     public TskTyperModel()
     {
         reader_ = new TextFileReader(new FullFileReadStrategy());
+    }
+
+    public LevelModel getLevelModel()
+    {
+        return levelModel_;
+    }
+
+    public void setLevelModel(LevelModel model)
+    {
+        levelModel_ = model;
     }
 
     public String getFilename()
