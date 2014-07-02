@@ -1,13 +1,14 @@
 package level;
 
-// import java.util.Array;
+import interfaces.*;
+import tsk_typer.TskTyperModel;
+
 import java.util.ArrayList;
 import java.lang.*;
 import java.awt.Color;
 
-public class LevelPresenter
+public class LevelPresenter extends BasePresenter
 {
-    private LevelModel model_;
     private int currentIndex_,  // index of current character
                 leftIndex_,     // index of left-most character
                 rightIndex_,    // index of right-most character
@@ -55,6 +56,7 @@ public class LevelPresenter
 
     public LevelPresenter( int charactersOnScreen )
     {
+        super();
         fixedWindowSize_ = charactersOnScreen;
     }
 
@@ -68,7 +70,7 @@ public class LevelPresenter
         String padding = "";
         for ( int i = 0; i < numberPaddingCharacters_; ++i )
             padding += " ";
-        model_ = new LevelModel( padding + text );
+        tskTyperModel_.setLevelModel(new LevelModel( padding + text ));
     }
 
     public int getWindowSize()
@@ -97,7 +99,7 @@ public class LevelPresenter
         StringBuilder textBuilder = new StringBuilder();
         for ( int index = leftIndex_; index < rightIndex_; ++index )
         {
-            textBuilder.append( model_.getCharacter( index ) );
+            textBuilder.append( tskTyperModel_.getLevelModel().getCharacter( index ) );
         }
         return textBuilder.toString();
     }
@@ -109,7 +111,7 @@ public class LevelPresenter
         // System.out.println( "BEFORE Right index: " + rightIndex_ );
         ++currentIndex_;
         ++leftIndex_;
-        rightIndex_ = Math.min( rightIndex_ + 1, model_.getTextLength() - 1 );
+        rightIndex_ = Math.min( rightIndex_ + 1, tskTyperModel_.getLevelModel().getTextLength() - 1 );
 
         if ( numberPaddingCharacters_ > 0 )
             --numberPaddingCharacters_;
@@ -123,7 +125,7 @@ public class LevelPresenter
     {
         try
         {
-            LevelModel.CharacterMode mode = model_.getCharacterMode( index );
+            LevelModel.CharacterMode mode = tskTyperModel_.getLevelModel().getCharacterMode( index );
             return CharacterColor.values()[ mode.getValue() ];
         }
         catch ( IllegalArgumentException e )
@@ -145,13 +147,13 @@ public class LevelPresenter
 
     public void handleTypedCharacter( char character )
     {
-        if ( model_.getCharacter( currentIndex_ ) == character )
+        if ( tskTyperModel_.getLevelModel().getCharacter( currentIndex_ ) == character )
         {
-            model_.setCharacterMode( currentIndex_, LevelModel.CharacterMode.CORRECT );
+            tskTyperModel_.getLevelModel().setCharacterMode( currentIndex_, LevelModel.CharacterMode.CORRECT );
         }
         else
         {
-            model_.setCharacterMode( currentIndex_, LevelModel.CharacterMode.INCORRECT );
+            tskTyperModel_.getLevelModel().setCharacterMode( currentIndex_, LevelModel.CharacterMode.INCORRECT );
         }
         incrementIndices();
     }
