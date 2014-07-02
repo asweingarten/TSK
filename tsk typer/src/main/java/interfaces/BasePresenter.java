@@ -1,14 +1,14 @@
 package interfaces;
 
-import tsk_typer;
+import tsk_typer.*;
 
 public abstract class BasePresenter
 {
 	protected TskTyperModel tskTyperModel_;
 
-	BasePresenter( TskTyperModel tskTyperModel )
+	public BasePresenter()
 	{
-		tskTyperModel_ = tskTyperModel;
+		tskTyperModel_ = TskTyperPresenter.getModel();
 	}
 
 }
