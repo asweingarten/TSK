@@ -6,5 +6,6 @@ keyboard/.gradle/**
 keyboard/build/**
 lib/tsklib/.gradle/**
 lib/tsklib/build/**
-
+.gradle/**
+lib/build/**
 tsk typer/src/main/java/level/Notes.txt
