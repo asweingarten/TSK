@@ -1,14 +1,19 @@
 package tsk_typer;
 
 import interfaces.*;
+import java.util.ArrayList;
 
 public class TskTyperPresenter extends BaseSubject implements IObserver
 {
     private static TskTyperModel model_;
+    private String currentScreen_;
 
     public TskTyperPresenter()
     {
+        this.observerList_ = new ArrayList<IObserver>();
+
         this.model_ = new TskTyperModel();
+        this.model_.subscribe( this );
     }
 
     public String getFilename()
@@ -36,8 +41,14 @@ public class TskTyperPresenter extends BaseSubject implements IObserver
         return model_;
     }
 
+    public String getCurrentScreen()
+    {
+        return currentScreen_;
+    }
+
     public void update()
     {
-
+        currentScreen_ = model_.getCurrentScreen();
+        publish();
     }
 }
