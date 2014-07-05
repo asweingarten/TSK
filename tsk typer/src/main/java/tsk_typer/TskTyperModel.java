@@ -29,6 +29,10 @@ public class TskTyperModel extends BaseSubject
     public void setLevelModel(LevelModel model)
     {
         levelModel_ = model;
+    }
+
+    public void startLevel()
+    {
         currentScreen_ = "level";
         publish();
     }
