@@ -105,19 +105,9 @@ public class LevelPresenter extends BasePresenter
 
     private void incrementIndices()
     {
-        // System.out.println( "BEFORE Left index: " + leftIndex_ );
-        // System.out.println( "BEFORE Current index: " + currentIndex_ );
-        // System.out.println( "BEFORE Right index: " + rightIndex_ );
         ++currentIndex_;
         ++leftIndex_;
         rightIndex_ = Math.min( rightIndex_ + 1, tskTyperModel_.getLevelModel().getTextLength() - 1 );
-
-        // if ( numberPaddingCharacters_ > 0 )
-        //     --numberPaddingCharacters_;
-        // System.out.println( "AFTER Left index: " + leftIndex_ );
-        // System.out.println( "AFTER Current index: " + currentIndex_ );
-        // System.out.println( "AFTER Right index: " + rightIndex_ );
-
     }
 
     private CharacterColor getCharacterColor( int index )
@@ -137,7 +127,7 @@ public class LevelPresenter extends BasePresenter
     public Color[] getCharacterColors()
     {
         Color[] colorList = new Color[getWindowSize()];
-        for ( int index = leftIndex_; index < leftIndex_+getWindowSize(); ++index )
+        for ( int index = leftIndex_; index < rightIndex_; ++index )
         {
             colorList[index - leftIndex_] = getCharacterColor( index ).getColor();
         }
@@ -154,11 +144,14 @@ public class LevelPresenter extends BasePresenter
         {
             tskTyperModel_.getLevelModel().setCharacterMode( currentIndex_, LevelModel.CharacterMode.INCORRECT );
         }
-        incrementIndices();
 
         if ( currentIndex_ == tskTyperModel_.getLevelModel().getTextLength()-1 )
         {
             tskTyperModel_.endLevel();
+            System.out.println( "LEVEL OVER" );
         }
+
+        incrementIndices();
+
     }
 }
