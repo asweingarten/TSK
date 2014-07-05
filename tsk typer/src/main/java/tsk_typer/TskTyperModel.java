@@ -1,6 +1,6 @@
 package tsk_typer;
 
-import interfaces.BaseSubject;
+import interfaces.*;
 import utilities.*;
 import java.util.ArrayList;
 import java.io.File;
@@ -12,9 +12,12 @@ public class TskTyperModel extends BaseSubject
     LevelModel levelModel_;
     private TextFileReader reader_;
     private String filename_;
+    private String currentScreen_;
 
     public TskTyperModel()
     {
+        this.observerList_ = new ArrayList<IObserver>();
+
         reader_ = new TextFileReader(new FullFileReadStrategy());
     }
 
@@ -26,6 +29,19 @@ public class TskTyperModel extends BaseSubject
     public void setLevelModel(LevelModel model)
     {
         levelModel_ = model;
+        currentScreen_ = "level";
+        publish();
+    }
+
+    public void endLevel()
+    {
+        currentScreen_ = "results";
+        publish();
+    }
+
+    public String getCurrentScreen()
+    {
+        return currentScreen_;
     }
 
     public String getFilename()
