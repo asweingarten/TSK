@@ -41,6 +41,12 @@ public class TskTyperPresenter extends BaseSubject implements IObserver
         return model_;
     }
 
+    // Debug function
+    public void startLevel()
+    {
+        model_.startLevel();
+    }
+
     public String getCurrentScreen()
     {
         return currentScreen_;
