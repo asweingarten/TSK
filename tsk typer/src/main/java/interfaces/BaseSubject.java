@@ -4,21 +4,21 @@ import java.util.ArrayList;
 
 public abstract class BaseSubject
 {
-	private ArrayList<IObserver> observer_list_;
+	protected ArrayList<IObserver> observerList_;
 
 	public void subscribe( IObserver observer )
 	{
-		observer_list_.add(observer);
+		observerList_.add(observer);
 	}
 
 	public void unsubscribe( IObserver observer )
 	{
-		observer_list_.remove(observer);
+		observerList_.remove(observer);
 	}
 
 	protected void publish()
 	{
-		for ( IObserver observer : observer_list_ )
+		for ( IObserver observer : observerList_ )
 		{
 			observer.update();
 		}
