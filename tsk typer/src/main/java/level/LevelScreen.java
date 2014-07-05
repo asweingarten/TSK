@@ -49,12 +49,7 @@ public class LevelScreen extends JComponent implements IView
 
         presenter_ = new LevelPresenter( width_/characterWidth_ );
         presenter_.setTextContents( "My country, 'tis of thee, " +
-                                    "Sweet land of liberty, " +
-                                    "Of thee I sing; " +
-                                    "Land where my fathers died, " +
-                                    "Land of the pilgrims' pride, " +
-                                    "From ev'ry mountainside" +
-                                    "Let freedom ring!" );
+                                    "Sweet land of liberty, " );
         initializeListeners();
 
         isDebouncing_ = false;
