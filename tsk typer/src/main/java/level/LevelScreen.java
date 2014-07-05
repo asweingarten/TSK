@@ -86,7 +86,6 @@ public class LevelScreen extends JComponent implements IView
         {
             public void keyTyped( KeyEvent e )
             {
-                // fireActionPerformed( new ActionEvent( this, 0, "KEY_TYPED" ) );
                 lastTypedChar = e.getKeyChar();
                 System.out.println( "Key Press: " + lastTypedChar );
                 saveToPresenter();
