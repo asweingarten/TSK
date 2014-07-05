@@ -28,12 +28,9 @@ public class TskTyperView extends JComponent implements IView, IObserver
         presenter_ = new TskTyperPresenter();
         presenter_.subscribe( this );
 
-        // Typing Level Init
-        currentScreen_ = new LevelScreen( width_, height_ );
-        Dimension levelViewDim = new Dimension( width_/2, height_/2 );
-        currentScreen_.setPreferredSize( levelViewDim );
-        this.add( currentScreen_, BorderLayout.CENTER );
-
+        currentScreen_ = null;
+        // Debug function
+        presenter_.startLevel();
     }
 
     public void paintComponent( Graphics g )
@@ -59,21 +56,32 @@ public class TskTyperView extends JComponent implements IView, IObserver
     public void update()
     {
         String currentScreenName = presenter_.getCurrentScreen();
+        Dimension levelViewDim;
+
+        if ( currentScreen_ != null )
+        {
+            this.remove( currentScreen_ );
+            this.revalidate();
+        }
 
         switch( currentScreenName )
         {
             case "results":
-
+                currentScreen_ = new LevelScreen( width_, height_ );
+                levelViewDim = new Dimension( width_/2, height_/2 );
+                currentScreen_.setPreferredSize( levelViewDim );
+                this.add( currentScreen_, BorderLayout.CENTER );
                 break;
 
             case "level":
-                // Typing Level Init
-                // levelView_ = new LevelScreen( width_, height_ );
-                // Dimension levelViewDim = new Dimension( width_/2, height_/2 );
-                // levelView_.setPreferredSize( levelViewDim );
-                // this.add( levelView_, BorderLayout.CENTER );
+                currentScreen_ = new LevelScreen( width_, height_ );
+                levelViewDim = new Dimension( width_/2, height_/2 );
+                currentScreen_.setPreferredSize( levelViewDim );
+                this.add( currentScreen_, BorderLayout.CENTER );
                 break;
         }
+
+        setKeyboardFocus();
     }
 
 }
