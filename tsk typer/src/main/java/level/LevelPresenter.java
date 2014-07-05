@@ -155,5 +155,10 @@ public class LevelPresenter extends BasePresenter
             tskTyperModel_.getLevelModel().setCharacterMode( currentIndex_, LevelModel.CharacterMode.INCORRECT );
         }
         incrementIndices();
+
+        if ( currentIndex_ == tskTyperModel_.getLevelModel().getTextLength()-1 )
+        {
+            tskTyperModel_.endLevel();
+        }
     }
 }
