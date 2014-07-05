@@ -19,19 +19,20 @@ public class TskTyperView extends JComponent implements IView, IObserver
     // Presenter
     private TskTyperPresenter presenter_;
 
-    private LevelScreen levelView_;
+    private JComponent currentScreen_;
 
     public TskTyperView()
     {
-      super();
-      this.setLayout( new BorderLayout() );
-      presenter_ = new TskTyperPresenter();
+        super();
+        this.setLayout( new BorderLayout() );
+        presenter_ = new TskTyperPresenter();
+        presenter_.subscribe( this );
 
-      // Typing Level Init
-      levelView_ = new LevelScreen( width_, height_ );
-      Dimension levelViewDim = new Dimension( width_/2, height_/2 );
-      levelView_.setPreferredSize( levelViewDim );
-      this.add( levelView_, BorderLayout.CENTER );
+        // Typing Level Init
+        currentScreen_ = new LevelScreen( width_, height_ );
+        Dimension levelViewDim = new Dimension( width_/2, height_/2 );
+        currentScreen_.setPreferredSize( levelViewDim );
+        this.add( currentScreen_, BorderLayout.CENTER );
 
     }
 
@@ -42,7 +43,7 @@ public class TskTyperView extends JComponent implements IView, IObserver
 
     public void setKeyboardFocus()
     {
-        levelView_.requestFocusInWindow();
+        currentScreen_.requestFocusInWindow();
     }
 
     public synchronized void updateFromPresenter()
@@ -57,7 +58,22 @@ public class TskTyperView extends JComponent implements IView, IObserver
 
     public void update()
     {
+        String currentScreenName = presenter_.getCurrentScreen();
 
+        switch( currentScreenName )
+        {
+            case "results":
+
+                break;
+
+            case "level":
+                // Typing Level Init
+                // levelView_ = new LevelScreen( width_, height_ );
+                // Dimension levelViewDim = new Dimension( width_/2, height_/2 );
+                // levelView_.setPreferredSize( levelViewDim );
+                // this.add( levelView_, BorderLayout.CENTER );
+                break;
+        }
     }
 
 }
