@@ -56,7 +56,6 @@ public class TskTyperView extends JComponent implements IView, IObserver
     public void update()
     {
         String currentScreenName = presenter_.getCurrentScreen();
-        Dimension levelViewDim;
 
         if ( currentScreen_ != null )
         {
@@ -68,15 +67,11 @@ public class TskTyperView extends JComponent implements IView, IObserver
         {
             case "results":
                 currentScreen_ = new LevelScreen( width_, height_ );
-                levelViewDim = new Dimension( width_/2, height_/2 );
-                currentScreen_.setPreferredSize( levelViewDim );
                 this.add( currentScreen_, BorderLayout.CENTER );
                 break;
 
             case "level":
                 currentScreen_ = new LevelScreen( width_, height_ );
-                levelViewDim = new Dimension( width_/2, height_/2 );
-                currentScreen_.setPreferredSize( levelViewDim );
                 this.add( currentScreen_, BorderLayout.CENTER );
                 break;
         }
