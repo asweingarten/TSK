@@ -12,7 +12,26 @@ public class TskTyperModel extends BaseSubject
     LevelModel levelModel_;
     private TextFileReader reader_;
     private String filename_;
-    private String currentScreen_;
+    private Screen currentScreen_;
+
+    public enum Screen
+    {
+        SETUP(0),
+        LEVEL(1),
+        RESULTS(2);
+
+        private int value_;
+
+        private Screen( int value )
+        {
+            this.value_ = value;
+        }
+
+        public int getValue()
+        {
+            return value_;
+        }
+    }
 
     public TskTyperModel()
     {
@@ -33,17 +52,17 @@ public class TskTyperModel extends BaseSubject
 
     public void startLevel()
     {
-        currentScreen_ = "level";
+        currentScreen_ = Screen.LEVEL;
         publish();
     }
 
     public void endLevel()
     {
-        currentScreen_ = "results";
+        currentScreen_ = Screen.RESULTS;
         publish();
     }
 
-    public String getCurrentScreen()
+    public Screen getCurrentScreen()
     {
         return currentScreen_;
     }

@@ -1,7 +1,6 @@
 package tsk_typer;
 
 import interfaces.*;
-import level.LevelScreen;
 
 import javax.swing.*;
 import javax.swing.event.*;
@@ -28,6 +27,8 @@ public class TskTyperView extends JComponent implements IView, IObserver
         presenter_ = new TskTyperPresenter();
         presenter_.subscribe( this );
 
+        saveToPresenter();
+
         currentScreen_ = null;
         // Debug function
         presenter_.startLevel();
@@ -50,12 +51,12 @@ public class TskTyperView extends JComponent implements IView, IObserver
 
     public void saveToPresenter()
     {
-
+        presenter_.setScreenDimensions( width_, height_ );
     }
 
     public void update()
     {
-        String currentScreenName = presenter_.getCurrentScreen();
+        JComponent newScreen = presenter_.getCurrentScreen();
 
         if ( currentScreen_ != null )
         {
@@ -63,19 +64,8 @@ public class TskTyperView extends JComponent implements IView, IObserver
             this.revalidate();
         }
 
-        switch( currentScreenName )
-        {
-            case "results":
-                currentScreen_ = new LevelScreen( width_, height_ );
-                this.add( currentScreen_, BorderLayout.CENTER );
-                break;
-
-            case "level":
-                currentScreen_ = new LevelScreen( width_, height_ );
-                this.add( currentScreen_, BorderLayout.CENTER );
-                break;
-        }
-
+        currentScreen_ = newScreen;
+        this.add( currentScreen_, BorderLayout.CENTER );
         setKeyboardFocus();
     }
 
