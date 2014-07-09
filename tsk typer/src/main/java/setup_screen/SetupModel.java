@@ -4,22 +4,34 @@ import java.lang.*;
 import java.io.*;
 import java.nio.*;
 import java.util.*;
+import utilities.*;
 
 public class SetupModel
 {
 	private File directory_;
+	private File file_;
+	private TextFileReader reader_;
 
 	public SetupModel( String directory )
 	{
-		setDirectory( directory );
+		try
+		{
+			setDirectory( directory );
+		}
+		catch ( IOException ex )
+		{
+			directory_ = null;
+		}
+		reader_ = new TextFileReader( new FullFileReadStrategy() );
 	}
 
-	private Bool isFileValid( File fileName )
+	private boolean isFileValid( String fileName )
 	{
-		return fileName.isFile() && fileName.toLowerCase().endsWith( ".txt" );
+		File file = new File( fileName );
+		return file.isFile() && file.getName().toLowerCase().endsWith( ".txt" );
 	}
 
-	private Bool isDirectoryValid( String directory )
+	private boolean isDirectoryValid( String directory )
 	{
 		File folder = new File( directory );
 		return folder.exists() && folder.isDirectory();
@@ -27,14 +39,14 @@ public class SetupModel
 
 	public String getDirectory()
 	{
-		if ( NULL != directory_ )
+		if ( null != directory_ )
 		{
 			return directory_.getName();
 		}
 		return "";
 	}
 
-	public void setDirectory( String directory )
+	public void setDirectory( String directory ) throws IOException
 	{
 		if ( isDirectoryValid( directory ) )
 		{
@@ -52,11 +64,44 @@ public class SetupModel
 		List<String> textFileList = new ArrayList<String>();
 		for ( File file : fileList )
 		{
-			if ( isFileValid( file ) )
+			if ( isFileValid( file.getName() ) )
 			{
 				textFileList.add( file.getName() );
 			}
 		}
 		return textFileList;
 	}
+
+	public String getFilename()
+    {
+    	if ( null != file_ )
+    	{
+        	return file_.getName();
+        }
+        return "";
+    }
+
+    public void setFilename( String fileName ) throws IOException
+    {
+    	if ( isFileValid( fileName ) )
+    	{
+        	file_ = new File( fileName );
+        }
+        else
+        {
+        	throw new IOException();
+        }
+    }
+
+    public String getFileContents()
+    {
+        try
+        {
+            return reader_.ReadFile( file_.getName() );
+        }
+        catch ( IOException ex )
+        {
+            return "";
+        }
+    }
 }
