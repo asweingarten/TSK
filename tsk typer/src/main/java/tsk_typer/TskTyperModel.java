@@ -1,7 +1,6 @@
 package tsk_typer;
 
 import interfaces.*;
-import utilities.*;
 import java.util.ArrayList;
 import java.io.File;
 import java.io.IOException;
@@ -38,8 +37,6 @@ public class TskTyperModel extends BaseSubject
     public TskTyperModel()
     {
         this.observerList_ = new ArrayList<IObserver>();
-
-        reader_ = new TextFileReader(new FullFileReadStrategy());
     }
 
     public LevelModel getLevelModel()
@@ -77,39 +74,5 @@ public class TskTyperModel extends BaseSubject
     public Screen getCurrentScreen()
     {
         return currentScreen_;
-    }
-
-    public String getFilename()
-    {
-        return filename_;
-    }
-
-    public void setFilename(String filename)
-    {
-        filename_ = filename;
-    }
-
-    public String getFileContents()
-    {
-        try
-        {
-            return reader_.ReadFile(filename_);
-        }
-        catch (IOException ex)
-        {
-            return "";
-        }
-    }
-
-    public boolean isFileValid()
-    {
-        try
-        {
-            return new File(filename_).isFile();
-        }
-        catch (Exception ex)
-        {
-            return false;
-        }
     }
 }

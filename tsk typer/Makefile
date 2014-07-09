@@ -1,3 +1,5 @@
+.PHONY: default clean run
+
 default:
 	gradle build;
 clean:
