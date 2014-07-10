@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import level.LevelModel;
 import results.ResultsModel;
+import utilities.TextFileReader;
 
 public class TskTyperModel extends BaseSubject
 {

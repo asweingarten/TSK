@@ -22,7 +22,7 @@ public class ResultsScreen extends JComponent implements IView
         width_  = width;
         height_ = height;
         this.setFocusable(true);
-        this.setLayout( new BoxLayout( BoxLayout.Y_AXIS ) );
+        this.setLayout( new BoxLayout( this, BoxLayout.Y_AXIS ) );
 
         resultsTextFont_ = new Font( "Courier New", Font.PLAIN, 16 );
 

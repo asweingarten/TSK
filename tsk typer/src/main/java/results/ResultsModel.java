@@ -10,7 +10,7 @@ public class ResultsModel
 
     }
 
-    public int calculateResults() 
+    public void calculateResults() 
     {
 
     }
