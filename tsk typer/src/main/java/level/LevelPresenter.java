@@ -155,10 +155,20 @@ public class LevelPresenter extends BasePresenter
 
     private void endLevel()
     {
-        // String levelText = tskTyperModel_.getLevelModel().getLevelText();
+        String levelText = tskTyperModel_.getLevelModel().getLevelText(),
+               trimmedLevelText = levelText.trim();
+        int offset = levelText.length() - trimmedLevelText.length();
 
-        // tskTyperModel_.endLevel( levelModel_.getCharacterModeList() );
-        // System.out.println( "LEVEL OVER" );
+        System.out.println( "offset: " + offset + "    levelText Length: " + levelText.length() + "    trimmed len:" + trimmedLevelText.length() );
 
+        LevelModel.CharacterMode[] characterModeList = tskTyperModel_.getLevelModel().getCharacterModeList(),
+                        trimmedCharacterModeList = new LevelModel.CharacterMode[characterModeList.length - offset];
+        for ( int i = offset; i < characterModeList.length; ++i )
+        {
+            trimmedCharacterModeList[i-offset] = characterModeList[i];
+        }
+
+        tskTyperModel_.endLevel( trimmedLevelText, trimmedCharacterModeList );
+        System.out.println( "LEVEL OVER" );
     }
 }
