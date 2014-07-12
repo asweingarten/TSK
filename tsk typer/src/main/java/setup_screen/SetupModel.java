@@ -72,7 +72,7 @@ public class SetupModel
         return textFileList;
     }
 
-    public String getFilename()
+    public String getFileName()
     {
         if ( null != file_ )
         {
@@ -81,7 +81,7 @@ public class SetupModel
         return "";
     }
 
-    public void setFilename( String fileName ) throws IOException
+    public void setFileName( String fileName ) throws IOException
     {
         if ( isFileValid( fileName ) )
         {

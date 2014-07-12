@@ -5,6 +5,7 @@ import tsk_typer.TskTyperModel;
 
 import java.lang.*;
 import java.util.*;
+import java.io.IOException;
 
 public class SetupPresenter extends BasePresenter
 {
@@ -13,20 +14,15 @@ public class SetupPresenter extends BasePresenter
     public SetupPresenter()
     {
         super();
-        HideDirectoryPanel();
+        setDirectoryPanel( false );
     }
 
-    public void ShowDirectoryPanel()
+    public void setDirectoryPanel( boolean is_visible )
     {
-        is_panel_expanded_ = true;
+        is_panel_expanded_ = is_visible;
     }
 
-    public void HideDirectoryPanel()
-    {
-        is_panel_expanded_ = false;
-    }
-
-    public boolean IsDirectoryPanelVisible()
+    public boolean isDirectoryPanelVisible()
     {
         return is_panel_expanded_;
     }
@@ -34,5 +30,30 @@ public class SetupPresenter extends BasePresenter
     public List<String> getFileNameList()
     {
         return tskTyperModel_.getSetupModel().getFileNames();
+    }
+
+    public void setFileName( String fileName ) throws IOException
+    {
+        tskTyperModel_.getSetupModel().setFileName( fileName );
+    }
+
+    public String getFileName()
+    {
+        return tskTyperModel_.getSetupModel().getFileName();
+    }
+
+    public String getFileContents()
+    {
+        return tskTyperModel_.getSetupModel().getFileContents();
+    }
+
+    public void setDirectory( String directory ) throws IOException
+    {
+        tskTyperModel_.getSetupModel().setDirectory( directory );
+    }
+
+    public String getDirectory()
+    {
+        return tskTyperModel_.getSetupModel().getDirectory();
     }
 }
