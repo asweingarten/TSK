@@ -1,16 +1,20 @@
 package results;
 
-import java.lang.IllegalArgumentException;
+import level.LevelModel;
 
 public class ResultsModel
 {
+	private String levelText_;
 
-    public ResultsModel()
+	private LevelModel.CharacterMode[] characterModeList_;
+
+    public ResultsModel( String levelText, LevelModel.CharacterMode[] characterModeList )
     {
-
+    	levelText_ = levelText;
+    	characterModeList_ = characterModeList;
     }
 
-    public void calculateResults() 
+    public void calculateResults()
     {
 
     }
