@@ -3,6 +3,7 @@ package tsk_typer;
 import interfaces.*;
 import javax.swing.JComponent;
 import level.LevelScreen;
+import results.ResultsScreen;
 
 import java.util.ArrayList;
 
@@ -48,7 +49,7 @@ public class TskTyperPresenter extends BaseSubject implements IObserver
         switch( model_.getCurrentScreen() )
         {
             case RESULTS:
-                currentScreen_ = new LevelScreen( width_, height_ );
+                currentScreen_ = new ResultsScreen( width_, height_ );
                 break;
 
             case LEVEL:
