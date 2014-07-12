@@ -74,7 +74,6 @@ public class LevelPresenter extends BasePresenter
 
     public int getWindowSize()
     {
-        // return Math.max( fixedWindowSize_, rightIndex_ - leftIndex_ );
         return fixedWindowSize_;
     }
 

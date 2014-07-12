@@ -5,12 +5,14 @@ import java.util.ArrayList;
 import java.io.File;
 import java.io.IOException;
 import level.LevelModel;
+import setup_screen.SetupModel;
 import results.ResultsModel;
 import utilities.TextFileReader;
 
 public class TskTyperModel extends BaseSubject
 {
     LevelModel levelModel_;
+    SetupModel setupModel_;
     ResultsModel resultsModel_;
     private TextFileReader reader_;
     private String filename_;
@@ -48,6 +50,16 @@ public class TskTyperModel extends BaseSubject
     public void setLevelModel(LevelModel model)
     {
         levelModel_ = model;
+    }
+
+    public SetupModel getSetupModel()
+    {
+        return setupModel_;
+    }
+
+    public void setSetupModel(SetupModel model)
+    {
+        setupModel_ = model;
     }
 
     public ResultsModel getResultsModel()
