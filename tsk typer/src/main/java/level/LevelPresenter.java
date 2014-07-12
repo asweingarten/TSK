@@ -15,6 +15,8 @@ public class LevelPresenter extends BasePresenter
 
     private int fixedWindowSize_;
 
+    private LevelModel levelModel_;
+
     public enum CharacterColor
     {
         BLACK(0),
@@ -57,6 +59,8 @@ public class LevelPresenter extends BasePresenter
     {
         super();
         fixedWindowSize_ = charactersOnScreen;
+        levelModel_ = tskTyperModel_.getLevelModel();
+
     }
 
     public void setTextContents( String text )
@@ -74,7 +78,6 @@ public class LevelPresenter extends BasePresenter
 
     public int getWindowSize()
     {
-        // return Math.max( fixedWindowSize_, rightIndex_ - leftIndex_ );
         return fixedWindowSize_;
     }
 
@@ -98,7 +101,7 @@ public class LevelPresenter extends BasePresenter
         StringBuilder textBuilder = new StringBuilder();
         for ( int index = leftIndex_; index < rightIndex_; ++index )
         {
-            textBuilder.append( tskTyperModel_.getLevelModel().getCharacter( index ) );
+            textBuilder.append( levelModel_.getCharacter( index ) );
         }
         return textBuilder.toString();
     }
@@ -107,14 +110,14 @@ public class LevelPresenter extends BasePresenter
     {
         ++currentIndex_;
         ++leftIndex_;
-        rightIndex_ = Math.min( rightIndex_ + 1, tskTyperModel_.getLevelModel().getTextLength() - 1 );
+        rightIndex_ = Math.min( rightIndex_ + 1, levelModel_.getTextLength() - 1 );
     }
 
     private CharacterColor getCharacterColor( int index )
     {
         try
         {
-            LevelModel.CharacterMode mode = tskTyperModel_.getLevelModel().getCharacterMode( index );
+            LevelModel.CharacterMode mode = levelModel_.getCharacterMode( index );
             return CharacterColor.values()[ mode.getValue() ];
         }
         catch ( IllegalArgumentException e )
@@ -136,18 +139,19 @@ public class LevelPresenter extends BasePresenter
 
     public void handleTypedCharacter( char character )
     {
-        if ( tskTyperModel_.getLevelModel().getCharacter( currentIndex_ ) == character )
+        if ( levelModel_.getCharacter( currentIndex_ ) == character )
         {
-            tskTyperModel_.getLevelModel().setCharacterMode( currentIndex_, LevelModel.CharacterMode.CORRECT );
+            levelModel_.setCharacterMode( currentIndex_, LevelModel.CharacterMode.CORRECT );
         }
         else
         {
-            tskTyperModel_.getLevelModel().setCharacterMode( currentIndex_, LevelModel.CharacterMode.INCORRECT );
+            levelModel_.setCharacterMode( currentIndex_, LevelModel.CharacterMode.INCORRECT );
         }
 
-        if ( currentIndex_ == tskTyperModel_.getLevelModel().getTextLength()-1 )
+        if ( currentIndex_ == levelModel_.getTextLength()-1 )
         {
-            tskTyperModel_.endLevel();
+            tskTyperModel_.endLevel( levelModel_.getLevelText(),
+                                     levelModel_.getCharacterModeList() );
             System.out.println( "LEVEL OVER" );
         }
 
