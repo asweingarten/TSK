@@ -63,4 +63,14 @@ public class LevelModel
         }
         return text_.charAt( index );
     }
+
+    public CharacterMode[] getCharacterModeList()
+    {
+        return characterModeList_;
+    }
+
+    public String getLevelText()
+    {
+        return text_;
+    }
 }
