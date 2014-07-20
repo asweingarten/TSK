@@ -9,37 +9,37 @@ import java.awt.Color;
 
 public class ResultsPresenter extends BasePresenter
 {
-
-    //Call tsk typer model to get handle to results model (contained in BasePresenter)
+    ResultsModel resultsModel_;
 
     public ResultsPresenter()
     {
         super();
+        resultsModel_ = tskTyperModel_.getResultsModel();
     }
 
     public int getTotalChars()
     {
-        return 0;
+        return resultsModel_.getTotalChars();
     }
 
     public int getNumMistypedChars() 
     {
-        return 0;
+        return resultsModel_.getNumMistypedChars();
     }
 
     public int getTotalWords()
     {
-        return 0;
+        return resultsModel_.getTotalWords();
     }
 
     public int getNumMistypedWords()
     {
-        return 0;
+        return resultsModel_.getNumMistypedWords();
     }
 
     public int countMistypes(char c) 
     {
-        return 0;
+        return resultsModel_.countMistypes(c);
     }
 
     public int getWordsPerMinute()

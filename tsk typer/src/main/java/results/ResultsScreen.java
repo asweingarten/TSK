@@ -39,6 +39,19 @@ public class ResultsScreen extends JComponent implements IView
         g2.fillRect( 0, 0, width_, height_ );
 
         g2.setPaint( Color.BLACK );
+
+        g2.setFont( resultsTextFont_ );
+        g2.drawString( "RESULTS SCREEN", 50, 50 );
+
+        int numChars = presenter_.getTotalChars();
+        int numMistypedChars = presenter_.getNumMistypedChars();
+        int numWords = presenter_.getTotalWords();
+        int numMistypedWords = presenter_.getNumMistypedWords();
+
+        g2.drawString( "Total Characters Typed: " + numChars, 50, 70 );
+        g2.drawString( "Total Characters Mistyped: " + numMistypedChars, 50, 87 );
+        g2.drawString( "Total Words Typed: " + numWords, 50, 105 );
+        g2.drawString( "Total Words Mistyped: " + numMistypedWords, 50, 122 );
         //Draw results information
     }
 
