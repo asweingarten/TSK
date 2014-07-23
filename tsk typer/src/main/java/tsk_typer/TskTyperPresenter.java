@@ -4,6 +4,7 @@ import interfaces.*;
 import javax.swing.JComponent;
 import level.LevelScreen;
 import results.ResultsScreen;
+import setup_screen.SetupScreen;
 
 import java.util.ArrayList;
 
@@ -33,6 +34,11 @@ public class TskTyperPresenter extends BaseSubject implements IObserver
         model_.startLevel();
     }
 
+    public void initializeGame()
+    {
+        model_.initializeGame();
+    }
+
     public JComponent getCurrentScreen()
     {
         return currentScreen_;
@@ -46,8 +52,12 @@ public class TskTyperPresenter extends BaseSubject implements IObserver
 
     public void update()
     {
-        switch( model_.getCurrentScreen() )
+        switch ( model_.getCurrentScreen() )
         {
+            case SETUP:
+                currentScreen_ = new SetupScreen( width_, height_ );
+                break;
+
             case RESULTS:
                 currentScreen_ = new ResultsScreen( width_, height_ );
                 break;

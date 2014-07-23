@@ -78,6 +78,12 @@ public class TskTyperModel extends BaseSubject
         publish();
     }
 
+    public void initializeGame()
+    {
+        currentScreen_ = Screen.SETUP;
+        publish();
+    }
+
     public void endLevel( String levelText, LevelModel.CharacterMode[] charModes )
     {
         currentScreen_ = Screen.RESULTS;
