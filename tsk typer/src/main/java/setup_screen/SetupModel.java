@@ -28,7 +28,7 @@ public class SetupModel
     private boolean isFileValid( String fileName )
     {
         File file = new File( fileName );
-        return file.isFile() && file.getName().toLowerCase().endsWith( ".txt" );
+        return file.getName().toLowerCase().endsWith( ".txt" );
     }
 
     private boolean isDirectoryValid( String directory )
@@ -97,7 +97,7 @@ public class SetupModel
     {
         try
         {
-            return reader_.ReadFile( file_.getName() );
+            return reader_.ReadFile( file_.getAbsolutePath() );
         }
         catch ( IOException ex )
         {

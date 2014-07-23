@@ -49,7 +49,7 @@ public class SetupPresenter extends BasePresenter
 
     public void setDirectory( String directory ) throws IOException
     {
-        tskTyperModel_.getSetupModel().setDirectory( directory );
+        tskTyperModel_.setSetupModel( new SetupModel( directory ) );
     }
 
     public String getDirectory()
