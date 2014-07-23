@@ -18,6 +18,7 @@ public class SetupScreen extends JComponent implements IView
 	private SetupPresenter presenter_;
 
 	private JComboBox<String> levelSelector_;
+	//private JTextBox selectedLevelText_;
 
 	public SetupScreen( int width, int height )
 	{
@@ -48,6 +49,26 @@ public class SetupScreen extends JComponent implements IView
 		}
 
 		levelSelector_ = new JComboBox<String>();
+
+		levelSelector_.addItemListener( new ItemListener()
+		{
+			public void itemStateChanged( ItemEvent e )
+			{
+				if ( e.getStateChange() == ItemEvent.DESELECTED )
+					return;
+
+				try
+				{
+					System.out.println( (String)e.getItem() );
+					presenter_.setFileName( (String)e.getItem() );
+				}
+				catch ( IOException ex )
+				{
+
+				}
+			}
+		});
+
 		this.add( levelSelector_ );
 		updateFromPresenter();
 	}
