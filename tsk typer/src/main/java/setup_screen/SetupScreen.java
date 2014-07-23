@@ -18,7 +18,7 @@ public class SetupScreen extends JComponent implements IView
 	private SetupPresenter presenter_;
 
 	private JComboBox<String> levelSelector_;
-	//private JTextBox selectedLevelText_;
+	private JTextArea selectedLevelText_;
 
 	public SetupScreen( int width, int height )
 	{
@@ -48,6 +48,10 @@ public class SetupScreen extends JComponent implements IView
 			System.err.println( "directory not found: " + ex );
 		}
 
+		selectedLevelText_ = new JTextArea();
+		selectedLevelText_.setLineWrap( true );
+		selectedLevelText_.setWrapStyleWord( true );
+
 		levelSelector_ = new JComboBox<String>();
 
 		levelSelector_.addItemListener( new ItemListener()
@@ -59,8 +63,8 @@ public class SetupScreen extends JComponent implements IView
 
 				try
 				{
-					System.out.println( (String)e.getItem() );
 					presenter_.setFileName( (String)e.getItem() );
+					selectedLevelText_.setText( presenter_.getFileContents() );
 				}
 				catch ( IOException ex )
 				{
@@ -70,6 +74,7 @@ public class SetupScreen extends JComponent implements IView
 		});
 
 		this.add( levelSelector_ );
+		this.add( selectedLevelText_ );
 		updateFromPresenter();
 	}
 

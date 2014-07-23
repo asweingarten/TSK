@@ -85,7 +85,7 @@ public class SetupModel
     {
         if ( isFileValid( fileName ) )
         {
-            file_ = new File( fileName );
+            file_ = new File( directory_, fileName );
         }
         else
         {
