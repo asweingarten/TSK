@@ -2,6 +2,9 @@ package results;
 
 import interfaces.*;
 import javax.swing.*;
+
+import javax.swing.border.EtchedBorder;
+import javax.swing.BorderFactory;
 import javax.swing.event.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -9,14 +12,14 @@ import java.awt.geom.*;
 import java.util.List;
 import java.util.ArrayList;
 
+
 public class ResultsScreen extends JComponent implements IView
 {
 
-    public class ResultsComponent extends JComponent 
+    public class ResultsComponent extends JPanel 
     {
         ResultsPresenter presenter_;
         public ResultsComponent(ResultsPresenter presenter) { presenter_ = presenter; }
-        public void paintComponent( Graphics g ) {}
     } 
 
     private final int width_,
@@ -38,40 +41,42 @@ public class ResultsScreen extends JComponent implements IView
 
         presenter_ = new ResultsPresenter();
 
-        ResultsComponent titleComponent = new ResultsComponent( presenter_ ) {
-            public void paintComponent ( Graphics g ) 
-            {
-                Graphics2D g2 = ( Graphics2D ) g;
-                g2.drawString( "RESULTS SCREEN", 50, 50 );
-            }
-        };
 
         ResultsComponent characterComponent = new ResultsComponent( presenter_ ) {
-            public void paintComponent ( Graphics g ) 
             {
-                Graphics2D g2 = ( Graphics2D ) g;
-                int numChars = presenter_.getTotalChars();
-                int numMistypedChars = presenter_.getNumMistypedChars();
-                g2.drawString( "Total Characters Typed: " + numChars, 50, 70 );
-                g2.drawString( "Total Characters Mistyped: " + numMistypedChars, 50, 87 );
+                this.setLayout( new GridLayout(2, 1) );
+                JLabel totalChars = new JLabel("Total Characters Typed: " + presenter_.getTotalChars());
+                JLabel mistypedChars = new JLabel("Total Characters Mistyped: " + presenter_.getNumMistypedChars());
+                totalChars.setBorder( BorderFactory.createEtchedBorder(EtchedBorder.RAISED) );
+                mistypedChars.setBorder( BorderFactory.createEtchedBorder(EtchedBorder.RAISED) );
+                this.add( totalChars );
+                this.add( mistypedChars );
+                this.revalidate();
+                this.setMaximumSize( this. getPreferredSize() );
             }
         };
 
         ResultsComponent wordComponent = new ResultsComponent( presenter_ ) {
-            public void paintComponent ( Graphics g ) 
             {
-                Graphics2D g2 = ( Graphics2D ) g;
-                int numWords = presenter_.getTotalWords();
-                int numMistypedWords = presenter_.getNumMistypedWords();
-                g2.drawString( "Total Words Typed: " + numWords, 50, 105 );
-                g2.drawString( "Total Words Mistyped: " + numMistypedWords, 50, 122 );
+                this.setLayout( new GridLayout(2, 1) );
+                JLabel totalWords = new JLabel("Total Words Typed: " + presenter_.getTotalWords());
+                JLabel mistypedWords = new JLabel("Total Words Mistyped: " + presenter_.getNumMistypedWords()) ;
+                totalWords.setBorder( BorderFactory.createEtchedBorder(EtchedBorder.RAISED) );
+                mistypedWords.setBorder( BorderFactory.createEtchedBorder(EtchedBorder.RAISED) );
+                this.add( totalWords );
+                this.add( mistypedWords );
+                this.revalidate();
+                this.setMaximumSize( this. getPreferredSize() );
             }
         };
 
-        resultsComponents = new ArrayList<ResultsComponent>();
-        resultsComponents.add(titleComponent);
-        resultsComponents.add(characterComponent);
-        resultsComponents.add(wordComponent);
+        this.add( new JLabel("Results:") );
+        //this.add(titleComponent);
+        this.add(characterComponent);
+        this.add(wordComponent);
+
+      //  this.add(resultsPanel);
+        revalidate();
 
         updateFromPresenter();
     }
@@ -81,15 +86,10 @@ public class ResultsScreen extends JComponent implements IView
         Graphics2D g2 = ( Graphics2D ) g;
         g2.setFont( resultsTextFont_ );
         g2.setPaint( Color.WHITE );
-        g2.fillRect( 0, 0, width_, height_ );
+        //g2.fillRect( 0, 0, width_, height_ );
 
         g2.setPaint( Color.BLACK );
         g2.setFont( resultsTextFont_ );
-
-        for (ResultsComponent component : resultsComponents) 
-        {
-            component.paintComponent( (Graphics) g2 );
-        }
 
         //Draw results information
     }
