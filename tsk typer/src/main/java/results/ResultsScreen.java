@@ -25,7 +25,9 @@ public class ResultsScreen extends JComponent implements IView
     private final int width_,
                       height_;
 
+    private Font resultsTitleFont_;
     private Font resultsTextFont_;
+    private Font resultsValueFont_;
     private ResultsPresenter presenter_;
     private List<ResultsComponent> resultsComponents;
 
@@ -37,22 +39,29 @@ public class ResultsScreen extends JComponent implements IView
         this.setFocusable(true);
         this.setLayout( new BoxLayout( this, BoxLayout.Y_AXIS ) );
 
+        resultsTitleFont_ = new Font( "Courier New", Font.PLAIN, 28 );
         resultsTextFont_ = new Font( "Courier New", Font.PLAIN, 16 );
+        resultsValueFont_ = new Font( "Courier New", Font.PLAIN, 16 );
 
         presenter_ = new ResultsPresenter();
 
+        ResultsComponent titleComponent = new ResultsComponent( presenter_ ) {
+            {
+                JLabel title = new JLabel("Results:");
+                title.setFont( resultsTitleFont_ );
+                this.add( title );
+            }
+        };
 
         ResultsComponent characterComponent = new ResultsComponent( presenter_ ) {
             {
-                this.setLayout( new GridLayout(2, 1) );
+                this.setLayout( new GridLayout(2, 2) );
                 JLabel totalChars = new JLabel("Total Characters Typed: " + presenter_.getTotalChars());
                 JLabel mistypedChars = new JLabel("Total Characters Mistyped: " + presenter_.getNumMistypedChars());
-                totalChars.setBorder( BorderFactory.createEtchedBorder(EtchedBorder.RAISED) );
-                mistypedChars.setBorder( BorderFactory.createEtchedBorder(EtchedBorder.RAISED) );
+                totalChars.setFont( resultsTextFont_ );
+                mistypedChars.setFont( resultsTextFont_ );
                 this.add( totalChars );
                 this.add( mistypedChars );
-                this.revalidate();
-                this.setMaximumSize( this. getPreferredSize() );
             }
         };
 
@@ -61,19 +70,30 @@ public class ResultsScreen extends JComponent implements IView
                 this.setLayout( new GridLayout(2, 1) );
                 JLabel totalWords = new JLabel("Total Words Typed: " + presenter_.getTotalWords());
                 JLabel mistypedWords = new JLabel("Total Words Mistyped: " + presenter_.getNumMistypedWords()) ;
-                totalWords.setBorder( BorderFactory.createEtchedBorder(EtchedBorder.RAISED) );
-                mistypedWords.setBorder( BorderFactory.createEtchedBorder(EtchedBorder.RAISED) );
+                totalWords.setFont( resultsTextFont_ );
+                mistypedWords.setFont( resultsTextFont_ );
                 this.add( totalWords );
                 this.add( mistypedWords );
-                this.revalidate();
-                this.setMaximumSize( this. getPreferredSize() );
             }
         };
 
-        this.add( new JLabel("Results:") );
-        //this.add(titleComponent);
-        this.add(characterComponent);
-        this.add(wordComponent);
+        resultsComponents = new ArrayList<ResultsComponent>();
+        resultsComponents.add( titleComponent );
+        resultsComponents.add( characterComponent );
+        resultsComponents.add( wordComponent );
+
+        int maxX = 0;
+        for (ResultsComponent component : resultsComponents) {
+            Dimension d = component.getPreferredSize();
+            if ((int) d.getWidth() > maxX) { maxX = (int) d.getWidth() + 10; }
+        }
+
+        for (ResultsComponent component : resultsComponents) {
+            component.setMaximumSize( new Dimension (maxX, (int) component.getPreferredSize().getHeight()) );
+            component.setBorder( BorderFactory.createEtchedBorder(EtchedBorder.RAISED) );
+            component.revalidate();
+            this.add(component);
+        }
 
       //  this.add(resultsPanel);
         revalidate();
