@@ -87,7 +87,7 @@ public class TskTyperModel extends BaseSubject
     public void endLevel( String levelText, LevelModel.CharacterMode[] charModes )
     {
         currentScreen_ = Screen.RESULTS;
-        setResultsModel( new ResultsModel( levelText, charModes ) );
+        setResultsModel( new ResultsModel( levelText, charModes, levelModel_.getElapsedTime() ) );
         publish();
     }
 

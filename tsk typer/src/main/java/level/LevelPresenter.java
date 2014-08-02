@@ -135,13 +135,16 @@ public class LevelPresenter extends BasePresenter
 
     public void handleTypedCharacter( char character )
     {
+        System.out.print("Current character " + character + " Current index = " + currentIndex_);
         if ( tskTyperModel_.getLevelModel().getCharacter( currentIndex_ ) == character )
         {
             tskTyperModel_.getLevelModel().setCharacterMode( currentIndex_, LevelModel.CharacterMode.CORRECT );
+            System.out.println(" CORRECT ");
         }
         else
         {
             tskTyperModel_.getLevelModel().setCharacterMode( currentIndex_, LevelModel.CharacterMode.INCORRECT );
+            System.out.println(" INCORRECT ");
         }
 
         if ( currentIndex_ == tskTyperModel_.getLevelModel().getTextLength()-1 )
@@ -165,7 +168,7 @@ public class LevelPresenter extends BasePresenter
                         trimmedCharacterModeList = new LevelModel.CharacterMode[characterModeList.length - offset];
         for ( int i = offset; i < characterModeList.length; ++i )
         {
-            trimmedCharacterModeList[i-offset] = characterModeList[i];
+            trimmedCharacterModeList[i - offset] = characterModeList[i-1];
         }
 
         tskTyperModel_.endLevel( trimmedLevelText, trimmedCharacterModeList );

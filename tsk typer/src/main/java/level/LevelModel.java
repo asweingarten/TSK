@@ -6,6 +6,8 @@ public class LevelModel
 {
     private String text_;                        // full text
     private CharacterMode[] characterModeList_;  // stores each character mode for each character in text_ in corresponding index
+    private long startTime_ = 0;
+    private long endTime_ = 0; 
 
     public enum CharacterMode
     {
@@ -52,6 +54,15 @@ public class LevelModel
 
     public void setCharacterMode( int index, CharacterMode mode )
     {
+        if ( 0 == startTime_ ) 
+        {
+            startTime_ = System.nanoTime();
+        } 
+        else if ( text_.length() - 1 == index )
+        {
+            endTime_ = System.nanoTime();
+        }
+
         this.characterModeList_[index] = mode;
     }
 
@@ -72,5 +83,22 @@ public class LevelModel
     public String getLevelText()
     {
         return text_;
+    }
+
+    public double getElapsedTime()
+    {
+        double CONVERSION_FACTOR = 1000000000;
+        if ( startTime_ == 0 )
+        {
+            return 0;
+        } 
+        else if ( endTime_ == 0 )
+        {
+            return ( (System.nanoTime() - startTime_) / CONVERSION_FACTOR ); 
+        } 
+        else
+        {
+            return ( (endTime_ - startTime_) / CONVERSION_FACTOR );
+        }
     }
 }

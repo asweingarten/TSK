@@ -4,7 +4,7 @@ import level.LevelModel;
 
 public class ResultsModel
 {
-    private final String PUNCTUATION = " ,.?!\":;\t\n";
+    private final String WHITESPACE = " ";
 
 	private String levelText_;
 	private LevelModel.CharacterMode[] characterModeList_;
@@ -12,12 +12,15 @@ public class ResultsModel
     private int totalWords_ = 0;
     private int mistypedChars_ = 0;
     private int mistypedWords_ = 0;
-    private int wordsPerMinute_ = 0;
+    private double wordsPerMinute_ = 0.0;
+    private double elapsedTime_ = 0.0;
 
-    public ResultsModel( String levelText, LevelModel.CharacterMode[] characterModeList )
+    public ResultsModel( String levelText, LevelModel.CharacterMode[] characterModeList, double elapsedTime )
     {
     	levelText_ = levelText;
     	characterModeList_ = characterModeList;
+        elapsedTime_ = elapsedTime;
+        System.out.println("Elapsed time = " + elapsedTime_);
         computeResults();
     }
 
@@ -41,7 +44,7 @@ public class ResultsModel
         return mistypedWords_;
     }
 
-    public int getWordsPerMinute()
+    public double getWordsPerMinute()
     {
         return wordsPerMinute_;
     }
@@ -57,7 +60,7 @@ public class ResultsModel
         {
             try 
             {
-                if (levelText_.charAt(i) == c && characterModeList_[i].getValue() != 1)
+                if (levelText_.charAt(i) == c && characterModeList_[i] == LevelModel.CharacterMode.INCORRECT)
                 {
                     mistypes++;
                 }
@@ -71,25 +74,43 @@ public class ResultsModel
         return mistypes;
     }
 
+
     private void computeResults()
+    {
+        computeCharacterResults();
+        computeWordResults();
+    }
+
+    private void computeCharacterResults()
+    {
+        totalChars_ = levelText_.length();
+        for ( int i = 0; i < totalChars_; i++ )
+        {
+            if ( LevelModel.CharacterMode.INCORRECT == characterModeList_[i] ) 
+            {
+                mistypedChars_++;
+            }
+        }
+    }
+
+    private void computeWordResults()
     {
         boolean isWord = false;
         boolean isWordCorrect = true;
 
-        for (int i = 0; i < levelText_.length(); i++) 
+        for ( int i = 0; i < levelText_.length(); i++ ) 
         {
             try 
             {
                 char currentCharacter = levelText_.charAt(i);
-                totalChars_++;
-
-                if (PUNCTUATION.indexOf(currentCharacter) >= 0) 
+                if ( WHITESPACE.indexOf(currentCharacter) >= 0 ) 
                 {
-                    if (isWord == true) 
+                    if ( true == isWord ) 
                     {
                         isWord = false;
                         totalWords_++;
-                        if (isWordCorrect == false) {
+                        if ( false == isWordCorrect ) 
+                        {
                             mistypedWords_++;
                         }
                         isWordCorrect = true;
@@ -98,20 +119,29 @@ public class ResultsModel
                 else
                 {
                     isWord = true;
+                    if ( LevelModel.CharacterMode.INCORRECT == characterModeList_[i] ) 
+                    {
+                        isWordCorrect = false;
+                    }
+                    if ( levelText_.length() - 1 == i )
+                    {
+                        totalWords_++;
+                        if ( false == isWordCorrect ) 
+                        {
+                            mistypedWords_++;
+                        }
+                    }
                 }
-
-                if (characterModeList_[i].getValue() != 1) 
-                {
-                    mistypedChars_++;
-                    isWordCorrect = !isWord;
-                }
-
-                System.out.println("Character: " + currentCharacter + " processed. Bad Chars = " + mistypedChars_ + ", Bad Words = " + mistypedWords_);
             } 
-            catch (Exception e) 
+            catch ( Exception e ) 
             {
                 System.out.println("ERROR ACCESSING CHARACTER MODE LIST");
             }
+        }
+
+        if ( 0 != elapsedTime_ )
+        {
+            wordsPerMinute_ = ( totalWords_ / elapsedTime_ ) * 60;
         }
     }
 

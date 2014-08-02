@@ -39,7 +39,7 @@ public class ResultsScreen extends JComponent implements IView
         this.setFocusable(true);
         this.setLayout( new BoxLayout( this, BoxLayout.Y_AXIS ) );
 
-        resultsTitleFont_ = new Font( "Courier New", Font.PLAIN, 28 );
+        resultsTitleFont_ = new Font( "Courier New", Font.PLAIN, 24 );
         resultsTextFont_ = new Font( "Courier New", Font.PLAIN, 16 );
         resultsValueFont_ = new Font( "Courier New", Font.PLAIN, 16 );
 
@@ -67,13 +67,16 @@ public class ResultsScreen extends JComponent implements IView
 
         ResultsComponent wordComponent = new ResultsComponent( presenter_ ) {
             {
-                this.setLayout( new GridLayout(2, 1) );
+                this.setLayout( new GridLayout(3, 1) );
                 JLabel totalWords = new JLabel("Total Words Typed: " + presenter_.getTotalWords());
                 JLabel mistypedWords = new JLabel("Total Words Mistyped: " + presenter_.getNumMistypedWords()) ;
+                JLabel wordsPerMinute = new JLabel("Average Words Per Minute: " + presenter_.getWordsPerMinute()) ;
                 totalWords.setFont( resultsTextFont_ );
                 mistypedWords.setFont( resultsTextFont_ );
+                wordsPerMinute.setFont( resultsTextFont_ );
                 this.add( totalWords );
                 this.add( mistypedWords );
+                this.add( wordsPerMinute );
             }
         };
 

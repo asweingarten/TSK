@@ -42,9 +42,9 @@ public class ResultsPresenter extends BasePresenter
         return resultsModel_.countMistypes(c);
     }
 
-    public int getWordsPerMinute()
+    public double getWordsPerMinute()
     {
-        return 0;
+        return resultsModel_.getWordsPerMinute();
     }
 
 
