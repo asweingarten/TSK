@@ -51,8 +51,11 @@
      <Compile Include="Assets\Scripts\InputEventArgs.cs" />
      <Compile Include="Assets\Scripts\Keyboard.cs" />
      <Compile Include="Assets\Scripts\NewBehaviourScript.cs" />
+     <Compile Include="Assets\Scripts\cameraScript.cs" />
      <Compile Include="Assets\Scripts\movementScript.cs" />
+     <Compile Include="Assets\Scripts\panelBehaviorScript.cs" />
      <Compile Include="Assets\Scripts\textInput.cs" />
+     <None Include="Assets\3D Text Shader.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
