@@ -4,15 +4,23 @@ using System.Collections;
 public class movementScript : MonoBehaviour {
 
 	// Use this for initialization
+	public float rotationX = 0f;
+	// public float mouseSensitivity = 10.0f;
+
 	float moveForward = 0;
 	float moveRight = 0;
-	float incrementAmount = 2;
+	float incrementAmount = 20;
 	void Start () {
 	
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		rotationX += Input.GetAxis ("Mouse X");
+		// Debug.Log (rotationX);
+		var sinOfAngle = Mathf.Sin((rotationX * Mathf.PI)/180);
+		var cosOfAngle = Mathf.Cos((rotationX * Mathf.PI)/180);
+
 		if (Input.GetKeyDown ("a")) {
 			moveRight = moveRight - incrementAmount;
 		}
@@ -41,7 +49,11 @@ public class movementScript : MonoBehaviour {
 			moveForward = moveForward + incrementAmount;
 		}
 
+		float xMovement = moveRight * Time.deltaTime * cosOfAngle + moveForward * Time.deltaTime * sinOfAngle;
+		float zMovement = moveForward * Time.deltaTime * cosOfAngle - moveRight * Time.deltaTime * sinOfAngle;
 
-		this.transform.Translate(moveRight * Time.deltaTime, 0,  moveForward * Time.deltaTime);
+		// float xMovement = moveRight * Time.deltaTime * sinOfAngle + moveForward * Time.deltaTime * cosOfAngle;
+		// float zMovement = moveForward * Time.deltaTime * sinOfAngle + moveRight * Time.deltaTime * cosOfAngle;
+		this.transform.Translate(xMovement, 0, zMovement);
 	}
 }
