@@ -41,7 +41,7 @@ public class SetupScreen extends JComponent implements IView
 			// String s = currentRelativePath.toAbsolutePath().toString();
 			// System.out.println("Current relative path is: " + s);
 
-			presenter_.setDirectory( "/Users/arielweingarten/University/4A/FYDP/TSK/tsk typer/levels" );
+			presenter_.setDirectory( System.getProperty( "user.dir" ) + "/levels" );
 		}
 		catch ( IOException ex )
 		{
@@ -81,6 +81,9 @@ public class SetupScreen extends JComponent implements IView
 	private void populateLevelSelector( java.util.List<String> filenames )
 	{
 		levelSelector_.removeAllItems();
+		if ( null == filenames ) {
+			return;
+		}
 		for ( String filename : filenames )
 		{
 			levelSelector_.addItem( filename );

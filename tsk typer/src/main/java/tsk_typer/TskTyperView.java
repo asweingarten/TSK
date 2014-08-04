@@ -31,8 +31,8 @@ public class TskTyperView extends JComponent implements IView, IObserver
 
         currentScreen_ = null;
         // Debug function
-        presenter_.startLevel();
-        //presenter_.initializeGame();
+        //presenter_.startLevel();
+        presenter_.initializeGame();
 
     }
 
