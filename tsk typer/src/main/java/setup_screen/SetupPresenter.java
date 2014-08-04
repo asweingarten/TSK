@@ -42,9 +42,14 @@ public class SetupPresenter extends BasePresenter
         return tskTyperModel_.getSetupModel().getFileName();
     }
 
-    public String getFileContents()
+    public void setText( String text )
     {
-        return tskTyperModel_.getSetupModel().getFileContents();
+        tskTyperModel_.getSetupModel().setText( text );
+    }
+
+    public String getText()
+    {
+        return tskTyperModel_.getSetupModel().getText();
     }
 
     public void setDirectory( String directory ) throws IOException

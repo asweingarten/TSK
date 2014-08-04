@@ -11,6 +11,7 @@ public class SetupModel
     private File directory_;
     private File file_;
     private TextFileReader reader_;
+    private String text_;
 
     public SetupModel( String directory )
     {
@@ -35,6 +36,16 @@ public class SetupModel
     {
         File folder = new File( directory );
         return folder.exists() && folder.isDirectory();
+    }
+
+    public void setText( String text )
+    {
+        text_ = text;
+    }
+
+    public String getText()
+    {
+        return text_;
     }
 
     public String getDirectory()
@@ -89,6 +100,7 @@ public class SetupModel
         if ( isFileValid( fileName ) )
         {
             file_ = new File( directory_, fileName );
+            text_ = getFileContents();
         }
         else
         {
