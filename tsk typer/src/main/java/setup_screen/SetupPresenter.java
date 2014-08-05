@@ -61,4 +61,9 @@ public class SetupPresenter extends BasePresenter
     {
         return tskTyperModel_.getSetupModel().getDirectory();
     }
+
+    public void startLevel()
+    {
+        tskTyperModel_.startLevel();
+    }
 }

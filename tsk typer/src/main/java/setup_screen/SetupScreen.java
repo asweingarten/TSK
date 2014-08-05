@@ -19,6 +19,13 @@ public class SetupScreen extends JComponent implements IView
 
     private JComboBox<String> levelSelector_;
     private JTextArea selectedLevelText_;
+    
+    private JPanel directoryPanel_;
+    private JLabel directoryLabel_;
+    private JTextField directoryTextBox_;
+    private JButton browseButton_;
+
+    private JButton beginButton_;
 
     public SetupScreen( int width, int height )
     {
@@ -38,7 +45,12 @@ public class SetupScreen extends JComponent implements IView
         {
             System.err.println( "directory not found: " + ex );
         }
+        initializeControls();
+        updateFromPresenter();
+    }
 
+    private void initializeLevelControls()
+    {
         selectedLevelText_ = new JTextArea();
         selectedLevelText_.setLineWrap( true );
         selectedLevelText_.setWrapStyleWord( true );
@@ -89,7 +101,45 @@ public class SetupScreen extends JComponent implements IView
 
         this.add( levelSelector_ );
         this.add( selectedLevelText_ );
-        updateFromPresenter();
+    }
+
+    private void initializeDirectoryControls()
+    {
+        directoryPanel_ = new JPanel();
+
+        directoryLabel_ = new JLabel("Folder: ");
+
+        directoryTextBox_ = new JTextField();
+
+        browseButton_ = new JButton("Browse");
+
+        directoryPanel_.add(directoryLabel_);
+        directoryPanel_.add(directoryTextBox_);
+        directoryPanel_.add(browseButton_);
+
+        this.add(directoryPanel_);
+    }
+
+    private void initializeControls()
+    {
+        initializeLevelControls();
+        //initializeDirectoryControls();
+
+        JPanel beginPanel = new JPanel();
+        beginPanel.setLayout(new FlowLayout());
+        beginButton_ = new JButton("Begin");
+
+        beginButton_.addActionListener( new ActionListener()
+        {
+            @Override
+            public void actionPerformed( ActionEvent e )
+            {
+                presenter_.startLevel();
+            }
+        });
+
+        beginPanel.add(beginButton_, BorderLayout.PAGE_END);
+        this.add(beginPanel);
     }
 
     private void populateLevelSelector( java.util.List<String> filenames )
@@ -112,5 +162,7 @@ public class SetupScreen extends JComponent implements IView
     public void saveToPresenter()
     {
         presenter_.setText( selectedLevelText_.getText() );
+        System.out.println( presenter_.getText() + "|" );
+        beginButton_.setEnabled( null != presenter_.getText() && 0 < presenter_.getText().trim().length() );
     }
 }
