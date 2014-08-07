@@ -70,6 +70,7 @@ public class LevelModel
     {
         if ( index >= text_.length() )
         {
+            System.err.println("INDEX: " + index + ", LENGTH: " + text_.length());
             throw new IllegalArgumentException();
         }
         return text_.charAt( index );

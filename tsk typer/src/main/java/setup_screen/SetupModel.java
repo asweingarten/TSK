@@ -48,6 +48,11 @@ public class SetupModel
         return text_;
     }
 
+    public String getFormattedText()
+    {
+        return text_.replaceAll("(\\s+)", " ").trim();
+    }
+
     public String getDirectory()
     {
         if ( null != directory_ )

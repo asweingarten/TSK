@@ -57,24 +57,26 @@ public class LevelPresenter extends BasePresenter
     {
         super();
         fixedWindowSize_ = charactersOnScreen;
+        setTextContents(tskTyperModel_.getSetupModel().getFormattedText());
     }
 
     public void setTextContents( String text )
     {
-        leftIndex_ = 0;
-        rightIndex_ = fixedWindowSize_;
-        int numberPaddingCharacters = Math.round( rightIndex_ / 2 );
+        int numberPaddingCharacters = Math.round( fixedWindowSize_ / 2 );
         currentIndex_ = numberPaddingCharacters;
 
         String padding = "";
         for ( int i = 0; i < numberPaddingCharacters; ++i )
             padding += " ";
         tskTyperModel_.setLevelModel(new LevelModel( padding + text ));
+
+        leftIndex_ = 0;
+        rightIndex_ = getWindowSize();
     }
 
     public int getWindowSize()
     {
-        return fixedWindowSize_;
+        return fixedWindowSize_ > tskTyperModel_.getLevelModel().getTextLength() ? tskTyperModel_.getLevelModel().getTextLength() : fixedWindowSize_;
     }
 
     public int getLeftIndex()
@@ -97,6 +99,7 @@ public class LevelPresenter extends BasePresenter
         StringBuilder textBuilder = new StringBuilder();
         for ( int index = leftIndex_; index < rightIndex_; ++index )
         {
+            System.err.println( "LEFT: " + leftIndex_ + ", RIGHT: " + rightIndex_ + ", CURRENT: " + index );
             textBuilder.append( tskTyperModel_.getLevelModel().getCharacter( index ) );
         }
         return textBuilder.toString();

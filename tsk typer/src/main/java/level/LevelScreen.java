@@ -48,8 +48,7 @@ public class LevelScreen extends JComponent implements IView
         cursorVerticalPosition_   = height_/2 + cursorSize_;
 
         presenter_ = new LevelPresenter( width_/characterWidth_ );
-        presenter_.setTextContents( "My country, 'tis of thee, " +
-                                    "Sweet land of liberty, " );
+        //presenter_.setTextContents( "My country, 'tis of thee, Sweet land of liberty, " );
         initializeListeners();
 
         isDebouncing_ = false;
