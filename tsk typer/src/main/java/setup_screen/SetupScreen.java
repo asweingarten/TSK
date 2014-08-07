@@ -8,6 +8,7 @@ import java.awt.event.*;
 import java.awt.geom.*;
 
 import java.util.*;
+import java.io.File;
 import java.io.IOException;
 
 public class SetupScreen extends JComponent implements IView
@@ -39,7 +40,7 @@ public class SetupScreen extends JComponent implements IView
         presenter_ = new SetupPresenter();
         try
         {
-            presenter_.setDirectory( System.getProperty( "user.dir" ) + "/levels" );
+            presenter_.setDirectory( new File( "./levels" ).getCanonicalPath() );
         }
         catch ( IOException ex )
         {
@@ -99,8 +100,9 @@ public class SetupScreen extends JComponent implements IView
             }
         });
 
-        this.add( levelSelector_ );
-        this.add( selectedLevelText_ );
+        this.setLayout( new BorderLayout() );
+        this.add( levelSelector_, BorderLayout.PAGE_START );
+        this.add( new JScrollPane( selectedLevelText_ ), BorderLayout.CENTER );
     }
 
     private void initializeDirectoryControls()
@@ -117,7 +119,7 @@ public class SetupScreen extends JComponent implements IView
         directoryPanel_.add(directoryTextBox_);
         directoryPanel_.add(browseButton_);
 
-        this.add(directoryPanel_);
+        this.add(directoryPanel_, BorderLayout.PAGE_END );
     }
 
     private void initializeControls()
@@ -125,8 +127,6 @@ public class SetupScreen extends JComponent implements IView
         initializeLevelControls();
         //initializeDirectoryControls();
 
-        JPanel beginPanel = new JPanel();
-        beginPanel.setLayout(new FlowLayout());
         beginButton_ = new JButton("Begin");
 
         beginButton_.addActionListener( new ActionListener()
@@ -138,8 +138,7 @@ public class SetupScreen extends JComponent implements IView
             }
         });
 
-        beginPanel.add(beginButton_, BorderLayout.PAGE_END);
-        this.add(beginPanel);
+        this.add( beginButton_, BorderLayout.PAGE_END );
     }
 
     private void populateLevelSelector( java.util.List<String> filenames )
@@ -162,7 +161,6 @@ public class SetupScreen extends JComponent implements IView
     public void saveToPresenter()
     {
         presenter_.setText( selectedLevelText_.getText() );
-        System.out.println( presenter_.getText() + "|" );
         beginButton_.setEnabled( null != presenter_.getText() && 0 < presenter_.getText().trim().length() );
     }
 }

@@ -99,7 +99,6 @@ public class LevelPresenter extends BasePresenter
         StringBuilder textBuilder = new StringBuilder();
         for ( int index = leftIndex_; index < rightIndex_; ++index )
         {
-            System.err.println( "LEFT: " + leftIndex_ + ", RIGHT: " + rightIndex_ + ", CURRENT: " + index );
             textBuilder.append( tskTyperModel_.getLevelModel().getCharacter( index ) );
         }
         return textBuilder.toString();
