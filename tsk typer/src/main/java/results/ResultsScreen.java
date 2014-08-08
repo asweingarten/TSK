@@ -11,6 +11,7 @@ import java.awt.event.*;
 import java.awt.geom.*;
 import java.util.List;
 import java.util.ArrayList;
+import java.text.DecimalFormat;
 
 
 public class ResultsScreen extends JComponent implements IView
@@ -21,6 +22,16 @@ public class ResultsScreen extends JComponent implements IView
         ResultsPresenter presenter_;
         public ResultsComponent(ResultsPresenter presenter) { presenter_ = presenter; }
     } 
+
+    public class ResultsLabel extends JLabel
+    {
+        ResultsLabel( String text, Font font ) 
+        {
+            super( text );
+            this.setFont( font );
+        }
+    }
+
 
     private final int width_,
                       height_;
@@ -47,36 +58,25 @@ public class ResultsScreen extends JComponent implements IView
 
         ResultsComponent titleComponent = new ResultsComponent( presenter_ ) {
             {
-                JLabel title = new JLabel("Results:");
-                title.setFont( resultsTitleFont_ );
-                this.add( title );
+                this.add(new ResultsLabel( "Results:", resultsTitleFont_ ));
             }
         };
 
         ResultsComponent characterComponent = new ResultsComponent( presenter_ ) {
             {
-                this.setLayout( new GridLayout(2, 2) );
-                JLabel totalChars = new JLabel("Total Characters Typed: " + presenter_.getTotalChars());
-                JLabel mistypedChars = new JLabel("Total Characters Mistyped: " + presenter_.getNumMistypedChars());
-                totalChars.setFont( resultsTextFont_ );
-                mistypedChars.setFont( resultsTextFont_ );
-                this.add( totalChars );
-                this.add( mistypedChars );
+                this.setLayout( new GridLayout(2, 1) );
+                this.add( new ResultsLabel( "Total Characters Mistyped: " + presenter_.getTotalChars(), resultsTextFont_ ));
+                this.add( new ResultsLabel( "Total Characters Mistyped: " + presenter_.getNumMistypedChars(), resultsTextFont_ ));
             }
         };
 
         ResultsComponent wordComponent = new ResultsComponent( presenter_ ) {
             {
                 this.setLayout( new GridLayout(3, 1) );
-                JLabel totalWords = new JLabel("Total Words Typed: " + presenter_.getTotalWords());
-                JLabel mistypedWords = new JLabel("Total Words Mistyped: " + presenter_.getNumMistypedWords()) ;
-                JLabel wordsPerMinute = new JLabel("Average Words Per Minute: " + presenter_.getWordsPerMinute()) ;
-                totalWords.setFont( resultsTextFont_ );
-                mistypedWords.setFont( resultsTextFont_ );
-                wordsPerMinute.setFont( resultsTextFont_ );
-                this.add( totalWords );
-                this.add( mistypedWords );
-                this.add( wordsPerMinute );
+                this.add( new ResultsLabel( "Total Words Typed: " + presenter_.getTotalWords(), resultsTextFont_ ));
+                this.add( new ResultsLabel( "Total Words Mistyped: " + presenter_.getNumMistypedWords(), resultsTextFont_ ));
+                this.add( new ResultsLabel( "Average Words Per Minute: " 
+                                            + new DecimalFormat("#.##").format(presenter_.getWordsPerMinute()) , resultsTextFont_ ));
             }
         };
 
@@ -98,7 +98,16 @@ public class ResultsScreen extends JComponent implements IView
             this.add(component);
         }
 
-      //  this.add(resultsPanel);
+        JButton retryButton = new JButton( "Retry" );
+        retryButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e)
+            {
+                presenter_.restartGame();
+            }
+        }); 
+        retryButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        this.add( retryButton );
+
         revalidate();
 
         updateFromPresenter();
