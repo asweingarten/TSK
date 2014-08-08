@@ -76,9 +76,9 @@ public class SetupModel
 
     public List<String> getFileNames()
     {
-	if ( null == directory_ ) {
-		return null;
-	}
+        if ( null == directory_ ) {
+            return null;
+        }
         File[] fileList = directory_.listFiles();
         List<String> textFileList = new ArrayList<String>();
         for ( File file : fileList )

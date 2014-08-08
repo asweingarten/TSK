@@ -12,7 +12,7 @@ public class SetupModelTest
     @Test
     public void formattedTextTest()
     {
-        String input = "hello\n\tworld    !?!   \n\n !  ";
+        String input = "  \nhello\n\tworld    !?!   \n\n !  ";
         String output = "hello world !?! !";
         SetupModel model = getSetupModel();
         model.setText( input );
