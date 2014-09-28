@@ -2,7 +2,7 @@ BIBTEX = bibtex
 LATEX = pdflatex
 REPORT = report
 RM = rm
-TEMP = *.aux *.bbl *.blg *.log *.out *.toc
+TEMP = *.aux *.bbl *.blg *.lof *.log *.out *.toc
 
 .PHONY: all clean
 
