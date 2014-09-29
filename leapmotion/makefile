@@ -1,8 +1,8 @@
 compile:
-	javac -classpath ./LeapJava.jar Sample.java
+	javac -classpath ./LeapJava.jar InteractionBoxDemo.java
 
 run:
-	java -classpath "./LeapJava.jar:." Sample
+	java -classpath "./LeapJava.jar:." InteractionBoxDemo
 
 clean:
 	rm *.class
