@@ -6,6 +6,12 @@
 * between Leap Motion and you, your company or other organization.             *
 \******************************************************************************/
 
+// compile:
+//     javac -classpath ./LeapJava.jar Sample.java
+
+// run:
+//     java -classpath "./LeapJava.jar:." Sample
+
 import java.io.IOException;
 import java.lang.Math;
 import com.leapmotion.leap.*;
