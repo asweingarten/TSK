@@ -29,4 +29,5 @@ class MyListener extends Listener
 		InteractionBox iBox = frame.interactionBox();
 		System.out.println("Center: " + iBox.center());
 	}
+
 }
