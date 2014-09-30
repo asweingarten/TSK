@@ -1,5 +1,5 @@
 compile:
-	javac -classpath ./LeapJava.jar InteractionBoxDemo.java
+	javac -classpath ./LeapJava.jar MyListener.java InteractionBoxDemo.java
 
 run:
 	java -classpath "./LeapJava.jar:." InteractionBoxDemo
