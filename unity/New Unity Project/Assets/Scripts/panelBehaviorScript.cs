@@ -16,18 +16,17 @@ public class panelBehaviorScript : MonoBehaviour {
 		var tryToFindTextMesh = GameObject.Find ("Input1");
 		panelText = (TextMesh)tryToFindTextMesh.GetComponent(typeof(TextMesh));
 
-		// panelText =(TextMesh)  GameObject.Find ("NewText");
+		// panelText = (TextMesh)  GameObject.Find ("NewText");
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		float distance =  + Mathf.Sqrt(Mathf.Pow ((userAndKeyboard.transform.position.x - transform.position.x), 2) + Mathf.Pow((userAndKeyboard.transform.position.z - transform.position.z), 2));
 
-		// Debug.Log(distance);
 		if (distance < 10) {
 
 			// string[] keys = {"!", "@", "#", "$", "%"};
-
+			// Debug.Log(distance);
 
 			string[] keys = {"`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=",
 				"q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]", "\\",
@@ -37,9 +36,10 @@ public class panelBehaviorScript : MonoBehaviour {
 
 			string[] keys2 = {"1", "2", "3", "4", "5"};
 
-			if (Input.GetKeyDown (KeyCode.LeftShift)) {
+			// if (Input.GetKeyDown (KeyCode.LeftShift)) {
 				
 				if (Input.GetKeyUp ("1")) {
+					Debug.Log("here");
 					panelText.text = panelText.text + "!";
 				}
 				if (Input.GetKeyUp ("2")) {
@@ -67,7 +67,7 @@ public class panelBehaviorScript : MonoBehaviour {
 					}
 				}
 				*/
-			}
+			// }
 
 
 

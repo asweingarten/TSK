@@ -1,10 +1,8 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System;
 
 public class textInput : MonoBehaviour {
-
-	private Keyboard keyboard;
 
 	private float mouseX;
 	private float mouseY;
@@ -18,34 +16,103 @@ public class textInput : MonoBehaviour {
 	
 	public float mouseSensitivity = 10.0f;
 
+
+	class Keyboard {
+		public Keyboard(){
+
+		}
+
+	}
+
+	class KeyboardRow {
+
+		private int rowHeight;
+		private int rowSpaceHeight;
+
+		private int totalRowWidth;
+		private List<Key> keys = new ArrayList<Key>();
+
+		public KeyboardRow(){
+			this.rowHeight = 10;
+			this.rowSpaceHeight = 0;
+			this.totalRowWidth = 0;
+		}
+
+		public KeyboardRow(int rowHeight, int rowSpaceHeight){
+			this.rowHeight = rowHeight;
+			this.rowSpaceHeight = rowSpaceHeight;
+			this.totalRowWidth = 0;
+		}
+
+		public void addNewKey(Key newKey){
+			keys.add(newKey);
+			totalRowWidth = totalRowWidth + newKey.keyWidth + newKey.keySpaceWidth;
+		}
+	}
+
+	class Key {
+		private TextMesh tm;
+		private string id;
+
+		private int keyWidth;
+		private int keySpaceWidth;
+
+		public Key(TextMesh tm, string id){
+			this.tm = tm;
+			this.id = id;
+			this.keyWidth = 10;
+			this.keySpaceWidth = 0;
+		}
+
+		public Key(TextMesh tm, string id, int keyWidth, int keySpaceWidth){
+			this.tm = tm;
+			this.id = id;
+			this.keyWidth = keyWidth;
+			this.keySpaceWidth = keySpaceWidth;
+		}
+
+		public void setColorBlue(){
+			tm.color = new Color(0,0,100);
+		}
+
+		public void setColorGreen(){
+			tm.color = new Color(0,100,0);
+		}
+
+		public void setColorRed(){
+			tm.color = new Color(100,0,0);
+		}
+	}
+
+	Keyboard keyboard;
+
 	// Use this for initialization
 	void Start () {
 		mouseX = Input.mousePosition.x;
 		mouseY = Input.mousePosition.y;
 
-		keyboard = new Keyboard ();
-		keyboard.InputEvent += HandleInputEvent;
-		keyboard.ErrorEvent += HandleErrorEvent;
+		keyboard = new Keyboard();
 
-		// DELETE ALL KEYS IN KEYBOARD
-		// READ IN 
+		string[] keys = {"`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=",
+						"q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]", "\\",
+						"a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "'",
+						"z", "x", "c", "v", "b", "n", "m", ",", ".", "/",
+						"space"};
+
+		KeyboardRow row1 = new KeyboardRow();
+
+		foreach (string s in keys){
+			var tryToFindTextMesh = GameObject.Find ("key_" + s);
+			var tm = (TextMesh)tryToFindTextMesh.GetComponent(typeof(TextMesh));
+			Key key = new Key(tm, ("key_" + s));
+
+		}
+
 	}
 
 	void HandleErrorEvent (object sender, EventArgs e)
 	{
 		Debug.Log(String.Format("DANGER, DANGER WILL ROBINSON: {0}", Input.mousePosition.y));
-	}
-
-	private void HandleInputEvent (object sender, InputEventArgs e)
-	{
-		var tryToFindTextMesh = GameObject.Find (String.Format("key_{0}", e.inputCharacter));
-		var tm = (TextMesh)tryToFindTextMesh.GetComponent(typeof(TextMesh));
-
-		if (e.isTouchPress) {
-			tm.color = new Color(0,0,100);
-		} else {
-			tm.color = new Color(0,100,0);
-		}
 	}
 	
 	// Update is called once per frame
