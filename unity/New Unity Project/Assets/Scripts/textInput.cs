@@ -17,21 +17,34 @@ public class textInput : MonoBehaviour {
 	public float viewRange = 90.0f;
 	
 	public float mouseSensitivity = 10.0f;
+	
+	public GameObject thingy;
+
+	GameObject userAndKeyboard;
 
 
 	class Keyboard {
-		public Keyboard(){
 
+		private IList rows = new List<KeyboardRow>();
+		private int rowCount;
+
+		public Keyboard(){
+			this.rowCount = 0;
+		}
+
+		public void addNewRow(KeyboardRow newRow){
+			this.rows.Add(newRow);
+			this.rowCount++;
 		}
 
 	}
 
 	class KeyboardRow {
 
-		private int rowHeight;
-		private int rowSpaceHeight;
+		private float rowHeight;
+		private float rowSpaceHeight;
 
-		private int totalRowWidth;
+		private float totalRowWidth;
 		private IList keys = new List<Key>();
 
 		public KeyboardRow(){
@@ -40,7 +53,7 @@ public class textInput : MonoBehaviour {
 			this.totalRowWidth = 0;
 		}
 
-		public KeyboardRow(int rowHeight, int rowSpaceHeight){
+		public KeyboardRow(float rowHeight, float rowSpaceHeight){
 			this.rowHeight = rowHeight;
 			this.rowSpaceHeight = rowSpaceHeight;
 			this.totalRowWidth = 0;
@@ -48,7 +61,7 @@ public class textInput : MonoBehaviour {
 
 		public void addNewKey(Key newKey){
 			keys.Add (newKey);
-			totalRowWidth = totalRowWidth + newKey.keyWidth + newKey.keySpaceWidth;
+			totalRowWidth = totalRowWidth + newKey.getKeyWidth() + newKey.getKeySpaceWidth();
 		}
 	}
 
@@ -56,17 +69,28 @@ public class textInput : MonoBehaviour {
 		private TextMesh tm;
 		private string id;
 
-		public int keyWidth;
-		public int keySpaceWidth;
+		private float keyWidth;
+		private float keySpaceWidth;
 
-		public Key(TextMesh tm, string id){
+		private GameObject cube;
+		private TextMesh textMesh;
+
+		public Key(GameObject parent, string id){
+			Debug.Log("CREATING OBJECT " + id);
+			cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+			cube.name = ("cube_new_" + id);
+			cube.renderer.material.color = Color.red;
+			cube.transform.position = new Vector3(parent.transform.position.x, 11 , parent.transform.position.z + 4);
+
+			cube.transform.parent = parent.transform;
+
 			this.tm = tm;
 			this.id = id;
 			this.keyWidth = 10;
 			this.keySpaceWidth = 0;
 		}
 
-		public Key(TextMesh tm, string id, int keyWidth, int keySpaceWidth){
+		public Key(TextMesh tm, string id, float keyWidth, float keySpaceWidth){
 			this.tm = tm;
 			this.id = id;
 			this.keyWidth = keyWidth;
@@ -84,16 +108,22 @@ public class textInput : MonoBehaviour {
 		public void setColorRed(){
 			tm.color = new Color(100,0,0);
 		}
-	}
 
-	Keyboard keyboard;
+		public float getKeyWidth(){
+			return this.keyWidth;
+		}
+
+		public float getKeySpaceWidth(){
+			return this.keySpaceWidth;
+		}
+	}
 
 	// Use this for initialization
 	void Start () {
 		mouseX = Input.mousePosition.x;
 		mouseY = Input.mousePosition.y;
 
-		keyboard = new Keyboard();
+		
 
 		string[] keys = {"`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=",
 						"q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]", "\\",
@@ -101,12 +131,24 @@ public class textInput : MonoBehaviour {
 						"z", "x", "c", "v", "b", "n", "m", ",", ".", "/",
 						"space"};
 
-		KeyboardRow row1 = new KeyboardRow();
+		string[] keys_row_1 = {"`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=",};
+		
+		Keyboard keyboard_instance = new Keyboard();
+		KeyboardRow row_1 = new KeyboardRow();
+
+		GameObject userAndKeyboard = GameObject.Find ("UserAndKeyboard");
+		GameObject virtualKeybard = GameObject.Find ("Keyboard");
+		foreach (string s in keys_row_1){
+			Key key = new Key(virtualKeybard, s);
+		}
+
+		keyboard_instance.addNewRow(row_1);
+
 
 		foreach (string s in keys){
 			var tryToFindTextMesh = GameObject.Find ("key_" + s);
 			var tm = (TextMesh)tryToFindTextMesh.GetComponent(typeof(TextMesh));
-			Key key = new Key(tm, ("key_" + s));
+			// Key key = new Key(tm, ("key_" + s));
 
 		}
 
