@@ -92,9 +92,13 @@ public class textInput : MonoBehaviour {
 			cube.transform.localScale = new Vector3(0.5f,0.05f,0.5f);
 			cube.transform.parent = parent.transform;
 
-			//textMesh = GameObject.CreatePrimitive(TextMesh);
-			// cube.AddComponent("TextMesh");
-			// cube.GetComponent<TextMesh>().text = id;
+			cube.AddComponent("TextMesh");
+			cube.GetComponent<TextMesh>().text = id;
+			cube.GetComponent<TextMesh>().color = Color.red;
+			Font ArialFont = (Font)Resources.GetBuiltinResource (typeof(Font), "Arial.ttf");
+			cube.GetComponent<TextMesh>().font = ArialFont;
+			cube.GetComponent<TextMesh>().renderer.material = ArialFont.material;
+			cube.GetComponent<TextMesh>().fontSize = 24;
 
 
 			this.tm = tm;
