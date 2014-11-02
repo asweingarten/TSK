@@ -46,6 +46,7 @@ public class textInput : MonoBehaviour {
 
 		private float totalRowWidth;
 		private IList keys = new List<Key>();
+		private int keyCount = 0;
 
 		public KeyboardRow(){
 			this.rowHeight = 10;
@@ -59,7 +60,9 @@ public class textInput : MonoBehaviour {
 			this.totalRowWidth = 0;
 		}
 
-		public void addNewKey(Key newKey){
+		public void addNewKey(GameObject parent, string id){
+			keyCount++;
+			Key newKey = new Key(parent, id, keyCount);
 			keys.Add (newKey);
 			totalRowWidth = totalRowWidth + newKey.getKeyWidth() + newKey.getKeySpaceWidth();
 		}
@@ -75,14 +78,24 @@ public class textInput : MonoBehaviour {
 		private GameObject cube;
 		private TextMesh textMesh;
 
-		public Key(GameObject parent, string id){
+		public Key(GameObject parent, string id, float positionOffset){
 			Debug.Log("CREATING OBJECT " + id);
 			cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
 			cube.name = ("cube_new_" + id);
 			cube.renderer.material.color = Color.red;
-			cube.transform.position = new Vector3(parent.transform.position.x, 11 , parent.transform.position.z + 4);
 
+			float positionX = parent.transform.position.x + 3;
+			float positionY = 11;
+			float positionZ = parent.transform.position.z + 6 - (positionOffset);
+
+			cube.transform.position = new Vector3(positionX, positionY, positionZ);
+			cube.transform.localScale = new Vector3(0.5f,0.05f,0.5f);
 			cube.transform.parent = parent.transform;
+
+			//textMesh = GameObject.CreatePrimitive(TextMesh);
+			// cube.AddComponent("TextMesh");
+			// cube.GetComponent<TextMesh>().text = id;
+
 
 			this.tm = tm;
 			this.id = id;
@@ -139,7 +152,7 @@ public class textInput : MonoBehaviour {
 		GameObject userAndKeyboard = GameObject.Find ("UserAndKeyboard");
 		GameObject virtualKeybard = GameObject.Find ("Keyboard");
 		foreach (string s in keys_row_1){
-			Key key = new Key(virtualKeybard, s);
+			row_1.addNewKey(virtualKeybard, s);
 		}
 
 		keyboard_instance.addNewRow(row_1);
