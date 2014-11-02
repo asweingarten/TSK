@@ -89,16 +89,21 @@ public class textInput : MonoBehaviour {
 			float positionZ = parent.transform.position.z + 6 - (positionOffset);
 
 			cube.transform.position = new Vector3(positionX, positionY, positionZ);
-			cube.transform.localScale = new Vector3(0.5f,0.05f,0.5f);
+			cube.renderer.material.color = Color.cyan;
+			cube.transform.localScale = new Vector3(0.5f,0.5f,0.5f);
 			cube.transform.parent = parent.transform;
 
-			cube.AddComponent("TextMesh");
-			cube.GetComponent<TextMesh>().text = id;
-			cube.GetComponent<TextMesh>().color = Color.red;
 			Font ArialFont = (Font)Resources.GetBuiltinResource (typeof(Font), "Arial.ttf");
-			cube.GetComponent<TextMesh>().font = ArialFont;
-			cube.GetComponent<TextMesh>().renderer.material = ArialFont.material;
-			cube.GetComponent<TextMesh>().fontSize = 24;
+			cube.AddComponent("TextMesh");
+			TextMesh textMesh = cube.GetComponent<TextMesh>();
+			textMesh.text = id;
+			textMesh.color = Color.red;
+			textMesh.font = ArialFont;
+			textMesh.renderer.material = ArialFont.material;
+			textMesh.fontSize = 40;
+			textMesh.transform.localRotation = Quaternion.Euler (0, 0, 0);
+//			textMesh.transform.rotation = parent.transform.rotation.;
+//			textMesh.transform.rotation.Set(90,90,0,180);
 
 
 			this.tm = tm;
