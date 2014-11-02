@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections;
 using System;
+using System.Collections.Generic;
+//using System.Collections.Generic.List<T>;
 
 public class textInput : MonoBehaviour {
 
@@ -30,7 +32,7 @@ public class textInput : MonoBehaviour {
 		private int rowSpaceHeight;
 
 		private int totalRowWidth;
-		private List<Key> keys = new ArrayList<Key>();
+		private IList keys = new List<Key>();
 
 		public KeyboardRow(){
 			this.rowHeight = 10;
@@ -45,7 +47,7 @@ public class textInput : MonoBehaviour {
 		}
 
 		public void addNewKey(Key newKey){
-			keys.add(newKey);
+			keys.Add (newKey);
 			totalRowWidth = totalRowWidth + newKey.keyWidth + newKey.keySpaceWidth;
 		}
 	}
@@ -54,8 +56,8 @@ public class textInput : MonoBehaviour {
 		private TextMesh tm;
 		private string id;
 
-		private int keyWidth;
-		private int keySpaceWidth;
+		public int keyWidth;
+		public int keySpaceWidth;
 
 		public Key(TextMesh tm, string id){
 			this.tm = tm;
