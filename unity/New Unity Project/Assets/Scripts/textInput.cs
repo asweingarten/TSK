@@ -94,19 +94,19 @@ public class textInput : MonoBehaviour {
 			cube.transform.parent = parent.transform;
 
 			Font ArialFont = (Font)Resources.GetBuiltinResource (typeof(Font), "Arial.ttf");
-			cube.AddComponent("TextMesh");
-			TextMesh textMesh = cube.GetComponent<TextMesh>();
+			GameObject text = new GameObject();
+			text.transform.parent = cube.transform;
+			text.transform.localPosition = new Vector3(0,0,0);
+			text.transform.localRotation = Quaternion.Euler (90,90,0);
+			text.transform.localScale = new Vector3(1, 1, 1);
+			TextMesh textMesh = (TextMesh)text.AddComponent("TextMesh");
 			textMesh.text = id;
 			textMesh.color = Color.red;
 			textMesh.font = ArialFont;
 			textMesh.renderer.material = ArialFont.material;
-			textMesh.fontSize = 40;
-			textMesh.transform.localRotation = Quaternion.Euler (0, 0, 0);
-//			textMesh.transform.rotation = parent.transform.rotation.;
-//			textMesh.transform.rotation.Set(90,90,0,180);
+			textMesh.fontSize = 12;
 
-
-			this.tm = tm;
+			this.tm = textMesh;
 			this.id = id;
 			this.keyWidth = 10;
 			this.keySpaceWidth = 0;
