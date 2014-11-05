@@ -96,7 +96,7 @@ public class textInput : MonoBehaviour {
 			Font ArialFont = (Font)Resources.GetBuiltinResource (typeof(Font), "Arial.ttf");
 			GameObject text = new GameObject();
 			text.transform.parent = cube.transform;
-			text.transform.localPosition = new Vector3(0,0,0);
+			text.transform.localPosition = new Vector3(0.5f,0.3f,0.3f);
 			text.transform.localRotation = Quaternion.Euler (90,90,0);
 			text.transform.localScale = new Vector3(1, 1, 1);
 			TextMesh textMesh = (TextMesh)text.AddComponent("TextMesh");
@@ -153,18 +153,24 @@ public class textInput : MonoBehaviour {
 						"z", "x", "c", "v", "b", "n", "m", ",", ".", "/",
 						"space"};
 
-		string[] keys_row_1 = {"`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=",};
+		string[] keys_row_1 = {"`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "="};
+		string[] keys_row_2 = {"q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]", "\\"};
 		
 		Keyboard keyboard_instance = new Keyboard();
 		KeyboardRow row_1 = new KeyboardRow();
+		KeyboardRow row_2 = new KeyboardRow();
 
 		GameObject userAndKeyboard = GameObject.Find ("UserAndKeyboard");
-		GameObject virtualKeybard = GameObject.Find ("Keyboard");
+		GameObject virtualKeyboard = GameObject.Find ("Keyboard");
 		foreach (string s in keys_row_1){
-			row_1.addNewKey(virtualKeybard, s);
+			row_1.addNewKey(virtualKeyboard, s);
+		}
+		foreach (string s in keys_row_2) {
+//			row_2.addNewKey(virtualKeyboard, s);
 		}
 
 		keyboard_instance.addNewRow(row_1);
+		keyboard_instance.addNewRow(row_2);
 
 
 		foreach (string s in keys){
