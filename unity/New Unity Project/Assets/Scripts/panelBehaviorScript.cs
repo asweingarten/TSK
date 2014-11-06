@@ -3,14 +3,14 @@ using System.Collections;
 
 public class panelBehaviorScript : MonoBehaviour {
 
-	GameObject userAndKeyboard;
+	GameObject user;
 	GameObject forceField;
 	TextMesh panelText;
 	// var panelText;
 
 	// Use this for initialization
 	void Start () {
-		userAndKeyboard = GameObject.Find ("UserAndKeyboard");
+		user = GameObject.Find ("User");
 		forceField = GameObject.Find ("ForceField");
 
 		var tryToFindTextMesh = GameObject.Find ("Input1");
@@ -21,7 +21,7 @@ public class panelBehaviorScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		float distance =  + Mathf.Sqrt(Mathf.Pow ((userAndKeyboard.transform.position.x - transform.position.x), 2) + Mathf.Pow((userAndKeyboard.transform.position.z - transform.position.z), 2));
+		float distance =  + Mathf.Sqrt(Mathf.Pow ((user.transform.position.x - transform.position.x), 2) + Mathf.Pow((user.transform.position.z - transform.position.z), 2));
 
 		if (distance < 10) {
 
