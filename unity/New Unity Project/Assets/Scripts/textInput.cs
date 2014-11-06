@@ -23,49 +23,57 @@ public class textInput : MonoBehaviour {
 	GameObject userAndKeyboard;
 
 
-	class Keyboard {
+	class KeyboardComponent : Component {
 
-		private IList rows = new List<KeyboardRow>();
+		private IList rows = new List<KeyboardRowComponent>();
 		private int rowCount;
 
-		public Keyboard(){
+		public KeyboardComponent(){
 			this.rowCount = 0;
 		}
 
-		public void addNewRow(KeyboardRow newRow){
-			this.rows.Add(newRow);
+		public void addRow(KeyboardRowComponent row){
+			this.rows.Add(row);
 			this.rowCount++;
 		}
 
 	}
 
-	class KeyboardRow {
+	class KeyboardRowComponent : Component {
 
 		private float rowHeight;
 		private float rowSpaceHeight;
 
 		private float totalRowWidth;
-		private IList keys = new List<Key>();
+		private IList<String> keys = new List<String>();
 		private int keyCount = 0;
 
-		public KeyboardRow(){
+		public KeyboardRowComponent(){
 			this.rowHeight = 10;
 			this.rowSpaceHeight = 0;
 			this.totalRowWidth = 0;
 		}
 
-		public KeyboardRow(float rowHeight, float rowSpaceHeight){
+		public KeyboardRowComponent(float rowHeight, float rowSpaceHeight){
 			this.rowHeight = rowHeight;
 			this.rowSpaceHeight = rowSpaceHeight;
 			this.totalRowWidth = 0;
 		}
 
-		public void addNewKey(GameObject parent, string id){
-			keyCount++;
-			Key newKey = new Key(parent, id, keyCount);
-			keys.Add (newKey);
-			totalRowWidth = totalRowWidth + newKey.getKeyWidth() + newKey.getKeySpaceWidth();
+		public void setKeys(String[] keySet) {
+			keys = keySet;
 		}
+
+		public IList<String> getKeys() {
+			return keys;
+		}
+
+//		public void addNewKey(GameObject parent, string id){
+//			keyCount++;
+//			Key newKey = new Key(parent, id, keyCount);
+//			keys.Add (newKey);
+//			totalRowWidth = totalRowWidth + newKey.getKeyWidth() + newKey.getKeySpaceWidth();
+//		}
 	}
 
 	class Key {
@@ -88,7 +96,7 @@ public class textInput : MonoBehaviour {
 			float positionY = 11;
 			float positionZ = parent.transform.position.z + 6 - (positionOffset);
 
-			cube.transform.position = new Vector3(positionX, positionY, positionZ);
+			cube.transform.localPosition = new Vector3(positionX, positionY, positionZ);
 			cube.renderer.material.color = Color.cyan;
 			cube.transform.localScale = new Vector3(0.5f,0.5f,0.5f);
 			cube.transform.parent = parent.transform;
@@ -153,31 +161,38 @@ public class textInput : MonoBehaviour {
 						"z", "x", "c", "v", "b", "n", "m", ",", ".", "/",
 						"space"};
 
-		string[] keys_row_1 = {"`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "="};
-		string[] keys_row_2 = {"q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]", "\\"};
+		string[] row1Keys = {"`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "="};
+		string[] row2Keys = {"q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]", "\\"};
 		
-		Keyboard keyboard_instance = new Keyboard();
-		KeyboardRow row_1 = new KeyboardRow();
-		KeyboardRow row_2 = new KeyboardRow();
+//		Keyboard keyboard_instance = new Keyboard();
+//		KeyboardRow row_1 = new KeyboardRow();
+//		KeyboardRow row_2 = new KeyboardRow();
 
-		GameObject userAndKeyboard = GameObject.Find ("UserAndKeyboard");
-		GameObject virtualKeyboard = GameObject.Find ("Keyboard");
-		foreach (string s in keys_row_1){
-			row_1.addNewKey(virtualKeyboard, s);
+		GameObject user = GameObject.Find ("User");
+		GameObject keyboardObj = new GameObject ();
+		keyboardObj.name = "ScriptKeyboard";
+		keyboardObj.AddComponent ("Keyboard");
+		keyboardObj.transform.parent = user.transform;
+		keyboardObj.transform.localPosition = new Vector3 (0, -1.8f, 0);
+
+		GameObject keyboardRow1 = new GameObject ();
+		keyboardRow1.transform.parent = keyboardObj.transform;
+		keyboardRow1.transform.localPosition = new Vector3 (0, 0, 0);
+		keyboardRow1.AddComponent ("KeyboardRowComponent");
+		KeyboardRowComponent rowComponent = keyboardRow1.GetComponent<KeyboardRowComponent> ();
+		rowComponent.setKeys (row1Keys);
+
+		KeyboardComponent keyboard = keyboardObj.GetComponent<KeyboardComponent> ();
+
+		int offset = 0;
+		foreach (string s in rowComponent.getKeys()){
+			new Key(keyboardRow1, s, offset);
+			offset += 1;
 		}
-		foreach (string s in keys_row_2) {
-//			row_2.addNewKey(virtualKeyboard, s);
-		}
-
-		keyboard_instance.addNewRow(row_1);
-		keyboard_instance.addNewRow(row_2);
-
 
 		foreach (string s in keys){
 			var tryToFindTextMesh = GameObject.Find ("key_" + s);
 			var tm = (TextMesh)tryToFindTextMesh.GetComponent(typeof(TextMesh));
-			// Key key = new Key(tm, ("key_" + s));
-
 		}
 
 	}
