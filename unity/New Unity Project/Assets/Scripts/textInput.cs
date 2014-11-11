@@ -21,22 +21,10 @@ public class textInput : MonoBehaviour {
 
 	GameObject userAndKeyboard;
 
-
-
-
 	// Use this for initialization
 	void Start () {
 		mouseX = Input.mousePosition.x;
 		mouseY = Input.mousePosition.y;
-
-		
-
-
-
-//		foreach (string s in keys){
-//			var tryToFindTextMesh = GameObject.Find ("key_" + s);
-//			var tm = (TextMesh)tryToFindTextMesh.GetComponent(typeof(TextMesh));
-//		}
 
 	}
 
@@ -48,12 +36,6 @@ public class textInput : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		rotationX += Input.GetAxis ("Mouse X") * 1;
-		
-		// rotationY -= Input.GetAxis ("Mouse Y") * mouseSensitivity;
-		// rotationY = Mathf.Clamp (rotationY, -viewRange, viewRange);
-		// Camera.main.transform.Rotate (-rotationY, 0, 0);
-		
-//		transform.localRotation = Quaternion.Euler (90 , rotationX,0);
 
 		string[] keys = {"`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=",
 						"q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]", "\\",
