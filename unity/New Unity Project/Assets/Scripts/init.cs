@@ -92,7 +92,7 @@ class Key {
 		textMesh.text = id;
 		textMesh.color = Color.red;
 		textMesh.font = ArialFont;
-		textMesh.renderer.material = ArialFont.material;
+		textMesh.renderer.sharedMaterial = ArialFont.material;
 		textMesh.fontSize = 12;
 		
 		this.tm = textMesh;
