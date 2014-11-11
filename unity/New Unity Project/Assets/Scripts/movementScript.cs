@@ -6,17 +6,23 @@ public class movementScript : MonoBehaviour {
 	// Use this for initialization
 	public float rotationX = 0f;
 	// public float mouseSensitivity = 10.0f;
+	private GameObject keyboard;
 
 	float moveForward = 0;
 	float moveRight = 0;
 	float incrementAmount = 20;
 	void Start () {
+		keyboard = GameObject.Find ("ScriptKeyboard");
+
 	
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		rotationX += Input.GetAxis ("Mouse X");
+
+		keyboard.transform.localRotation = Quaternion.Euler (0, rotationX - 90, 0);
+
 		// Debug.Log (rotationX);
 		var sinOfAngle = Mathf.Sin((rotationX * Mathf.PI)/180);
 		var cosOfAngle = Mathf.Cos((rotationX * Mathf.PI)/180);
