@@ -1,20 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class movementScript : MonoBehaviour {
+public class MovementScript : MonoBehaviour {
 
 	// Use this for initialization
 	public float rotationX = 0f;
 	// public float mouseSensitivity = 10.0f;
 	private GameObject keyboard;
-	private GameObject user;
+
 
 	float moveForward = 0;
 	float moveRight = 0;
 	float incrementAmount = 20;
 	void Start () {
 		keyboard = GameObject.Find ("ScriptKeyboard");
-		user = GameObject.Find ("User");
+//		user = GameObject.Find ("User");
 	
 	}
 	
@@ -61,6 +61,6 @@ public class movementScript : MonoBehaviour {
 
 		// float xMovement = moveRight * Time.deltaTime * sinOfAngle + moveForward * Time.deltaTime * cosOfAngle;
 		// float zMovement = moveForward * Time.deltaTime * sinOfAngle + moveRight * Time.deltaTime * cosOfAngle;
-		user.transform.Translate(xMovement, 0, zMovement);
+		this.transform.Translate(xMovement, 0, zMovement);
 	}
 }
