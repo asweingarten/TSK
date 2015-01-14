@@ -13,7 +13,7 @@ Team Contact Email: asweinga@uwaterloo.ca
 
 Team URL: arielweingarten.com/tsk
 
-Special Equipment: Ethernet Drop 2, TV/Monitor, Power Supply
+Special Equipment: Ethernet Drop 2, TV/Monitor, Power Bar (ideally connected to an outlet)
 
 ## Report Details ##
 
