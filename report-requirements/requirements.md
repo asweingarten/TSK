@@ -7,7 +7,7 @@ Any key with the *TODO* value has not been filled in yet.
 
 ## Project Details ##
 
-Project Description: Investigating the impact of a touch-sensitive keyboard on usability.
+Project Description: Building reusable components for development with the Leap Motion and Oculus Rift Devices on the Unity platform. Special interest will be given to text input methods and well as menu systems.
 
 Team Contact Email: asweinga@uwaterloo.ca
 
